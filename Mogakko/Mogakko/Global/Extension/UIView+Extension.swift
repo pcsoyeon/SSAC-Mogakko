@@ -14,7 +14,7 @@ extension UIView {
         }
     }
     
-    public func makeRound(radius: CGFloat = 10) {
+    public func makeRound(radius: CGFloat = 8) {
         layer.cornerRadius = radius
         clipsToBounds = true
     }
