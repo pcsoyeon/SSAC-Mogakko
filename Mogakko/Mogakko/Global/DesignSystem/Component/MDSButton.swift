@@ -9,6 +9,7 @@ import UIKit
 
 // MARK: - Button Type
 
+@frozen
 enum MDSButtonType {
     case inactive
     case fill
@@ -42,7 +43,7 @@ enum MDSButtonType {
         }
     }
     
-    var foregroundColor: UIColor {
+    var titleColor: UIColor {
         switch self {
         case .inactive, .cancel:
             return .black
@@ -56,6 +57,7 @@ enum MDSButtonType {
     }
 }
 
+@frozen
 enum MDSButtonHeightType {
     case h48
     case h40
@@ -113,16 +115,12 @@ final class MDSButton: UIButton {
     }
     
     private func setForegroundColor(type: MDSButtonType) {
-        titleLabel?.textColor = type.foregroundColor
+        titleLabel?.textColor = type.titleColor
     }
     
     private func setBorderColor(type: MDSButtonType) {
         layer.borderWidth = 1
         layer.borderColor = type.boderColor.cgColor
-    }
-    
-    private func setHeight(type: MDSButtonHeightType) {
-        
     }
 }
 

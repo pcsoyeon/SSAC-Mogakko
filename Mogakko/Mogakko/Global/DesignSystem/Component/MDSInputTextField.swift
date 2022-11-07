@@ -10,6 +10,41 @@ import UIKit
 import SnapKit
 import Then
 
+@frozen
+enum MDSInputTextFieldType {
+    case inactive
+    case focus
+    case active
+    case disable
+    
+    var backgroundColor: UIColor {
+        switch self {
+        case .inactive, .active, .focus:
+            return .white
+        case .disable:
+            return .gray3
+        }
+    }
+    
+    var textColor: UIColor {
+        switch self {
+        case .inactive, .disable:
+            return .gray7
+        case .focus, .active:
+            return .black
+        }
+    }
+    
+    var lineColor: UIColor {
+        switch self {
+        case .inactive, .active, .disable:
+            return .gray3
+        case .focus:
+            return .black
+        }
+    }
+}
+
 final class MDSInputTextField: UITextField {
     
     // MARK: - UI Property
@@ -20,6 +55,12 @@ final class MDSInputTextField: UITextField {
     
     override var placeholder: String? {
         didSet { setPlaceholder() }
+    }
+    
+    var type: MDSInputTextFieldType = .inactive {
+        didSet {
+            setState(type: type)
+        }
     }
     
     // MARK: - Initialize
@@ -34,11 +75,11 @@ final class MDSInputTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Set UI
+    // MARK: - Init UI
     
     private func setUI() {
+        borderStyle = .none
         setPadding()
-        setState()
     }
     
     private func setLayout() {
@@ -54,11 +95,6 @@ final class MDSInputTextField: UITextField {
         }
     }
     
-    private func setState() {
-        borderStyle = .none
-        
-    }
-    
     private func setPlaceholder() {
         guard let placeholder = placeholder else {
             return
@@ -68,6 +104,16 @@ final class MDSInputTextField: UITextField {
             string: placeholder,
             attributes: [.foregroundColor: UIColor.gray7]
         )
+    }
+    
+    // MARK: - Set UI
+    
+    private func setState(type: MDSInputTextFieldType) {
+        backgroundColor = type.backgroundColor
+        
+        lineView.backgroundColor = type.lineColor
+        
+        textColor = type.textColor
     }
     
 }

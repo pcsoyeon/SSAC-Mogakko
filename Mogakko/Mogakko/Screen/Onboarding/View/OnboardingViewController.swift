@@ -17,6 +17,11 @@ final class OnboardingViewController: UIViewController {
     private let button = MDSButton().then {
         $0.type = .fill
     }
+    
+    private let textField = MDSInputTextField().then {
+        $0.text = "메시지를 입력"
+        $0.type = .active
+    }
 
     // MARK: - Life Cycle
     
@@ -30,10 +35,10 @@ final class OnboardingViewController: UIViewController {
 
 extension OnboardingViewController: BaseViewControllerAttribute {
     func configureHierarchy() {
-        view.addSubview(button)
+        view.addSubviews(button)
         
         button.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
             make.height.equalTo(MDSButtonHeightType.h48.height)
         }
     }

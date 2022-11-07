@@ -27,7 +27,10 @@ extension Metric {
 
 extension Metric {
     static let inputTextFieldHeight: CGFloat = 48
+    
     static let messageTextFieldHeight: CGFloat = 52
+    static let messageTextFieldTrailing: CGFloat = 14
+    static let messageTextFieldIconSize: CGFloat = 20
 }
 
 // MARK: - Search Bar

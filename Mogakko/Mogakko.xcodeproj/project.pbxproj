@@ -29,6 +29,7 @@
 		9256073F2918F2E700A13FFB /* MDSInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256073E2918F2E700A13FFB /* MDSInputTextField.swift */; };
 		925607472918F35200A13FFB /* MDSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607462918F35200A13FFB /* MDSButton.swift */; };
 		9256074C2918F95500A13FFB /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256074B2918F95500A13FFB /* OnboardingViewController.swift */; };
+		9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256074D2918FCED00A13FFB /* MDSMessageTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		9256073E2918F2E700A13FFB /* MDSInputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSInputTextField.swift; sourceTree = "<group>"; };
 		925607462918F35200A13FFB /* MDSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSButton.swift; sourceTree = "<group>"; };
 		9256074B2918F95500A13FFB /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		9256074D2918FCED00A13FFB /* MDSMessageTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSMessageTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 				925607332918EF6300A13FFB /* BackButton.swift */,
 				925607352918F0B400A13FFB /* MDSNavigationBar.swift */,
 				9256073E2918F2E700A13FFB /* MDSInputTextField.swift */,
+				9256074D2918FCED00A13FFB /* MDSMessageTextField.swift */,
 				925607462918F35200A13FFB /* MDSButton.swift */,
 			);
 			path = Component;
@@ -353,6 +356,7 @@
 				925607342918EF6300A13FFB /* BackButton.swift in Sources */,
 				9256073F2918F2E700A13FFB /* MDSInputTextField.swift in Sources */,
 				9256073B2918F14D00A13FFB /* UIView+Extension.swift in Sources */,
+				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
 				925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */,
 				925607472918F35200A13FFB /* MDSButton.swift in Sources */,
