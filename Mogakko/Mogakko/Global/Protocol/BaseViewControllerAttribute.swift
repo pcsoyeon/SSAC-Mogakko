@@ -9,6 +9,6 @@ import Foundation
 
 protocol BaseViewControllerAttribute {
     func configureHierarchy()
-    func setAttribute()
+    func configureAttribute()
     func bind()
 }

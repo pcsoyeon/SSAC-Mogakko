@@ -55,5 +55,10 @@ extension Constant {
         static let sendInact = UIImage(named: "sendInact")!
         static let shopAct = UIImage(named: "shopAct")!
         static let shopInact = UIImage(named: "shopInact")!
+        
+        // onboarding
+        static let onboardingImg1 = UIImage(named: "onboarding_img1")!
+        static let onboardingImg2 = UIImage(named: "onboarding_img2")!
+        static let onboardingImg3 = UIImage(named: "onboarding_img3")!
     }
 }

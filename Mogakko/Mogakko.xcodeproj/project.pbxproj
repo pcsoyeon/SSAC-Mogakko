@@ -34,6 +34,13 @@
 		92560752291925EF00A13FFB /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 92560750291925EF00A13FFB /* NotoSansCJKkr-Regular.otf */; };
 		925607542919266600A13FFB /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607532919266600A13FFB /* UIFont+Extension.swift */; };
 		92560756291926A700A13FFB /* MDSFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92560755291926A700A13FFB /* MDSFont.swift */; };
+		92560759291945AA00A13FFB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 92560758291945AA00A13FFB /* RxCocoa */; };
+		9256075B291945AA00A13FFB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9256075A291945AA00A13FFB /* RxSwift */; };
+		9256075D2919468400A13FFB /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256075C2919468400A13FFB /* OnboardingCollectionViewCell.swift */; };
+		92560760291946C600A13FFB /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256075F291946C600A13FFB /* BaseCollectionViewCell.swift */; };
+		92560762291946FF00A13FFB /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92560761291946FF00A13FFB /* BaseTableViewCell.swift */; };
+		92560764291948DE00A13FFB /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92560763291948DE00A13FFB /* Onboarding.swift */; };
+		9256076729194F3700A13FFB /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256076629194F3700A13FFB /* AuthorizationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +71,11 @@
 		92560750291925EF00A13FFB /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
 		925607532919266600A13FFB /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		92560755291926A700A13FFB /* MDSFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSFont.swift; sourceTree = "<group>"; };
+		9256075C2919468400A13FFB /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
+		9256075F291946C600A13FFB /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		92560761291946FF00A13FFB /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		92560763291948DE00A13FFB /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
+		9256076629194F3700A13FFB /* AuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +83,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92560759291945AA00A13FFB /* RxCocoa in Frameworks */,
 				925607182918DF1C00A13FFB /* SnapKit in Frameworks */,
+				9256075B291945AA00A13FFB /* RxSwift in Frameworks */,
 				925607392918F0CB00A13FFB /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +134,7 @@
 		925607082918D54500A13FFB /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				9256076529194F1C00A13FFB /* Authorization */,
 				9256070F2918D5A300A13FFB /* Onboarding */,
 				9256070E2918D58D00A13FFB /* Splash */,
 			);
@@ -136,6 +151,7 @@
 		9256070A2918D54F00A13FFB /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				9256075E291946BC00A13FFB /* Base */,
 				925607262918E66200A13FFB /* Constant */,
 				9256071F2918E08D00A13FFB /* Extension */,
 				925607192918DF4F00A13FFB /* DesignSystem */,
@@ -269,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				9256074B2918F95500A13FFB /* OnboardingViewController.swift */,
+				9256075C2919468400A13FFB /* OnboardingCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -276,8 +293,26 @@
 		9256074A2918F94300A13FFB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				92560763291948DE00A13FFB /* Onboarding.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		9256075E291946BC00A13FFB /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				9256075F291946C600A13FFB /* BaseCollectionViewCell.swift */,
+				92560761291946FF00A13FFB /* BaseTableViewCell.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		9256076529194F1C00A13FFB /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				9256076629194F3700A13FFB /* AuthorizationViewController.swift */,
+			);
+			path = Authorization;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,6 +334,8 @@
 			packageProductDependencies = (
 				925607172918DF1C00A13FFB /* SnapKit */,
 				925607382918F0CB00A13FFB /* Then */,
+				92560758291945AA00A13FFB /* RxCocoa */,
+				9256075A291945AA00A13FFB /* RxSwift */,
 			);
 			productName = Mogakko;
 			productReference = 925606F02918D51800A13FFB /* Mogakko.app */;
@@ -331,6 +368,7 @@
 			packageReferences = (
 				925607162918DF1C00A13FFB /* XCRemoteSwiftPackageReference "SnapKit" */,
 				925607372918F0CB00A13FFB /* XCRemoteSwiftPackageReference "Then" */,
+				92560757291945AA00A13FFB /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 925606F12918D51800A13FFB /* Products */;
 			projectDirPath = "";
@@ -369,15 +407,20 @@
 				925607362918F0B400A13FFB /* MDSNavigationBar.swift in Sources */,
 				925607342918EF6300A13FFB /* BackButton.swift in Sources */,
 				92560756291926A700A13FFB /* MDSFont.swift in Sources */,
+				9256075D2919468400A13FFB /* OnboardingCollectionViewCell.swift in Sources */,
+				92560760291946C600A13FFB /* BaseCollectionViewCell.swift in Sources */,
 				925607542919266600A13FFB /* UIFont+Extension.swift in Sources */,
 				9256073F2918F2E700A13FFB /* MDSInputTextField.swift in Sources */,
 				9256073B2918F14D00A13FFB /* UIView+Extension.swift in Sources */,
+				9256076729194F3700A13FFB /* AuthorizationViewController.swift in Sources */,
 				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
 				925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */,
 				925607472918F35200A13FFB /* MDSButton.swift in Sources */,
+				92560762291946FF00A13FFB /* BaseTableViewCell.swift in Sources */,
 				9256074C2918F95500A13FFB /* OnboardingViewController.swift in Sources */,
 				9256072C2918EDC100A13FFB /* Metric.swift in Sources */,
+				92560764291948DE00A13FFB /* Onboarding.swift in Sources */,
 				9256073D2918F1BD00A13FFB /* UITextField+Extension.swift in Sources */,
 				925606F62918D51800A13FFB /* SceneDelegate.swift in Sources */,
 				925607152918DEBC00A13FFB /* Reusable.swift in Sources */,
@@ -616,6 +659,14 @@
 				kind = branch;
 			};
 		};
+		92560757291945AA00A13FFB /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -628,6 +679,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 925607372918F0CB00A13FFB /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
+		};
+		92560758291945AA00A13FFB /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92560757291945AA00A13FFB /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		9256075A291945AA00A13FFB /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92560757291945AA00A13FFB /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
