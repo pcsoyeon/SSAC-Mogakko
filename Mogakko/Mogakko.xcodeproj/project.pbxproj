@@ -16,6 +16,10 @@
 		925607152918DEBC00A13FFB /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607142918DEBC00A13FFB /* Reusable.swift */; };
 		925607182918DF1C00A13FFB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 925607172918DF1C00A13FFB /* SnapKit */; };
 		925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607202918E09900A13FFB /* UIColor+Extension.swift */; };
+		925607232918E42700A13FFB /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 925607222918E42700A13FFB /* Image.xcassets */; };
+		925607252918E48700A13FFB /* Icon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 925607242918E48700A13FFB /* Icon.xcassets */; };
+		925607282918E67700A13FFB /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607272918E67700A13FFB /* Constant.swift */; };
+		9256072A2918E68A00A13FFB /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607292918E68A00A13FFB /* Image.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +33,10 @@
 		925607122918DDD100A13FFB /* BaseViewControllerAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewControllerAttribute.swift; sourceTree = "<group>"; };
 		925607142918DEBC00A13FFB /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		925607202918E09900A13FFB /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		925607222918E42700A13FFB /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
+		925607242918E48700A13FFB /* Icon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icon.xcassets; sourceTree = "<group>"; };
+		925607272918E67700A13FFB /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		925607292918E68A00A13FFB /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +108,7 @@
 		9256070A2918D54F00A13FFB /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				925607262918E66200A13FFB /* Constant */,
 				9256071F2918E08D00A13FFB /* Extension */,
 				925607192918DF4F00A13FFB /* DesignSystem */,
 				925607112918DD7000A13FFB /* Protocol */,
@@ -121,6 +130,8 @@
 			isa = PBXGroup;
 			children = (
 				925606FC2918D51A00A13FFB /* Assets.xcassets */,
+				925607222918E42700A13FFB /* Image.xcassets */,
+				925607242918E48700A13FFB /* Icon.xcassets */,
 			);
 			path = Asset;
 			sourceTree = "<group>";
@@ -195,6 +206,15 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		925607262918E66200A13FFB /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				925607272918E67700A13FFB /* Constant.swift */,
+				925607292918E68A00A13FFB /* Image.swift */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -260,6 +280,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				925607002918D51A00A13FFB /* LaunchScreen.storyboard in Resources */,
+				925607232918E42700A13FFB /* Image.xcassets in Resources */,
+				925607252918E48700A13FFB /* Icon.xcassets in Resources */,
 				925606FD2918D51A00A13FFB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,6 +293,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				925607282918E67700A13FFB /* Constant.swift in Sources */,
+				9256072A2918E68A00A13FFB /* Image.swift in Sources */,
 				925606F82918D51800A13FFB /* SplashViewController.swift in Sources */,
 				925607132918DDD100A13FFB /* BaseViewControllerAttribute.swift in Sources */,
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
