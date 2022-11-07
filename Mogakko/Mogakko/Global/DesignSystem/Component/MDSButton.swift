@@ -107,7 +107,7 @@ final class MDSButton: UIButton {
     // MARK: - Init UI
     
     private func setTitle() {
-        // 폰트설정
+        titleLabel?.font = MDSFont.Body3_R14.font
     }
     
     private func setBackgroundColor(type: MDSButtonType) {

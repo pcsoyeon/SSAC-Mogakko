@@ -30,6 +30,10 @@
 		925607472918F35200A13FFB /* MDSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607462918F35200A13FFB /* MDSButton.swift */; };
 		9256074C2918F95500A13FFB /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256074B2918F95500A13FFB /* OnboardingViewController.swift */; };
 		9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256074D2918FCED00A13FFB /* MDSMessageTextField.swift */; };
+		92560751291925EF00A13FFB /* NotoSansCJKkr-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9256074F291925EE00A13FFB /* NotoSansCJKkr-Medium.otf */; };
+		92560752291925EF00A13FFB /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 92560750291925EF00A13FFB /* NotoSansCJKkr-Regular.otf */; };
+		925607542919266600A13FFB /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607532919266600A13FFB /* UIFont+Extension.swift */; };
+		92560756291926A700A13FFB /* MDSFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92560755291926A700A13FFB /* MDSFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +60,10 @@
 		925607462918F35200A13FFB /* MDSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSButton.swift; sourceTree = "<group>"; };
 		9256074B2918F95500A13FFB /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		9256074D2918FCED00A13FFB /* MDSMessageTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSMessageTextField.swift; sourceTree = "<group>"; };
+		9256074F291925EE00A13FFB /* NotoSansCJKkr-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Medium.otf"; sourceTree = "<group>"; };
+		92560750291925EF00A13FFB /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
+		925607532919266600A13FFB /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		92560755291926A700A13FFB /* MDSFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSFont.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +211,8 @@
 		9256071A2918DF5A00A13FFB /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				925607532919266600A13FFB /* UIFont+Extension.swift */,
+				92560755291926A700A13FFB /* MDSFont.swift */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -222,6 +232,8 @@
 		9256071C2918DF6800A13FFB /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				9256074F291925EE00A13FFB /* NotoSansCJKkr-Medium.otf */,
+				92560750291925EF00A13FFB /* NotoSansCJKkr-Regular.otf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -335,9 +347,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				925607002918D51A00A13FFB /* LaunchScreen.storyboard in Resources */,
+				92560752291925EF00A13FFB /* NotoSansCJKkr-Regular.otf in Resources */,
 				925607232918E42700A13FFB /* Image.xcassets in Resources */,
 				925607252918E48700A13FFB /* Icon.xcassets in Resources */,
 				925606FD2918D51A00A13FFB /* Assets.xcassets in Resources */,
+				92560751291925EF00A13FFB /* NotoSansCJKkr-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +368,8 @@
 				925607132918DDD100A13FFB /* BaseViewControllerAttribute.swift in Sources */,
 				925607362918F0B400A13FFB /* MDSNavigationBar.swift in Sources */,
 				925607342918EF6300A13FFB /* BackButton.swift in Sources */,
+				92560756291926A700A13FFB /* MDSFont.swift in Sources */,
+				925607542919266600A13FFB /* UIFont+Extension.swift in Sources */,
 				9256073F2918F2E700A13FFB /* MDSInputTextField.swift in Sources */,
 				9256073B2918F14D00A13FFB /* UIView+Extension.swift in Sources */,
 				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,

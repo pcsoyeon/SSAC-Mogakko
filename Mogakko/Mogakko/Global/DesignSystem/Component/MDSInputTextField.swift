@@ -79,6 +79,9 @@ final class MDSInputTextField: UITextField {
     
     private func setUI() {
         borderStyle = .none
+        
+        font = MDSFont.Title4_R14.font
+        
         setPadding()
     }
     

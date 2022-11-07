@@ -78,6 +78,9 @@ final class MDSMessageTextField: UITextField {
     
     private func setUI() {
         borderStyle = .none
+        
+        font = MDSFont.Body3_R14.font
+        
         setPadding()
     }
     

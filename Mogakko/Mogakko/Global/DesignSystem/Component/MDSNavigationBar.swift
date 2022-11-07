@@ -20,7 +20,7 @@ final class NDSNavigationBar: UIView {
     private var titleLabel = UILabel().then {
         $0.textColor = .black
         $0.textAlignment = .center
-        // 폰트 설정
+        $0.font = MDSFont.Title3_M14.font
     }
     
     var backButtonIsHidden: Bool = true {
