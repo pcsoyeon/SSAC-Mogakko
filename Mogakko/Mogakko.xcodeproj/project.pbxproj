@@ -15,6 +15,7 @@
 		925607132918DDD100A13FFB /* BaseViewControllerAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607122918DDD100A13FFB /* BaseViewControllerAttribute.swift */; };
 		925607152918DEBC00A13FFB /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607142918DEBC00A13FFB /* Reusable.swift */; };
 		925607182918DF1C00A13FFB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 925607172918DF1C00A13FFB /* SnapKit */; };
+		925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607202918E09900A13FFB /* UIColor+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		925607012918D51A00A13FFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		925607122918DDD100A13FFB /* BaseViewControllerAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewControllerAttribute.swift; sourceTree = "<group>"; };
 		925607142918DEBC00A13FFB /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		925607202918E09900A13FFB /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,8 @@
 		9256070A2918D54F00A13FFB /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				9256071F2918E08D00A13FFB /* Extension */,
+				925607192918DF4F00A13FFB /* DesignSystem */,
 				925607112918DD7000A13FFB /* Protocol */,
 			);
 			path = Global;
@@ -106,6 +110,7 @@
 		9256070B2918D56000A13FFB /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				9256071C2918DF6800A13FFB /* Font */,
 				9256070D2918D57E00A13FFB /* Storyboard */,
 				9256070C2918D57700A13FFB /* Asset */,
 			);
@@ -150,6 +155,44 @@
 				925607142918DEBC00A13FFB /* Reusable.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		925607192918DF4F00A13FFB /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				9256071B2918DF6100A13FFB /* Component */,
+				9256071A2918DF5A00A13FFB /* Font */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		9256071A2918DF5A00A13FFB /* Font */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		9256071B2918DF6100A13FFB /* Component */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		9256071C2918DF6800A13FFB /* Font */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		9256071F2918E08D00A13FFB /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				925607202918E09900A13FFB /* UIColor+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +274,7 @@
 				925606F82918D51800A13FFB /* SplashViewController.swift in Sources */,
 				925607132918DDD100A13FFB /* BaseViewControllerAttribute.swift in Sources */,
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
+				925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */,
 				925606F62918D51800A13FFB /* SceneDelegate.swift in Sources */,
 				925607152918DEBC00A13FFB /* Reusable.swift in Sources */,
 			);
