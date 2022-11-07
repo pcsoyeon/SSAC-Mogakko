@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum Constant {
+struct Constant {
     
 }

@@ -20,6 +20,12 @@
 		925607252918E48700A13FFB /* Icon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 925607242918E48700A13FFB /* Icon.xcassets */; };
 		925607282918E67700A13FFB /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607272918E67700A13FFB /* Constant.swift */; };
 		9256072A2918E68A00A13FFB /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607292918E68A00A13FFB /* Image.swift */; };
+		9256072C2918EDC100A13FFB /* Metric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256072B2918EDC100A13FFB /* Metric.swift */; };
+		925607342918EF6300A13FFB /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607332918EF6300A13FFB /* BackButton.swift */; };
+		925607362918F0B400A13FFB /* MDSNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925607352918F0B400A13FFB /* MDSNavigationBar.swift */; };
+		925607392918F0CB00A13FFB /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 925607382918F0CB00A13FFB /* Then */; };
+		9256073B2918F14D00A13FFB /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256073A2918F14D00A13FFB /* UIView+Extension.swift */; };
+		9256073D2918F1BD00A13FFB /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256073C2918F1BD00A13FFB /* UITextField+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +43,11 @@
 		925607242918E48700A13FFB /* Icon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icon.xcassets; sourceTree = "<group>"; };
 		925607272918E67700A13FFB /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		925607292918E68A00A13FFB /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		9256072B2918EDC100A13FFB /* Metric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metric.swift; sourceTree = "<group>"; };
+		925607332918EF6300A13FFB /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		925607352918F0B400A13FFB /* MDSNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSNavigationBar.swift; sourceTree = "<group>"; };
+		9256073A2918F14D00A13FFB /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		9256073C2918F1BD00A13FFB /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +56,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				925607182918DF1C00A13FFB /* SnapKit in Frameworks */,
+				925607392918F0CB00A13FFB /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +199,8 @@
 		9256071B2918DF6100A13FFB /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				925607332918EF6300A13FFB /* BackButton.swift */,
+				925607352918F0B400A13FFB /* MDSNavigationBar.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -202,6 +216,8 @@
 			isa = PBXGroup;
 			children = (
 				925607202918E09900A13FFB /* UIColor+Extension.swift */,
+				9256073A2918F14D00A13FFB /* UIView+Extension.swift */,
+				9256073C2918F1BD00A13FFB /* UITextField+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -211,6 +227,7 @@
 			children = (
 				925607272918E67700A13FFB /* Constant.swift */,
 				925607292918E68A00A13FFB /* Image.swift */,
+				9256072B2918EDC100A13FFB /* Metric.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -233,6 +250,7 @@
 			name = Mogakko;
 			packageProductDependencies = (
 				925607172918DF1C00A13FFB /* SnapKit */,
+				925607382918F0CB00A13FFB /* Then */,
 			);
 			productName = Mogakko;
 			productReference = 925606F02918D51800A13FFB /* Mogakko.app */;
@@ -264,6 +282,7 @@
 			mainGroup = 925606E72918D51800A13FFB;
 			packageReferences = (
 				925607162918DF1C00A13FFB /* XCRemoteSwiftPackageReference "SnapKit" */,
+				925607372918F0CB00A13FFB /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			productRefGroup = 925606F12918D51800A13FFB /* Products */;
 			projectDirPath = "";
@@ -297,8 +316,13 @@
 				9256072A2918E68A00A13FFB /* Image.swift in Sources */,
 				925606F82918D51800A13FFB /* SplashViewController.swift in Sources */,
 				925607132918DDD100A13FFB /* BaseViewControllerAttribute.swift in Sources */,
+				925607362918F0B400A13FFB /* MDSNavigationBar.swift in Sources */,
+				925607342918EF6300A13FFB /* BackButton.swift in Sources */,
+				9256073B2918F14D00A13FFB /* UIView+Extension.swift in Sources */,
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
 				925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */,
+				9256072C2918EDC100A13FFB /* Metric.swift in Sources */,
+				9256073D2918F1BD00A13FFB /* UITextField+Extension.swift in Sources */,
 				925606F62918D51800A13FFB /* SceneDelegate.swift in Sources */,
 				925607152918DEBC00A13FFB /* Reusable.swift in Sources */,
 			);
@@ -528,6 +552,14 @@
 				kind = branch;
 			};
 		};
+		925607372918F0CB00A13FFB /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -535,6 +567,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 925607162918DF1C00A13FFB /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		925607382918F0CB00A13FFB /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 925607372918F0CB00A13FFB /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
