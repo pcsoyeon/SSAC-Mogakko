@@ -16,7 +16,9 @@ final class AuthorizationViewController: UIViewController {
     
     // MARK: - Property
     
-    
+    private var titleLabel = UILabel()
+    private var numberTextField = UITextField()
+    private var button = UIButton()
 
     // MARK: - Life Cycle
     

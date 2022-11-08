@@ -18,10 +18,12 @@ final class OnboardingViewController: UIViewController {
     
     private let button = MDSButton().then {
         $0.type = .fill
+        $0.heightType = .h48
     }
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout).then {
         $0.isPagingEnabled = true
+        $0.showsHorizontalScrollIndicator = false
     }
     
     private var collectionLayout = UICollectionViewFlowLayout().then {
@@ -57,7 +59,6 @@ extension OnboardingViewController: BaseViewControllerAttribute {
         
         button.snp.makeConstraints { make in
             make.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.height.equalTo(MDSButtonHeightType.h48.height)
         }
     }
     
@@ -89,7 +90,7 @@ extension OnboardingViewController: BaseViewControllerAttribute {
         button.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                let viewController = UINavigationController(rootViewController: AuthorizationViewController())
+                let viewController = UINavigationController(rootViewController: PhoneNumberViewController())
                 viewController.modalPresentationStyle = .fullScreen
                 viewController.modalTransitionStyle = .crossDissolve
                 vc.present(viewController, animated: true)
@@ -103,5 +104,17 @@ extension OnboardingViewController: UICollectionViewDelegateFlowLayout {
         let width = view.frame.width
         let height = view.frame.height
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 }
