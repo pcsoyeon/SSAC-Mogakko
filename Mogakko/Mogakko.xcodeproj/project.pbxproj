@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE0C291A3CF500A2FE75 /* NicknameViewController.swift */; };
 		925606F42918D51800A13FFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925606F32918D51800A13FFB /* AppDelegate.swift */; };
 		925606F62918D51800A13FFB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925606F52918D51800A13FFB /* SceneDelegate.swift */; };
 		925606F82918D51800A13FFB /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925606F72918D51800A13FFB /* SplashViewController.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		923DDE0C291A3CF500A2FE75 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		925606F02918D51800A13FFB /* Mogakko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mogakko.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		925606F32918D51800A13FFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		925606F52918D51800A13FFB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +101,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		923DDE09291A3CC500A2FE75 /* Signup */ = {
+			isa = PBXGroup;
+			children = (
+				923DDE0B291A3CD800A2FE75 /* View */,
+				923DDE0A291A3CD300A2FE75 /* ViewModel */,
+			);
+			path = Signup;
+			sourceTree = "<group>";
+		};
+		923DDE0A291A3CD300A2FE75 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		923DDE0B291A3CD800A2FE75 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				923DDE0C291A3CF500A2FE75 /* NicknameViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		925606E72918D51800A13FFB = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +166,7 @@
 		925607082918D54500A13FFB /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				923DDE09291A3CC500A2FE75 /* Signup */,
 				9256076529194F1C00A13FFB /* Authorization */,
 				9256070F2918D5A300A13FFB /* Onboarding */,
 				9256070E2918D58D00A13FFB /* Splash */,
@@ -437,6 +464,7 @@
 				925607542919266600A13FFB /* UIFont+Extension.swift in Sources */,
 				9256073F2918F2E700A13FFB /* MDSInputTextField.swift in Sources */,
 				9256073B2918F14D00A13FFB /* UIView+Extension.swift in Sources */,
+				923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */,
 				9256076729194F3700A13FFB /* PhoneNumberViewController.swift in Sources */,
 				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,
 				9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */,

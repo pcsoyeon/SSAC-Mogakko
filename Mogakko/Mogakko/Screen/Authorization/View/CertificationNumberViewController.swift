@@ -121,13 +121,20 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         numberTextField.rx.text.orEmpty
-            .map { $0.count <= 6 && $0.count >= 0 }
+            .map { $0.count <= 6 && $0.count > 0 }
             .bind(to: resendButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
         numberTextField.rx.text.orEmpty
-            .map { $0.count <= 6 && $0.count >= 0 ? MDSButtonType.fill : MDSButtonType.disable}
+            .map { $0.count <= 6 && $0.count > 0 ? MDSButtonType.disable : MDSButtonType.fill}
             .bind(to: startButton.rx.type)
+            .disposed(by: disposeBag)
+        
+        startButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.navigationController?.pushViewController(NicknameViewController(), animated: true)
+            }
             .disposed(by: disposeBag)
     }
 }
