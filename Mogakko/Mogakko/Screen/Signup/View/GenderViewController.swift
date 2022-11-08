@@ -146,6 +146,15 @@ extension GenderViewController: BaseViewControllerAttribute {
         
         collectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
+        
+        collectionView.rx.itemSelected
+            .asDriver()
+            .drive { [weak self] indexPath in
+                guard let self = self else { return }
+                print("=========== selected indexpath row : \(indexPath.row)")
+                self.nextButton.type = .fill
+            }
+            .disposed(by: disposeBag)
     }
 }
 

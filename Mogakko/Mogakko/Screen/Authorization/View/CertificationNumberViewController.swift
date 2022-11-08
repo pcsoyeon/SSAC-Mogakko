@@ -122,12 +122,12 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         numberTextField.rx.text.orEmpty
-            .map { $0.count <= 6 && $0.count > 0 ? MDSButtonType.fill : MDSButtonType.disable}
+            .map { $0.count < 7 && $0.count > 0 ? MDSButtonType.fill : MDSButtonType.disable}
             .bind(to: startButton.rx.type)
             .disposed(by: disposeBag)
         
         numberTextField.rx.text.orEmpty
-            .map { $0.count <= 6 }
+            .map { $0.count < 7 }
             .asSignal(onErrorJustReturn: false)
             .emit(onNext: { [weak self] value in
                 guard let self = self else { return }

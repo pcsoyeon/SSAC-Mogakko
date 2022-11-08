@@ -99,11 +99,40 @@ extension EmailViewController: BaseViewControllerAttribute {
     }
     
     func bind() {
+        emailTextField.rx.controlEvent([.editingChanged])
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { vc, _ in
+                vc.emailTextField.type = .focus
+            })
+            .disposed(by: disposeBag)
+        
+        emailTextField.rx.text
+            .orEmpty
+            .withUnretained(self)
+            .bind { vc, text in
+                vc.viewModel.validateEmail(text)
+            }
+            .disposed(by: disposeBag)
+        
         nextButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                vc.navigationController?.pushViewController(GenderViewController(), animated: true)
+                if vc.viewModel.isValid.value {
+                    vc.navigationController?.pushViewController(GenderViewController(), animated: true)
+                } else {
+                    vc.showToast(message: "이메일 형식이 올바르지 않습니다.", font: MDSFont.Title4_R14.font)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.isValid
+            .asDriver()
+            .drive { [weak self] value in
+                guard let self = self else { return }
+                self.nextButton.type = value ? .fill : .disable
             }
             .disposed(by: disposeBag)
     }
 }
+

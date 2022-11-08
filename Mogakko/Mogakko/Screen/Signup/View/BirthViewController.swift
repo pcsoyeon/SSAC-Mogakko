@@ -29,6 +29,7 @@ final class BirthViewController: UIViewController {
     private var yearTextField = MDSInputTextField().then {
         $0.placeholder = "1990"
         $0.type = .inactive
+        $0.becomeFirstResponder()
     }
     
     private var yearLabel = UILabel().then {
@@ -63,6 +64,12 @@ final class BirthViewController: UIViewController {
         $0.text = "다음"
         $0.type = .disable
         $0.heightType = .h48
+    }
+    
+    private let datePicker = UIDatePicker().then {
+        $0.preferredDatePickerStyle = .wheels
+        $0.datePickerMode = .date
+        $0.locale = Locale(identifier: "ko-KR")
     }
     
     // MARK: - Property
@@ -143,17 +150,56 @@ extension BirthViewController: BaseViewControllerAttribute {
     
     func configureAttribute() {
         view.backgroundColor = .white
+        
+        [yearTextField, monthTextField, dateTextField].forEach {
+            $0.inputView = datePicker
+            $0.tintColor = .green
+        }
     }
     
     func bind() {
+        datePicker.rx.value
+            .skip(1)
+            .withUnretained(self)
+            .bind { vc, date in
+                vc.viewModel.changeDateToString(date)
+                vc.viewModel.calculateAge(date)
+            }
+            .disposed(by: disposeBag)
         
+        datePicker.rx.controlEvent([.valueChanged])
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.yearTextField.type = .active
+                vc.monthTextField.type = .active
+                vc.dateTextField.type = .active
+                
+                vc.nextButton.type = .fill
+            }
+            .disposed(by: disposeBag)
         
         nextButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                vc.navigationController?.pushViewController(EmailViewController(), animated: true)
+                // TODO: - 만 17세 이상 검사
+                if vc.viewModel.isValid.value {
+                    vc.navigationController?.pushViewController(EmailViewController(), animated: true)
+                } else {
+                    vc.showToast(message: "새싹스터디는 만 17세 이상만 사용할 수 있습니다.", font: MDSFont.Title4_R14.font)
+                }
             }
             .disposed(by: disposeBag)
+        
+        viewModel.yearRelay
+            .bind(to: yearTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.monthRelay
+            .bind(to: monthTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.dateRelay
+            .bind(to: dateTextField.rx.text)
+            .disposed(by: disposeBag)
     }
-    
 }

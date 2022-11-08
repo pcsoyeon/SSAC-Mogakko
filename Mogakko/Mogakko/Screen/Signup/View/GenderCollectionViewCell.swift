@@ -23,7 +23,7 @@ final class GenderCollectionViewCell: BaseCollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            contentView.backgroundColor = isSelected ? .white : .white
+            contentView.backgroundColor = isSelected ? .whiteGreen : .white
             contentView.layer.borderWidth = isSelected ? 0 : 1
         }
     }
