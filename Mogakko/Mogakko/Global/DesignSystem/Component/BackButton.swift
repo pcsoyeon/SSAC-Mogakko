@@ -16,7 +16,6 @@ final class BackButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
-        setLayout()
     }
     
     convenience init(root: UIViewController) {
@@ -32,14 +31,6 @@ final class BackButton: UIButton {
     
     private func configureUI() {
         setImage(Constant.Image.arrow, for: .normal)
-    }
-    
-    private func setLayout() {
-        self.snp.makeConstraints { make in
-            make.width.height.equalTo(Metric.navigationButtonSize)
-            make.leading.equalToSuperview().inset(Metric.navigationButtonLeading)
-            make.bottom.equalToSuperview().inset(Metric.navigationButtonBottom)
-        }
     }
     
     // MARK: - Custom Method

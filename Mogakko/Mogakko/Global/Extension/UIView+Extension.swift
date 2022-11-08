@@ -8,13 +8,13 @@
 import UIKit
 
 extension UIView {
-    public func addSubviews(_ views: UIView...) {
+    func addSubviews(_ views: UIView...) {
         views.forEach {
             addSubview($0)
         }
     }
     
-    public func makeRound(radius: CGFloat = 8) {
+    func makeRound(radius: CGFloat = 8) {
         layer.cornerRadius = radius
         clipsToBounds = true
     }

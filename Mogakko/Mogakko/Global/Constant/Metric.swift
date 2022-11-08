@@ -11,6 +11,12 @@ enum Metric {
     
 }
 
+// MARK: - Margin
+
+extension Metric {
+    static let margin: CGFloat = 16
+}
+
 // MARK: - Navigation
 
 extension Metric {

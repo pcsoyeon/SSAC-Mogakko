@@ -47,6 +47,11 @@ final class PhoneNumberViewController: UIViewController {
 
     // MARK: - Life Cycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHierarchy()
@@ -97,6 +102,14 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
         
+        button.rx.tap
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.navigationController?.pushViewController(CertificationNumberViewController(), animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         viewModel.phoneNumber
             .bind(to: numberTextField.rx.text)
             .disposed(by: disposeBag)
@@ -106,8 +119,8 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         viewModel.isValid
-            .map { $0 ? UIColor.green : UIColor.gray6 }
-            .bind(to: button.rx.backgroundColor)
+            .map { $0 ? MDSButtonType.fill : MDSButtonType.disable }
+            .bind(to: button.rx.type)
             .disposed(by: disposeBag)
         
         viewModel.isValid
