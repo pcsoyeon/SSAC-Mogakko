@@ -36,6 +36,7 @@ final class CertificationNumberViewController: UIViewController {
         $0.type = .inactive
         $0.placeholder = "인증번호 입력"
         $0.keyboardType = .numberPad
+        $0.tintColor = .green
     }
     
     private var resendButton = MDSButton().then {
@@ -121,19 +122,33 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         numberTextField.rx.text.orEmpty
-            .map { $0.count <= 6 && $0.count > 0 }
-            .bind(to: resendButton.rx.isEnabled)
+            .map { $0.count <= 6 && $0.count > 0 ? MDSButtonType.fill : MDSButtonType.disable}
+            .bind(to: startButton.rx.type)
             .disposed(by: disposeBag)
         
         numberTextField.rx.text.orEmpty
-            .map { $0.count <= 6 && $0.count > 0 ? MDSButtonType.disable : MDSButtonType.fill}
-            .bind(to: startButton.rx.type)
+            .map { $0.count <= 6 }
+            .asSignal(onErrorJustReturn: false)
+            .emit(onNext: { [weak self] value in
+                guard let self = self else { return }
+                if !value {
+                    self.numberTextField.text = String(self.numberTextField.text?.dropLast() ?? "")
+                }
+            })
             .disposed(by: disposeBag)
         
         startButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
+                
+                // TODO: - 인증 번호 유효 검사
+                // 성공한 경우
+                // 기존 사용자라면 -> 홈 화면으로
+                // 신규 사용자라면 -> 회원가입 화면으로
                 vc.navigationController?.pushViewController(NicknameViewController(), animated: true)
+                
+                // 실패한 경우
+                vc.showToast(message: "오류 메시지", font: MDSFont.Title4_R14.font)
             }
             .disposed(by: disposeBag)
     }

@@ -101,7 +101,6 @@ extension OnboardingViewController: BaseViewControllerAttribute {
             .map { $0.x }
             .withUnretained(self)
             .bind { vc, point in
-                print(point)
                 vc.pageControl.currentPage = Int(round(point / max(1, vc.collectionView.bounds.width)))
             }
             .disposed(by: disposeBag)

@@ -21,7 +21,7 @@ final class BirthViewController: UIViewController {
     }
     
     private var titleLabel = UILabel().then {
-        $0.text = "인증번호가 문자로 전송되었어요."
+        $0.text = "생년월일을 알려주세요"
         $0.font = MDSFont.Display1_R20.font
         $0.textColor = .black
     }

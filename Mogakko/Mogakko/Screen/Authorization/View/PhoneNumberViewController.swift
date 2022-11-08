@@ -106,16 +106,24 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .bind { vc, _ in
-                vc.navigationController?.pushViewController(CertificationNumberViewController(), animated: true)
+                
+                // TODO: - Firebase
+                // 1. 유효화 검사
+                if vc.viewModel.isValid.value {
+                    // 2. 파이어베이스 요청
+                    // 2-1. 요청 후 성공하면 화면 전환
+                    vc.navigationController?.pushViewController(CertificationNumberViewController(), animated: true)
+                    
+                    // 2-2. 요청 후 실패했을 경우, 그에 따른 토스트메시지 alert
+                } else {
+                    // 3. 유효하지 않은 경우, 원인 alert
+                    vc.showToast(message: "잘못된 전화번호 형식입니다.", font: MDSFont.Title4_R14.font)
+                }
             }
             .disposed(by: disposeBag)
         
         viewModel.phoneNumber
             .bind(to: numberTextField.rx.text)
-            .disposed(by: disposeBag)
-            
-        viewModel.isValid
-            .bind(to: button.rx.isEnabled)
             .disposed(by: disposeBag)
         
         viewModel.isValid

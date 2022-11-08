@@ -84,6 +84,8 @@ extension NicknameViewController: BaseViewControllerAttribute {
     
     func configureAttribute() {
         view.backgroundColor = .white
+        
+        nicknameTextField.becomeFirstResponder()
     }
     
     func bind() {
@@ -96,13 +98,19 @@ extension NicknameViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         nicknameTextField.rx.text.orEmpty
-            .map { $0.count <= 10 && $0.count > 0 }
-            .bind(to: nextButton.rx.isEnabled)
+            .map { $0.count <= 10 && $0.count > 0 ? MDSButtonType.fill : MDSButtonType.disable}
+            .bind(to: nextButton.rx.type)
             .disposed(by: disposeBag)
         
         nicknameTextField.rx.text.orEmpty
-            .map { $0.count <= 10 && $0.count > 0 ? MDSButtonType.fill : MDSButtonType.disable}
-            .bind(to: nextButton.rx.type)
+            .map { $0.count <= 10 }
+            .asSignal(onErrorJustReturn: false)
+            .emit(onNext: { [weak self] value in
+                guard let self = self else { return }
+                if !value {
+                    self.nicknameTextField.text = String(self.nicknameTextField.text?.dropLast() ?? "")
+                }
+            })
             .disposed(by: disposeBag)
         
         nextButton.rx.tap

@@ -16,6 +16,7 @@
 		923DDE1F291A4D8500A2FE75 /* GenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE1E291A4D8500A2FE75 /* GenderViewModel.swift */; };
 		923DDE21291A4FDD00A2FE75 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE20291A4FDD00A2FE75 /* NicknameViewModel.swift */; };
 		923DDE23291A501200A2FE75 /* GenderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE22291A501200A2FE75 /* GenderCollectionViewCell.swift */; };
+		923DDE25291A671100A2FE75 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE24291A671100A2FE75 /* UIViewController+Extension.swift */; };
 		925606F42918D51800A13FFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925606F32918D51800A13FFB /* AppDelegate.swift */; };
 		925606F62918D51800A13FFB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925606F52918D51800A13FFB /* SceneDelegate.swift */; };
 		925606F82918D51800A13FFB /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925606F72918D51800A13FFB /* SplashViewController.swift */; };
@@ -65,6 +66,7 @@
 		923DDE1E291A4D8500A2FE75 /* GenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewModel.swift; sourceTree = "<group>"; };
 		923DDE20291A4FDD00A2FE75 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		923DDE22291A501200A2FE75 /* GenderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderCollectionViewCell.swift; sourceTree = "<group>"; };
+		923DDE24291A671100A2FE75 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		925606F02918D51800A13FFB /* Mogakko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mogakko.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		925606F32918D51800A13FFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		925606F52918D51800A13FFB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				9256073A2918F14D00A13FFB /* UIView+Extension.swift */,
 				9256073C2918F1BD00A13FFB /* UITextField+Extension.swift */,
 				9256076E2919CC9D00A13FFB /* String+Extension.swift */,
+				923DDE24291A671100A2FE75 /* UIViewController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				9256076729194F3700A13FFB /* PhoneNumberViewController.swift in Sources */,
 				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,
 				9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */,
+				923DDE25291A671100A2FE75 /* UIViewController+Extension.swift in Sources */,
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
 				925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */,
 				925607472918F35200A13FFB /* MDSButton.swift in Sources */,
