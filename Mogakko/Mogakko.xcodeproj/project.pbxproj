@@ -17,6 +17,9 @@
 		923DDE21291A4FDD00A2FE75 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE20291A4FDD00A2FE75 /* NicknameViewModel.swift */; };
 		923DDE23291A501200A2FE75 /* GenderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE22291A501200A2FE75 /* GenderCollectionViewCell.swift */; };
 		923DDE25291A671100A2FE75 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE24291A671100A2FE75 /* UIViewController+Extension.swift */; };
+		923DDE28291AB8F400A2FE75 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 923DDE27291AB8F400A2FE75 /* .gitignore */; };
+		923DDE2A291AB90500A2FE75 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE29291AB90500A2FE75 /* APIKey.swift */; };
+		923DDE2D291ABA9E00A2FE75 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 923DDE2C291ABA9E00A2FE75 /* Alamofire */; };
 		925606F42918D51800A13FFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925606F32918D51800A13FFB /* AppDelegate.swift */; };
 		925606F62918D51800A13FFB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925606F52918D51800A13FFB /* SceneDelegate.swift */; };
 		925606F82918D51800A13FFB /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925606F72918D51800A13FFB /* SplashViewController.swift */; };
@@ -67,6 +70,8 @@
 		923DDE20291A4FDD00A2FE75 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		923DDE22291A501200A2FE75 /* GenderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderCollectionViewCell.swift; sourceTree = "<group>"; };
 		923DDE24291A671100A2FE75 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		923DDE27291AB8F400A2FE75 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		923DDE29291AB90500A2FE75 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		925606F02918D51800A13FFB /* Mogakko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mogakko.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		925606F32918D51800A13FFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		925606F52918D51800A13FFB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				923DDE2D291ABA9E00A2FE75 /* Alamofire in Frameworks */,
 				92560759291945AA00A13FFB /* RxCocoa in Frameworks */,
 				925607182918DF1C00A13FFB /* SnapKit in Frameworks */,
 				9256075B291945AA00A13FFB /* RxSwift in Frameworks */,
@@ -151,9 +157,18 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		923DDE26291AB8DB00A2FE75 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				923DDE29291AB90500A2FE75 /* APIKey.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		925606E72918D51800A13FFB = {
 			isa = PBXGroup;
 			children = (
+				923DDE27291AB8F400A2FE75 /* .gitignore */,
 				925606F22918D51800A13FFB /* Mogakko */,
 				925606F12918D51800A13FFB /* Products */,
 			);
@@ -203,6 +218,7 @@
 		925607092918D54A00A13FFB /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				923DDE26291AB8DB00A2FE75 /* Base */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -415,6 +431,7 @@
 				925607382918F0CB00A13FFB /* Then */,
 				92560758291945AA00A13FFB /* RxCocoa */,
 				9256075A291945AA00A13FFB /* RxSwift */,
+				923DDE2C291ABA9E00A2FE75 /* Alamofire */,
 			);
 			productName = Mogakko;
 			productReference = 925606F02918D51800A13FFB /* Mogakko.app */;
@@ -448,6 +465,7 @@
 				925607162918DF1C00A13FFB /* XCRemoteSwiftPackageReference "SnapKit" */,
 				925607372918F0CB00A13FFB /* XCRemoteSwiftPackageReference "Then" */,
 				92560757291945AA00A13FFB /* XCRemoteSwiftPackageReference "RxSwift" */,
+				923DDE2B291ABA9E00A2FE75 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 925606F12918D51800A13FFB /* Products */;
 			projectDirPath = "";
@@ -464,6 +482,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				925607002918D51A00A13FFB /* LaunchScreen.storyboard in Resources */,
+				923DDE28291AB8F400A2FE75 /* .gitignore in Resources */,
 				92560752291925EF00A13FFB /* NotoSansCJKkr-Regular.otf in Resources */,
 				925607232918E42700A13FFB /* Image.xcassets in Resources */,
 				925607252918E48700A13FFB /* Icon.xcassets in Resources */,
@@ -499,6 +518,7 @@
 				923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */,
 				923DDE21291A4FDD00A2FE75 /* NicknameViewModel.swift in Sources */,
 				9256076729194F3700A13FFB /* PhoneNumberViewController.swift in Sources */,
+				923DDE2A291AB90500A2FE75 /* APIKey.swift in Sources */,
 				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,
 				9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */,
 				923DDE25291A671100A2FE75 /* UIViewController+Extension.swift in Sources */,
@@ -735,6 +755,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		923DDE2B291ABA9E00A2FE75 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		925607162918DF1C00A13FFB /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -762,6 +790,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		923DDE2C291ABA9E00A2FE75 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 923DDE2B291ABA9E00A2FE75 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		925607172918DF1C00A13FFB /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 925607162918DF1C00A13FFB /* XCRemoteSwiftPackageReference "SnapKit" */;
