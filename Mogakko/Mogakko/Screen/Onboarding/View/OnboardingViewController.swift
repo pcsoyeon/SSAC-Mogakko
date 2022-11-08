@@ -30,6 +30,11 @@ final class OnboardingViewController: UIViewController {
         $0.scrollDirection = .horizontal
     }
     
+    private var pageControl = UIPageControl().then {
+        $0.numberOfPages = 3
+        $0.pageIndicatorTintColor = .gray5
+    }
+    
     // MARK: - Property
     
     private let list: [Onboarding] = [Onboarding(title: "위치 기반으로 빠르게\n주위 친구를 확인", image: Constant.Image.onboardingImg1),
@@ -50,11 +55,16 @@ final class OnboardingViewController: UIViewController {
 
 extension OnboardingViewController: BaseViewControllerAttribute {
     func configureHierarchy() {
-        view.addSubviews(collectionView, button)
+        view.addSubviews(collectionView, pageControl, button)
         
         collectionView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(56)
+            make.height.equalTo(564)
+        }
+        
+        pageControl.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(button.snp.top).inset(-42)
         }
         
         button.snp.makeConstraints { make in
@@ -87,6 +97,15 @@ extension OnboardingViewController: BaseViewControllerAttribute {
         collectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
+        collectionView.rx.contentOffset
+            .map { $0.x }
+            .withUnretained(self)
+            .bind { vc, point in
+                print(point)
+                vc.pageControl.currentPage = Int(round(point / max(1, vc.collectionView.bounds.width)))
+            }
+            .disposed(by: disposeBag)
+        
         button.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
@@ -102,7 +121,7 @@ extension OnboardingViewController: BaseViewControllerAttribute {
 extension OnboardingViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = view.frame.width
-        let height = view.frame.height
+        let height = 564.0
         return CGSize(width: width, height: height)
     }
     
