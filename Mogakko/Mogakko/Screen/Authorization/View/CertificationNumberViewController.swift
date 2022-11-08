@@ -7,23 +7,27 @@
 
 import UIKit
 
-class CertificationNumberViewController: UIViewController {
+import RxCocoa
+import RxSwift
+import SnapKit
+import Then
 
+final class CertificationNumberViewController: UIViewController {
+    
+    // MARK: - UI Property
+    
+    private var titleLabel = UILabel()
+    private var timerLabel = UILabel()
+    
+    private var numberTextField = UITextField()
+    
+    private var resendButton = UIButton()
+    private var startButton = UIButton()
+
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
