@@ -1,5 +1,5 @@
 //
-//  NicknameViewController.swift
+//  EmailViewController.swift
 //  Mogakko
 //
 //  Created by 소연 on 2022/11/08.
@@ -12,7 +12,7 @@ import RxSwift
 import SnapKit
 import Then
 
-final class NicknameViewController: UIViewController {
+final class EmailViewController: UIViewController {
     
     // MARK: - UI Property
     
@@ -21,13 +21,19 @@ final class NicknameViewController: UIViewController {
     }
     
     private var titleLabel = UILabel().then {
-        $0.text = "닉네임을 입력해주세요"
+        $0.text = "이메일을 입력해 주세요"
         $0.textColor = .black
         $0.font = MDSFont.Display1_R20.font
     }
     
-    private var nicknameTextField = MDSInputTextField().then {
-        $0.placeholder = "10자 이내로 입력"
+    private var subtitleLabel = UILabel().then {
+        $0.text = "휴대폰 번호 변경 시 인증을 위해 사용해요"
+        $0.textColor = .gray7
+        $0.font = MDSFont.Title2_R16.font
+    }
+    
+    private var emailTextField = MDSInputTextField().then {
+        $0.placeholder = "SeSAC@email.com"
         $0.tintColor = .green
         $0.type = .inactive
     }
@@ -40,15 +46,16 @@ final class NicknameViewController: UIViewController {
     
     // MARK: - Property
     
+    private let viewModel = EmailViewModel()
     private let disposeBag = DisposeBag()
-    
+
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHierarchy()
@@ -57,9 +64,9 @@ final class NicknameViewController: UIViewController {
     }
 }
 
-extension NicknameViewController: BaseViewControllerAttribute {
+extension EmailViewController: BaseViewControllerAttribute {
     func configureHierarchy() {
-        view.addSubviews(navigationBar, titleLabel, nicknameTextField, nextButton)
+        view.addSubviews(navigationBar, titleLabel, subtitleLabel, emailTextField, nextButton)
         
         navigationBar.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
@@ -71,13 +78,18 @@ extension NicknameViewController: BaseViewControllerAttribute {
             make.centerX.equalToSuperview()
         }
         
-        nicknameTextField.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(80)
+        subtitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.centerX.equalToSuperview()
+        }
+        
+        emailTextField.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(63)
             make.horizontalEdges.equalToSuperview().inset(Metric.margin)
         }
         
         nextButton.snp.makeConstraints { make in
-            make.top.equalTo(nicknameTextField.snp.bottom).offset(72)
+            make.top.equalTo(emailTextField.snp.bottom).offset(72)
             make.horizontalEdges.equalToSuperview().inset(Metric.margin)
         }
     }
@@ -87,28 +99,10 @@ extension NicknameViewController: BaseViewControllerAttribute {
     }
     
     func bind() {
-        nicknameTextField.rx.controlEvent([.editingChanged])
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { vc, _ in
-                vc.nicknameTextField.type = .focus
-            })
-            .disposed(by: disposeBag)
-        
-        nicknameTextField.rx.text.orEmpty
-            .map { $0.count <= 10 && $0.count > 0 }
-            .bind(to: nextButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-        
-        nicknameTextField.rx.text.orEmpty
-            .map { $0.count <= 10 && $0.count > 0 ? MDSButtonType.fill : MDSButtonType.disable}
-            .bind(to: nextButton.rx.type)
-            .disposed(by: disposeBag)
-        
         nextButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                vc.navigationController?.pushViewController(BirthViewController(), animated: true)
+                vc.navigationController?.pushViewController(GenderViewController(), animated: true)
             }
             .disposed(by: disposeBag)
     }
