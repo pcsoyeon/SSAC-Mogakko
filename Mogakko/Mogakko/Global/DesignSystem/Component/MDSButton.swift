@@ -92,6 +92,12 @@ final class MDSButton: UIButton {
         }
     }
     
+    var heightType: MDSButtonHeightType = .h48 {
+        didSet {
+            setHeight(type: heightType)
+        }
+    }
+    
     // MARK: - Initializer
     
     override init(frame: CGRect) {
@@ -121,6 +127,12 @@ final class MDSButton: UIButton {
     private func setBorderColor(type: MDSButtonType) {
         layer.borderWidth = 1
         layer.borderColor = type.boderColor.cgColor
+    }
+    
+    private func setHeight(type: MDSButtonHeightType) {
+        self.snp.makeConstraints { make in
+            make.height.equalTo(type.height)
+        }
     }
 }
 
