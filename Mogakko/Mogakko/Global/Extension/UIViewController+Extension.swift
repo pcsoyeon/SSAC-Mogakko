@@ -10,11 +10,11 @@ import UIKit
 extension UIViewController {
     func showToast(message : String, font: UIFont) {
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 150,
-                                               y: 88,
+                                               y: 90,
                                                width: 300,
-                                               height: 30))
+                                               height: 40))
         
-        toastLabel.backgroundColor = UIColor.lightGray.withAlphaComponent(0.6)
+        toastLabel.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
         toastLabel.textColor = UIColor.white
         toastLabel.font = font
         toastLabel.textAlignment = .center
@@ -25,9 +25,9 @@ extension UIViewController {
         
         self.view.addSubview(toastLabel)
         
-        UIView.animate(withDuration: 3.0,
-                       delay: 0.5,
-                       options: .curveEaseOut,
+        UIView.animate(withDuration: 2.0,
+                       delay: 0.3,
+                       options: .curveEaseInOut,
                        animations: { toastLabel.alpha = 0.0 },
                        completion: {(isCompleted) in toastLabel.removeFromSuperview() })
     }

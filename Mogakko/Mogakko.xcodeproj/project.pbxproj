@@ -57,6 +57,7 @@
 		9256076B2919C21600A13FFB /* CertificationNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256076A2919C21600A13FFB /* CertificationNumberViewController.swift */; };
 		9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256076C2919C81300A13FFB /* PhoneNumberViewModel.swift */; };
 		9256076F2919CC9D00A13FFB /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256076E2919CC9D00A13FFB /* String+Extension.swift */; };
+		92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE4A291B70E200094D3E /* NetworkMonitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +108,7 @@
 		9256076A2919C21600A13FFB /* CertificationNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationNumberViewController.swift; sourceTree = "<group>"; };
 		9256076C2919C81300A13FFB /* PhoneNumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewModel.swift; sourceTree = "<group>"; };
 		9256076E2919CC9D00A13FFB /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		92A5DE4A291B70E200094D3E /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				923DDE29291AB90500A2FE75 /* APIKey.swift */,
+				92A5DE4A291B70E200094D3E /* NetworkMonitor.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 		925607092918D54A00A13FFB /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				92A5DE49291B703100094D3E /* User */,
 				923DDE26291AB8DB00A2FE75 /* Base */,
 			);
 			path = Network;
@@ -410,6 +414,13 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		92A5DE49291B703100094D3E /* User */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -520,6 +531,7 @@
 				9256076729194F3700A13FFB /* PhoneNumberViewController.swift in Sources */,
 				923DDE2A291AB90500A2FE75 /* APIKey.swift in Sources */,
 				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,
+				92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */,
 				9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */,
 				923DDE25291A671100A2FE75 /* UIViewController+Extension.swift in Sources */,
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
