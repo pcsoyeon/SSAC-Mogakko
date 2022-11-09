@@ -33,6 +33,7 @@ final class OnboardingViewController: UIViewController {
     private var pageControl = UIPageControl().then {
         $0.numberOfPages = 3
         $0.pageIndicatorTintColor = .gray5
+        $0.currentPageIndicatorTintColor = .black
     }
     
     // MARK: - Property
