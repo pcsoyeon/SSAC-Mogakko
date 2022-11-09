@@ -151,7 +151,7 @@ extension GenderViewController: BaseViewControllerAttribute {
             .asDriver()
             .drive { [weak self] indexPath in
                 guard let self = self else { return }
-                print("=========== selected indexpath row : \(indexPath.row)")
+                print("💨 selected indexpath row : \(indexPath.row)")
                 self.nextButton.type = .fill
             }
             .disposed(by: disposeBag)

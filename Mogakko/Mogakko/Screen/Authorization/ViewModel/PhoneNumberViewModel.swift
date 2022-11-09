@@ -23,7 +23,6 @@ final class PhoneNumberViewModel {
                            : phoneNumber.value.toPhoneNumberPattern(pattern: "###-####-####", replacmentCharacter: "#"))
         
         isValid.accept(phoneNumber.value.count >= 12 ? true : false)
-        
     }
     
     func makeRequestPhoneNumber(_ number: String) {

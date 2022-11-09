@@ -146,26 +146,24 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
             .bind { vc, _ in
                 // TODO: - 유효 번호 검사
                 guard let verificationCode = vc.numberTextField.text else { return }
-                let credential = PhoneAuthProvider.provider().credential(withVerificationID: vc.verificationID, verificationCode: verificationCode)
+                
+                let credential = PhoneAuthProvider.provider().credential(withVerificationID: vc.verificationID, verificationCode: "123456")
                 
                 Auth.auth().signIn(with: credential) { success, error in
                     if error == nil {
-                        print("======== ✨ 인증번호 일치 -> Firebase idToken 받아 요청해라 !!!!")
-                        print(success ?? "")
+                        print("✨ 인증번호 일치 -> Firebase idToken 요청")
                         
                         // TODO: - idToken을 받아서 서버 요청
-                        
                         let currentUser = Auth.auth().currentUser
                         
                         currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
                             if let error = error {
-                                // Handle error
-                                print("======== 🔥 idToken Error : \(error)")
+                                print("🔥 idToken Error : \(error)")
                                 return
                             }
                             
-                            // Send token to your backend via HTTPS
-                            print("======== ✨ idToken : \(idToken)")
+                            // TODO: - 메모리스 서버한테 idToken 함께 보내서 유저 정보 GET
+                            print("✨ idToken : \(idToken)")
                         }
                         
                         // 1. 성공한 경우

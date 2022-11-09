@@ -121,17 +121,17 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
                             // 2-1. 요청 후 실패했을 경우, 그에 따른 토스트메시지 alert
                             if let error = error {
                                 vc.showToast(message: "에러가 발생했습니다. 다시 시도해주세요", font: MDSFont.Title4_R14.font)
-                                print("======== 🔴 Verification Error : \(error.localizedDescription)")
+                                print("🔴 Verification Error : \(error.localizedDescription)")
                                 return
                             }
                             
                             guard let verificationID = verificationID else {
                                 vc.showToast(message: "에러가 발생했습니다. 다시 시도해주세요", font: MDSFont.Title4_R14.font)
-                                print("======== 🔴 Verification ID is nil")
+                                print("🔴 Verification ID is nil")
                                 return
                             }
                             
-                            print("======== 🟢 Vertification ID : \(verificationID)")
+                            print("🟢 Vertification ID : \(verificationID)")
                             
                             // 2-2. 요청 후 성공하면 화면 전환
                             let viewController = CertificationNumberViewController()
