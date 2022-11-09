@@ -7,33 +7,87 @@
 
 import Foundation
 
+import FirebaseAuth
 import RxCocoa
 import RxSwift
 
-final class PhoneNumberViewModel {
+final class PhoneNumberViewModel: BaseViewModelAttribute {
     
-    var phoneNumber = BehaviorRelay<String>(value: "")
+    // MARK: - Property
+    
     var requestPhoneNumber = BehaviorRelay<String>(value: "")
     
     var isValid = BehaviorRelay<Bool>(value: false)
     
-    func changePhoneNumber(_ number: String) {
-        phoneNumber.accept(phoneNumber.value.count <= 12
-                           ? phoneNumber.value.toPhoneNumberPattern(pattern: "###-###-####", replacmentCharacter: "#")
-                           : phoneNumber.value.toPhoneNumberPattern(pattern: "###-####-####", replacmentCharacter: "#"))
+    // MARK: - Input, Output
+    
+    struct Input {
+        // property
+        let numberTextFieldText: ControlProperty<String?>
         
-        isValid.accept(phoneNumber.value.count >= 12 ? true : false)
+        // event
+        let buttonTap: ControlEvent<Void>
     }
     
-    func makeRequestPhoneNumber(_ number: String) {
+    struct Output {
+        // property
+        let phoneNumber: Observable<String>
+        let isValid: Observable<Bool>
+        let requestPhoneNumber: Observable<String>
+        
+        // event
+        let buttonTap: ControlEvent<Void>
+    }
+    
+    func transform(from input: Input) -> Output {
+        let phoneNumber = input.numberTextFieldText.orEmpty
+            .withUnretained(self)
+            .map { vm, text in
+                text.count <= 12 ? text.toPhoneNumberPattern(pattern: "###-###-####", replacmentCharacter: "#") : text.toPhoneNumberPattern(pattern: "###-####-####", replacmentCharacter: "#")
+            }
+        
+        let isValid = input.numberTextFieldText.orEmpty
+            .map { text in
+                text.count >= 12 ? true : false
+            }
+        
+        
+        
+        let requestPhoneNumber = input.numberTextFieldText.orEmpty
+            .withUnretained(self)
+            .map { vm, text in
+                vm.makeRequestPhoneNumber(text)
+            }
+        
+        return Output(phoneNumber: phoneNumber,
+                      isValid: isValid,
+                      requestPhoneNumber: requestPhoneNumber,
+                      buttonTap: input.buttonTap)
+    }
+    
+    // MARK: - Method
+    
+    func makeRequestPhoneNumber(_ number: String) -> String {
         if number != "" {
             let phoneNumber = number.replacingOccurrences(of: "-", with: "")
             let startIdx = phoneNumber.index(phoneNumber.startIndex, offsetBy: 1)
             let result = String(phoneNumber[startIdx...])
-            print("+\(82)\(result)")
-            requestPhoneNumber.accept("+\(82)\(result)")
+            return "+\(82)\(result)"
         } else {
-            print("makeRequestPhoneNumber 실패 ")
+            return ""
         }
+    }
+    
+    func requestVerificationCode(phoneNumber: String, completion: @escaping (String?, Error?) -> Void) {
+        Auth.auth().languageCode = "ko"
+        
+        PhoneAuthProvider.provider()
+            .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
+                guard let error = error else {
+                    completion(verificationID, nil)
+                    return
+                }
+                completion(nil, error)
+            }
     }
 }

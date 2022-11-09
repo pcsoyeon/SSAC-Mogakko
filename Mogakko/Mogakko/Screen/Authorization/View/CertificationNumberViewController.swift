@@ -117,6 +117,9 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
     }
     
     func bind() {
+        let input = CertificationNumberViewModel.Input(numberTextFieldText: numberTextField.rx.text, buttonTap: startButton.rx.tap)
+        let output = viewModel.transform(from: input)
+        
         numberTextField.rx.controlEvent([.editingChanged])
             .asObservable()
             .withUnretained(self)
@@ -125,14 +128,11 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
             })
             .disposed(by: disposeBag)
         
-        numberTextField.rx.text.orEmpty
-            .map { $0.count < 7 && $0.count > 0 ? MDSButtonType.fill : MDSButtonType.disable}
+        output.startButtonType
             .bind(to: startButton.rx.type)
             .disposed(by: disposeBag)
         
-        numberTextField.rx.text.orEmpty
-            .map { $0.count < 7 }
-            .asSignal(onErrorJustReturn: false)
+        output.numberTextFieldSignal
             .emit(onNext: { [weak self] value in
                 guard let self = self else { return }
                 if !value {
@@ -141,7 +141,7 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
             })
             .disposed(by: disposeBag)
         
-        startButton.rx.tap
+        output.buttonTap
             .withUnretained(self)
             .bind { vc, _ in
                 // TODO: - 유효 번호 검사
@@ -163,23 +163,23 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                             }
                             
                             // TODO: - 메모리스 서버한테 idToken 함께 보내서 유저 정보 GET
+                            guard let idToken = idToken else { return }
                             print("✨ idToken : \(idToken)")
+                            // 1. 성공한 경우
+                            // 1-1. 서버로부터 사용자 정보 확인 (get)
+                            
+                            // 1-2.
+                            // 기존 사용자라면 -> 홈 화면으로
+                            
+                            // 1-3.
+                            // 신규 사용자라면 -> 회원가입 화면으로
+                            vc.navigationController?.pushViewController(NicknameViewController(), animated: true)
                         }
-                        
-                        // 1. 성공한 경우
-                        // 1-1. 서버로부터 사용자 정보 확인 (get)
-                        
-                        // 1-2.
-                        // 기존 사용자라면 -> 홈 화면으로
-                        
-                        // 1-3.
-                        // 신규 사용자라면 -> 회원가입 화면으로
-                        vc.navigationController?.pushViewController(NicknameViewController(), animated: true)
                         
                     } else {
                         // 2. 실패한 경우
                         print(error.debugDescription)
-                        vc.showToast(message: "오류 메시지", font: MDSFont.Title4_R14.font)
+                        vc.showToast(message: "\(error.debugDescription)", font: MDSFont.Title4_R14.font)
                     }
                 }
             }

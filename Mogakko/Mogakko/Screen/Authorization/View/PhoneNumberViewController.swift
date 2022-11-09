@@ -86,6 +86,10 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
     }
     
     func bind() {
+        let input = PhoneNumberViewModel.Input(numberTextFieldText: numberTextField.rx.text, buttonTap: button.rx.tap)
+        
+        let output = viewModel.transform(from: input)
+        
         numberTextField.rx.controlEvent([.editingChanged])
             .asObservable()
             .withUnretained(self)
@@ -94,50 +98,38 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
             })
             .disposed(by: disposeBag)
         
-        numberTextField.rx.text
-            .withUnretained(self)
-            .bind { vc, text in
-                guard let text = text else { return }
-                vc.viewModel.phoneNumber.accept(text)
-                vc.viewModel.changePhoneNumber(text)
-            }
-            .disposed(by: disposeBag)
-        
-        button.rx.tap
+        output.buttonTap
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .bind { vc, _ in
                 
-                // TODO: - Firebase
+                guard let text = vc.numberTextField.text else { return }
+                
                 // 1. 유효화 검사
-                if vc.viewModel.isValid.value {
+                if text.count >= 12 {
                     
-                    vc.viewModel.makeRequestPhoneNumber(vc.viewModel.phoneNumber.value)
-                    
-                    // 2. 파이어베이스 요청
-                    PhoneAuthProvider.provider()
-                        .verifyPhoneNumber(vc.viewModel.requestPhoneNumber.value, uiDelegate: nil) { verificationID, error in
-                            
-                            // 2-1. 요청 후 실패했을 경우, 그에 따른 토스트메시지 alert
-                            if let error = error {
-                                vc.showToast(message: "에러가 발생했습니다. 다시 시도해주세요", font: MDSFont.Title4_R14.font)
-                                print("🔴 Verification Error : \(error.localizedDescription)")
-                                return
-                            }
-                            
-                            guard let verificationID = verificationID else {
-                                vc.showToast(message: "에러가 발생했습니다. 다시 시도해주세요", font: MDSFont.Title4_R14.font)
-                                print("🔴 Verification ID is nil")
-                                return
-                            }
-                            
-                            print("🟢 Vertification ID : \(verificationID)")
-                            
-                            // 2-2. 요청 후 성공하면 화면 전환
-                            let viewController = CertificationNumberViewController()
-                            viewController.verificationID = verificationID
-                            vc.navigationController?.pushViewController(viewController, animated: true)
+                    vc.viewModel.requestVerificationCode(phoneNumber: "+16505556789") { verificationID, error in
+                        // 2-1. 요청 후 실패했을 경우, 그에 따른 토스트메시지 alert
+                        if let error = error {
+                            vc.showToast(message: "에러가 발생했습니다. 다시 시도해주세요", font: MDSFont.Title4_R14.font)
+                            print("🔴 Verification Error : \(error.localizedDescription)")
+                            return
                         }
+                        
+                        guard let verificationID = verificationID else {
+                            vc.showToast(message: "에러가 발생했습니다. 다시 시도해주세요", font: MDSFont.Title4_R14.font)
+                            print("🔴 Verification ID is nil")
+                            return
+                        }
+                        
+//                        UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
+                        print("🟢 Vertification ID : \(verificationID)")
+                        
+                        // 2-2. 요청 후 성공하면 화면 전환
+                        let viewController = CertificationNumberViewController()
+                        viewController.verificationID = verificationID
+                        vc.navigationController?.pushViewController(viewController, animated: true)
+                    }
                     
                 } else {
                     // 3. 유효하지 않은 경우, 원인 alert
@@ -146,16 +138,16 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
         
-        viewModel.phoneNumber
+        output.phoneNumber
             .bind(to: numberTextField.rx.text)
             .disposed(by: disposeBag)
         
-        viewModel.isValid
+        output.isValid
             .map { $0 ? MDSButtonType.fill : MDSButtonType.disable }
             .bind(to: button.rx.type)
             .disposed(by: disposeBag)
         
-        viewModel.isValid
+        output.isValid
             .withUnretained(self)
             .bind { vc, value in
                 if value {
