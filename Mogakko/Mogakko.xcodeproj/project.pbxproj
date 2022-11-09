@@ -58,6 +58,8 @@
 		9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256076C2919C81300A13FFB /* PhoneNumberViewModel.swift */; };
 		9256076F2919CC9D00A13FFB /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256076E2919CC9D00A13FFB /* String+Extension.swift */; };
 		92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE4A291B70E200094D3E /* NetworkMonitor.swift */; };
+		92A5DE4D291B77EB00094D3E /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE4C291B77EB00094D3E /* Endpoint.swift */; };
+		92A5DE4F291B784200094D3E /* APIConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE4E291B784200094D3E /* APIConstant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +111,8 @@
 		9256076C2919C81300A13FFB /* PhoneNumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewModel.swift; sourceTree = "<group>"; };
 		9256076E2919CC9D00A13FFB /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		92A5DE4A291B70E200094D3E /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		92A5DE4C291B77EB00094D3E /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		92A5DE4E291B784200094D3E /* APIConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +168,8 @@
 			children = (
 				923DDE29291AB90500A2FE75 /* APIKey.swift */,
 				92A5DE4A291B70E200094D3E /* NetworkMonitor.swift */,
+				92A5DE4C291B77EB00094D3E /* Endpoint.swift */,
+				92A5DE4E291B784200094D3E /* APIConstant.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -540,11 +546,13 @@
 				92560762291946FF00A13FFB /* BaseTableViewCell.swift in Sources */,
 				9256076F2919CC9D00A13FFB /* String+Extension.swift in Sources */,
 				9256076B2919C21600A13FFB /* CertificationNumberViewController.swift in Sources */,
+				92A5DE4F291B784200094D3E /* APIConstant.swift in Sources */,
 				9256074C2918F95500A13FFB /* OnboardingViewController.swift in Sources */,
 				9256072C2918EDC100A13FFB /* Metric.swift in Sources */,
 				923DDE19291A4B9200A2FE75 /* EmailViewController.swift in Sources */,
 				923DDE0F291A429400A2FE75 /* BirthViewController.swift in Sources */,
 				92560764291948DE00A13FFB /* Onboarding.swift in Sources */,
+				92A5DE4D291B77EB00094D3E /* Endpoint.swift in Sources */,
 				9256073D2918F1BD00A13FFB /* UITextField+Extension.swift in Sources */,
 				925606F62918D51800A13FFB /* SceneDelegate.swift in Sources */,
 				925607152918DEBC00A13FFB /* Reusable.swift in Sources */,
