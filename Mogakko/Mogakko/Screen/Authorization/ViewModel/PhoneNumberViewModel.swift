@@ -15,8 +15,6 @@ final class PhoneNumberViewModel: BaseViewModelAttribute {
     
     // MARK: - Property
     
-    var requestPhoneNumber = BehaviorRelay<String>(value: "")
-    
     var isValid = BehaviorRelay<Bool>(value: false)
     
     // MARK: - Input, Output
@@ -33,7 +31,6 @@ final class PhoneNumberViewModel: BaseViewModelAttribute {
         // property
         let phoneNumber: Observable<String>
         let isValid: Observable<Bool>
-        let requestPhoneNumber: Observable<String>
         
         // event
         let buttonTap: ControlEvent<Void>
@@ -51,17 +48,8 @@ final class PhoneNumberViewModel: BaseViewModelAttribute {
                 text.count >= 12 ? true : false
             }
         
-        
-        
-        let requestPhoneNumber = input.numberTextFieldText.orEmpty
-            .withUnretained(self)
-            .map { vm, text in
-                vm.makeRequestPhoneNumber(text)
-            }
-        
         return Output(phoneNumber: phoneNumber,
                       isValid: isValid,
-                      requestPhoneNumber: requestPhoneNumber,
                       buttonTap: input.buttonTap)
     }
     
@@ -80,6 +68,8 @@ final class PhoneNumberViewModel: BaseViewModelAttribute {
     
     func requestVerificationCode(phoneNumber: String, completion: @escaping (String?, Error?) -> Void) {
         Auth.auth().languageCode = "ko"
+        
+        let phoneNumber = makeRequestPhoneNumber(phoneNumber)
         
         PhoneAuthProvider.provider()
             .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in

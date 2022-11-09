@@ -103,12 +103,12 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, _ in
                 
-                guard let text = vc.numberTextField.text else { return }
+                guard let phonNumber = vc.numberTextField.text else { return }
                 
                 // 1. 유효화 검사
-                if text.count >= 12 {
+                if phonNumber.count >= 12 {
                     
-                    vc.viewModel.requestVerificationCode(phoneNumber: "+16505556789") { verificationID, error in
+                    vc.viewModel.requestVerificationCode(phoneNumber: phonNumber) { verificationID, error in
                         // 2-1. 요청 후 실패했을 경우, 그에 따른 토스트메시지 alert
                         if let error = error {
                             vc.showToast(message: "에러가 발생했습니다. 다시 시도해주세요", font: MDSFont.Title4_R14.font)
@@ -122,7 +122,6 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
                             return
                         }
                         
-//                        UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
                         print("🟢 Vertification ID : \(verificationID)")
                         
                         // 2-2. 요청 후 성공하면 화면 전환
