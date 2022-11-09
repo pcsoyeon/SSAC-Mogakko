@@ -60,6 +60,9 @@
 		92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE4A291B70E200094D3E /* NetworkMonitor.swift */; };
 		92A5DE4D291B77EB00094D3E /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE4C291B77EB00094D3E /* Endpoint.swift */; };
 		92A5DE4F291B784200094D3E /* APIConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE4E291B784200094D3E /* APIConstant.swift */; };
+		92A5DE52291B809200094D3E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 92A5DE51291B809200094D3E /* FirebaseAuth */; };
+		92A5DE56291B8CC900094D3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92A5DE55291B8CC900094D3E /* GoogleService-Info.plist */; };
+		92A5DE58291B956B00094D3E /* CertificationNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE57291B956B00094D3E /* CertificationNumberViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +116,8 @@
 		92A5DE4A291B70E200094D3E /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		92A5DE4C291B77EB00094D3E /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		92A5DE4E291B784200094D3E /* APIConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstant.swift; sourceTree = "<group>"; };
+		92A5DE55291B8CC900094D3E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		92A5DE57291B956B00094D3E /* CertificationNumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationNumberViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				923DDE2D291ABA9E00A2FE75 /* Alamofire in Frameworks */,
+				92A5DE52291B809200094D3E /* FirebaseAuth in Frameworks */,
 				92560759291945AA00A13FFB /* RxCocoa in Frameworks */,
 				925607182918DF1C00A13FFB /* SnapKit in Frameworks */,
 				9256075B291945AA00A13FFB /* RxSwift in Frameworks */,
@@ -194,6 +200,7 @@
 		925606F22918D51800A13FFB /* Mogakko */ = {
 			isa = PBXGroup;
 			children = (
+				92A5DE55291B8CC900094D3E /* GoogleService-Info.plist */,
 				9256070A2918D54F00A13FFB /* Global */,
 				925607092918D54A00A13FFB /* Network */,
 				925607082918D54500A13FFB /* Screen */,
@@ -416,6 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				9256076C2919C81300A13FFB /* PhoneNumberViewModel.swift */,
+				92A5DE57291B956B00094D3E /* CertificationNumberViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -449,6 +457,7 @@
 				92560758291945AA00A13FFB /* RxCocoa */,
 				9256075A291945AA00A13FFB /* RxSwift */,
 				923DDE2C291ABA9E00A2FE75 /* Alamofire */,
+				92A5DE51291B809200094D3E /* FirebaseAuth */,
 			);
 			productName = Mogakko;
 			productReference = 925606F02918D51800A13FFB /* Mogakko.app */;
@@ -483,6 +492,7 @@
 				925607372918F0CB00A13FFB /* XCRemoteSwiftPackageReference "Then" */,
 				92560757291945AA00A13FFB /* XCRemoteSwiftPackageReference "RxSwift" */,
 				923DDE2B291ABA9E00A2FE75 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				92A5DE50291B809200094D3E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 925606F12918D51800A13FFB /* Products */;
 			projectDirPath = "";
@@ -499,6 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				925607002918D51A00A13FFB /* LaunchScreen.storyboard in Resources */,
+				92A5DE56291B8CC900094D3E /* GoogleService-Info.plist in Resources */,
 				923DDE28291AB8F400A2FE75 /* .gitignore in Resources */,
 				92560752291925EF00A13FFB /* NotoSansCJKkr-Regular.otf in Resources */,
 				925607232918E42700A13FFB /* Image.xcassets in Resources */,
@@ -540,6 +551,7 @@
 				92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */,
 				9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */,
 				923DDE25291A671100A2FE75 /* UIViewController+Extension.swift in Sources */,
+				92A5DE58291B956B00094D3E /* CertificationNumberViewModel.swift in Sources */,
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
 				925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */,
 				925607472918F35200A13FFB /* MDSButton.swift in Sources */,
@@ -807,6 +819,14 @@
 				kind = branch;
 			};
 		};
+		92A5DE50291B809200094D3E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -834,6 +854,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 92560757291945AA00A13FFB /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		92A5DE51291B809200094D3E /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92A5DE50291B809200094D3E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

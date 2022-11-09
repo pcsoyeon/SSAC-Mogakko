@@ -7,6 +7,7 @@
 
 import UIKit
 
+import FirebaseAuth
 import RxCocoa
 import RxSwift
 import SnapKit
@@ -54,6 +55,9 @@ final class CertificationNumberViewController: UIViewController {
     // MARK: - Property
     
     private let disposeBag = DisposeBag()
+    
+    var verificationID: String = ""
+    private let viewModel = CertificationNumberViewModel()
 
     // MARK: - Life Cycle
     
@@ -140,15 +144,46 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
         startButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
+                // TODO: - 유효 번호 검사
+                guard let verificationCode = vc.numberTextField.text else { return }
+                let credential = PhoneAuthProvider.provider().credential(withVerificationID: vc.verificationID, verificationCode: verificationCode)
                 
-                // TODO: - 인증 번호 유효 검사
-                // 성공한 경우
-                // 기존 사용자라면 -> 홈 화면으로
-                // 신규 사용자라면 -> 회원가입 화면으로
-                vc.navigationController?.pushViewController(NicknameViewController(), animated: true)
-                
-                // 실패한 경우
-                vc.showToast(message: "오류 메시지", font: MDSFont.Title4_R14.font)
+                Auth.auth().signIn(with: credential) { success, error in
+                    if error == nil {
+                        print("======== ✨ 인증번호 일치 -> Firebase idToken 받아 요청해라 !!!!")
+                        print(success ?? "")
+                        
+                        // TODO: - idToken을 받아서 서버 요청
+                        
+                        let currentUser = Auth.auth().currentUser
+                        
+                        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                            if let error = error {
+                                // Handle error
+                                print("======== 🔥 idToken Error : \(error)")
+                                return
+                            }
+                            
+                            // Send token to your backend via HTTPS
+                            print("======== ✨ idToken : \(idToken)")
+                        }
+                        
+                        // 1. 성공한 경우
+                        // 1-1. 서버로부터 사용자 정보 확인 (get)
+                        
+                        // 1-2.
+                        // 기존 사용자라면 -> 홈 화면으로
+                        
+                        // 1-3.
+                        // 신규 사용자라면 -> 회원가입 화면으로
+                        vc.navigationController?.pushViewController(NicknameViewController(), animated: true)
+                        
+                    } else {
+                        // 2. 실패한 경우
+                        print(error.debugDescription)
+                        vc.showToast(message: "오류 메시지", font: MDSFont.Title4_R14.font)
+                    }
+                }
             }
             .disposed(by: disposeBag)
     }

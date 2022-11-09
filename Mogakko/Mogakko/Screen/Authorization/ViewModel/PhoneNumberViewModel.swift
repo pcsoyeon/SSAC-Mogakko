@@ -13,6 +13,8 @@ import RxSwift
 final class PhoneNumberViewModel {
     
     var phoneNumber = BehaviorRelay<String>(value: "")
+    var requestPhoneNumber = BehaviorRelay<String>(value: "")
+    
     var isValid = BehaviorRelay<Bool>(value: false)
     
     func changePhoneNumber(_ number: String) {
@@ -24,14 +26,15 @@ final class PhoneNumberViewModel {
         
     }
     
-    func makeRequestPhoneNumber(_ number: String) -> String {
+    func makeRequestPhoneNumber(_ number: String) {
         if number != "" {
             let phoneNumber = number.replacingOccurrences(of: "-", with: "")
             let startIdx = phoneNumber.index(phoneNumber.startIndex, offsetBy: 1)
             let result = String(phoneNumber[startIdx...])
-            return "+\(82)\(result)"
+            print("+\(82)\(result)")
+            requestPhoneNumber.accept("+\(82)\(result)")
         } else {
-            return "error"
+            print("makeRequestPhoneNumber 실패 ")
         }
     }
 }
