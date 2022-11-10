@@ -151,8 +151,46 @@ extension GenderViewController: BaseViewControllerAttribute {
             .asDriver()
             .drive { [weak self] indexPath in
                 guard let self = self else { return }
-                print("💨 selected indexpath row : \(indexPath.row)")
+                
+                if indexPath.row == 0 {
+                    UserDefaults.standard.set(1, forKey: Constant.UserDefaults.gender)
+                } else {
+                    UserDefaults.standard.set(0, forKey: Constant.UserDefaults.gender)
+                }
+                
                 self.nextButton.type = .fill
+            }
+            .disposed(by: disposeBag)
+        
+        nextButton.rx.tap
+            .skip(1)
+            .withUnretained(self)
+            .bind { vc, _ in
+                
+                UserAPI.shared.requestSignup(signup: SignupRequest(phoneNumber: UserDefaults.standard.string(forKey: Constant.UserDefaults.phoneNumber)!,
+                                                                   FCMtoken: "dfkejfoefje",
+                                                                   nick: UserDefaults.standard.string(forKey: Constant.UserDefaults.nick)!,
+                                                                   birth: UserDefaults.standard.string(forKey: Constant.UserDefaults.birth)!,
+                                                                   email: UserDefaults.standard.string(forKey: Constant.UserDefaults.email)!,
+                                                                   gender: UserDefaults.standard.integer(forKey: Constant.UserDefaults.nick))) { statusCode, error in
+                    guard let statusCode = statusCode else { return }
+                    
+                    if statusCode == 200 {
+                        print("🍋 홈 화면으로 이동")
+                    } else if statusCode == 201 {
+                        print("🍋 이미 가입한 유저 -> 로그인 화면으로 이동")
+                        vc.showToast(message: "이미 가입한 유저입니다.", font: MDSFont.Title4_R14.font)
+                    } else if statusCode == 202 {
+                        print("🍋 사용할 수 없는 닉네임")
+                    } else if statusCode == 401 {
+                        print("🍋 Firebase Token Error")
+                    } else if statusCode == 500 {
+                        print("🍋 Server Error")
+                    } else if statusCode == 501 {
+                        print("🍋 Header와 RequestBody에 값 확인")
+                    }
+                    
+                }
             }
             .disposed(by: disposeBag)
     }

@@ -144,7 +144,9 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
         output.buttonTap
             .withUnretained(self)
             .bind { vc, _ in
+                
                 // MARK: - 유효 번호 검사
+                
                 guard let verificationCode = vc.numberTextField.text else { return }
                 
                 let credential = PhoneAuthProvider.provider().credential(withVerificationID: vc.verificationID, verificationCode: verificationCode)
@@ -162,24 +164,45 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                             
                             guard let idToken = idToken else { return }
                             print("✨ idToken : \(idToken)")
-                            // 1. 성공한 경우
-                            // 1-1. 서버로부터 사용자 정보 확인 (get)
                             
-                            // 1-2.
-                            // 기존 사용자라면 -> 홈 화면으로
+                            UserDefaults.standard.set(idToken, forKey: "idtoken")
                             
-                            // 1-3.
-                            // 신규 사용자라면 -> 회원가입 화면으로
-                            vc.navigationController?.pushViewController(NicknameViewController(), animated: true)
+                            vc.requestLogin()
+                            
                         }
                         
                     } else {
-                        // 2. 실패한 경우
-                        print(error.debugDescription)
-                        vc.showToast(message: "\(error.debugDescription)", font: MDSFont.Title4_R14.font)
+                        print("🔥 Fail to Signin with Firebase : \(error.debugDescription)")
+                        vc.showToast(message: "전화 번호 인증 실패", font: MDSFont.Title4_R14.font)
                     }
                 }
             }
             .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Network
+    
+    private func requestLogin() {
+        // 1. 성공한 경우
+        // 1-1. 서버로부터 사용자 정보 확인 (get)
+        UserAPI.shared.requestLogin { [weak self] data, statusCode, error in
+            guard let self = self else { return }
+            guard let statusCode = statusCode else { return }
+            
+            print(statusCode)
+            
+            if statusCode == 200 {
+                // 1-2.
+                // 기존 사용자라면 -> 홈 화면으로
+                guard let data = data else { return }
+                dump(data)
+                
+            } else if statusCode == 406 {
+                // 1-3.
+                // 신규 사용자라면 -> 회원가입 화면으로
+                self.navigationController?.pushViewController(NicknameViewController(), animated: true)
+            }
+            
+        }
     }
 }

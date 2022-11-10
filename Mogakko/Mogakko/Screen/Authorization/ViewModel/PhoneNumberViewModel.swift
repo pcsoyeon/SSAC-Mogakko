@@ -70,6 +70,7 @@ final class PhoneNumberViewModel: BaseViewModelAttribute {
         Auth.auth().languageCode = "ko"
         
         let phoneNumber = makeRequestPhoneNumber(phoneNumber)
+        UserDefaults.standard.set(phoneNumber, forKey: Constant.UserDefaults.phoneNumber)
         
         PhoneAuthProvider.provider()
             .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in

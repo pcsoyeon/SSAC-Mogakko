@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+struct SignupRequest {
+    var phoneNumber: String
+    var FCMtoken: String 
+    var nick: String
+    var birth: String
+    var email: String
+    var gender: Int
+}

@@ -24,9 +24,16 @@ extension APIConstant {
 
 extension APIConstant {
     struct ContentType {
+        static let contentType = "Content-Type"
         static let json = "application/json"
         static let formUrlEncoded = "application/x-www-form-urlencoded"
     }
+}
+
+// MARK: - Id Token
+
+extension APIConstant {
+    static let idtoken = "idtoken"
 }
 
 

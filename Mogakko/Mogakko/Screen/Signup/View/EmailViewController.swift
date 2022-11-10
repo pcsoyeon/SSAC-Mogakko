@@ -114,6 +114,9 @@ extension EmailViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, _ in
                 if vc.viewModel.isValid.value {
+                    guard let email = vc.emailTextField.text else { return }
+                    UserDefaults.standard.set(email, forKey: "email")
+                    
                     vc.navigationController?.pushViewController(GenderViewController(), animated: true)
                 } else {
                     vc.showToast(message: "이메일 형식이 올바르지 않습니다.", font: MDSFont.Title4_R14.font)

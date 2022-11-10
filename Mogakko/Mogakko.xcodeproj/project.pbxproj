@@ -64,6 +64,12 @@
 		92A5DE58291B956B00094D3E /* CertificationNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE57291B956B00094D3E /* CertificationNumberViewModel.swift */; };
 		92A5DE5A291BC10A00094D3E /* BaseViewModelAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE59291BC10A00094D3E /* BaseViewModelAttribute.swift */; };
 		92A5DE5C291CA27200094D3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92A5DE5B291CA27200094D3E /* GoogleService-Info.plist */; };
+		92A5DE5F291CF53100094D3E /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE5E291CF53100094D3E /* UserRouter.swift */; };
+		92A5DE61291CFBF800094D3E /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE60291CFBF800094D3E /* UserAPI.swift */; };
+		92A5DE64291CFC5600094D3E /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE63291CFC5600094D3E /* Login.swift */; };
+		92A5DE67291D124700094D3E /* SignupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE66291D124700094D3E /* SignupRequest.swift */; };
+		92A5DE6B291DB66A00094D3E /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE6A291DB66A00094D3E /* UserDefaults.swift */; };
+		92A5DE6D291DB8EA00094D3E /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE6C291DB8EA00094D3E /* Date+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +126,12 @@
 		92A5DE57291B956B00094D3E /* CertificationNumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationNumberViewModel.swift; sourceTree = "<group>"; };
 		92A5DE59291BC10A00094D3E /* BaseViewModelAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModelAttribute.swift; sourceTree = "<group>"; };
 		92A5DE5B291CA27200094D3E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		92A5DE5E291CF53100094D3E /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
+		92A5DE60291CFBF800094D3E /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
+		92A5DE63291CFC5600094D3E /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		92A5DE66291D124700094D3E /* SignupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupRequest.swift; sourceTree = "<group>"; };
+		92A5DE6A291DB66A00094D3E /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		92A5DE6C291DB8EA00094D3E /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +154,7 @@
 		923DDE09291A3CC500A2FE75 /* Signup */ = {
 			isa = PBXGroup;
 			children = (
+				92A5DE65291D101400094D3E /* Model */,
 				923DDE0B291A3CD800A2FE75 /* View */,
 				923DDE0A291A3CD300A2FE75 /* ViewModel */,
 			);
@@ -357,6 +370,7 @@
 				9256073C2918F1BD00A13FFB /* UITextField+Extension.swift */,
 				9256076E2919CC9D00A13FFB /* String+Extension.swift */,
 				923DDE24291A671100A2FE75 /* UIViewController+Extension.swift */,
+				92A5DE6C291DB8EA00094D3E /* Date+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -367,6 +381,7 @@
 				925607272918E67700A13FFB /* Constant.swift */,
 				925607292918E68A00A13FFB /* Image.swift */,
 				9256072B2918EDC100A13FFB /* Metric.swift */,
+				92A5DE6A291DB66A00094D3E /* UserDefaults.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -407,6 +422,7 @@
 		9256076529194F1C00A13FFB /* Authorization */ = {
 			isa = PBXGroup;
 			children = (
+				92A5DE62291CFC4E00094D3E /* Model */,
 				925607682919B9B900A13FFB /* View */,
 				925607692919B9BF00A13FFB /* ViewModel */,
 			);
@@ -434,8 +450,26 @@
 		92A5DE49291B703100094D3E /* User */ = {
 			isa = PBXGroup;
 			children = (
+				92A5DE5E291CF53100094D3E /* UserRouter.swift */,
+				92A5DE60291CFBF800094D3E /* UserAPI.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		92A5DE62291CFC4E00094D3E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				92A5DE63291CFC5600094D3E /* Login.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		92A5DE65291D101400094D3E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				92A5DE66291D124700094D3E /* SignupRequest.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -537,6 +571,7 @@
 				923DDE23291A501200A2FE75 /* GenderCollectionViewCell.swift in Sources */,
 				923DDE1F291A4D8500A2FE75 /* GenderViewModel.swift in Sources */,
 				925607132918DDD100A13FFB /* BaseViewControllerAttribute.swift in Sources */,
+				92A5DE61291CFBF800094D3E /* UserAPI.swift in Sources */,
 				923DDE1D291A4CE000A2FE75 /* GenderViewController.swift in Sources */,
 				925607362918F0B400A13FFB /* MDSNavigationBar.swift in Sources */,
 				925607342918EF6300A13FFB /* BackButton.swift in Sources */,
@@ -545,22 +580,27 @@
 				92560760291946C600A13FFB /* BaseCollectionViewCell.swift in Sources */,
 				925607542919266600A13FFB /* UIFont+Extension.swift in Sources */,
 				9256073F2918F2E700A13FFB /* MDSInputTextField.swift in Sources */,
+				92A5DE64291CFC5600094D3E /* Login.swift in Sources */,
 				9256073B2918F14D00A13FFB /* UIView+Extension.swift in Sources */,
 				923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */,
+				92A5DE6B291DB66A00094D3E /* UserDefaults.swift in Sources */,
 				923DDE21291A4FDD00A2FE75 /* NicknameViewModel.swift in Sources */,
 				9256076729194F3700A13FFB /* PhoneNumberViewController.swift in Sources */,
 				923DDE2A291AB90500A2FE75 /* APIKey.swift in Sources */,
 				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,
 				92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */,
+				92A5DE5F291CF53100094D3E /* UserRouter.swift in Sources */,
 				9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */,
 				923DDE25291A671100A2FE75 /* UIViewController+Extension.swift in Sources */,
 				92A5DE5A291BC10A00094D3E /* BaseViewModelAttribute.swift in Sources */,
 				92A5DE58291B956B00094D3E /* CertificationNumberViewModel.swift in Sources */,
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
+				92A5DE6D291DB8EA00094D3E /* Date+Extension.swift in Sources */,
 				925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */,
 				925607472918F35200A13FFB /* MDSButton.swift in Sources */,
 				92560762291946FF00A13FFB /* BaseTableViewCell.swift in Sources */,
 				9256076F2919CC9D00A13FFB /* String+Extension.swift in Sources */,
+				92A5DE67291D124700094D3E /* SignupRequest.swift in Sources */,
 				9256076B2919C21600A13FFB /* CertificationNumberViewController.swift in Sources */,
 				92A5DE4F291B784200094D3E /* APIConstant.swift in Sources */,
 				9256074C2918F95500A13FFB /* OnboardingViewController.swift in Sources */,

@@ -118,6 +118,8 @@ extension NicknameViewController: BaseViewControllerAttribute {
         output.buttonTap
             .withUnretained(self)
             .bind { vc, _ in
+                guard let nick = vc.nicknameTextField.text else { return }
+                UserDefaults.standard.set(nick, forKey: Constant.UserDefaults.nick)
                 vc.navigationController?.pushViewController(BirthViewController(), animated: true)
             }
             .disposed(by: disposeBag)
