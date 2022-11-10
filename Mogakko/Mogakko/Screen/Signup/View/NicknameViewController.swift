@@ -40,6 +40,8 @@ final class NicknameViewController: UIViewController {
     
     // MARK: - Property
     
+    private let viewModel = NicknameViewModel()
+    
     private let disposeBag = DisposeBag()
     
     // MARK: - Life Cycle
@@ -89,6 +91,9 @@ extension NicknameViewController: BaseViewControllerAttribute {
     }
     
     func bind() {
+        let input = NicknameViewModel.Input(nicknameTextFieldText: nicknameTextField.rx.text, buttonTap: nextButton.rx.tap)
+        let output = viewModel.transform(from: input)
+        
         nicknameTextField.rx.controlEvent([.editingChanged])
             .asObservable()
             .withUnretained(self)
@@ -97,14 +102,11 @@ extension NicknameViewController: BaseViewControllerAttribute {
             })
             .disposed(by: disposeBag)
         
-        nicknameTextField.rx.text.orEmpty
-            .map { $0.count <= 10 && $0.count > 0 ? MDSButtonType.fill : MDSButtonType.disable}
+        output.buttonType
             .bind(to: nextButton.rx.type)
             .disposed(by: disposeBag)
         
-        nicknameTextField.rx.text.orEmpty
-            .map { $0.count <= 10 }
-            .asSignal(onErrorJustReturn: false)
+        output.nicknameTextFieldSignal
             .emit(onNext: { [weak self] value in
                 guard let self = self else { return }
                 if !value {
@@ -113,7 +115,7 @@ extension NicknameViewController: BaseViewControllerAttribute {
             })
             .disposed(by: disposeBag)
         
-        nextButton.rx.tap
+        output.buttonTap
             .withUnretained(self)
             .bind { vc, _ in
                 vc.navigationController?.pushViewController(BirthViewController(), animated: true)

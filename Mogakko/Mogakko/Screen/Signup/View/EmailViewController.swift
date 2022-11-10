@@ -99,6 +99,9 @@ extension EmailViewController: BaseViewControllerAttribute {
     }
     
     func bind() {
+        let input = EmailViewModel.Input(emailTextFieldText: emailTextField.rx.text, buttonTap: nextButton.rx.tap)
+        let output = viewModel.transform(from: input)
+        
         emailTextField.rx.controlEvent([.editingChanged])
             .asObservable()
             .withUnretained(self)
@@ -107,15 +110,7 @@ extension EmailViewController: BaseViewControllerAttribute {
             })
             .disposed(by: disposeBag)
         
-        emailTextField.rx.text
-            .orEmpty
-            .withUnretained(self)
-            .bind { vc, text in
-                vc.viewModel.validateEmail(text)
-            }
-            .disposed(by: disposeBag)
-        
-        nextButton.rx.tap
+        output.buttonTap
             .withUnretained(self)
             .bind { vc, _ in
                 if vc.viewModel.isValid.value {
@@ -126,12 +121,12 @@ extension EmailViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
         
-        viewModel.isValid
-            .asDriver()
-            .drive { [weak self] value in
+        output.buttonType
+            .asDriver(onErrorJustReturn: .disable)
+            .drive(onNext: { [weak self] type in
                 guard let self = self else { return }
-                self.nextButton.type = value ? .fill : .disable
-            }
+                self.nextButton.type = type
+            })
             .disposed(by: disposeBag)
     }
 }
