@@ -61,9 +61,9 @@
 		92A5DE4D291B77EB00094D3E /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE4C291B77EB00094D3E /* Endpoint.swift */; };
 		92A5DE4F291B784200094D3E /* APIConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE4E291B784200094D3E /* APIConstant.swift */; };
 		92A5DE52291B809200094D3E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 92A5DE51291B809200094D3E /* FirebaseAuth */; };
-		92A5DE56291B8CC900094D3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92A5DE55291B8CC900094D3E /* GoogleService-Info.plist */; };
 		92A5DE58291B956B00094D3E /* CertificationNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE57291B956B00094D3E /* CertificationNumberViewModel.swift */; };
 		92A5DE5A291BC10A00094D3E /* BaseViewModelAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE59291BC10A00094D3E /* BaseViewModelAttribute.swift */; };
+		92A5DE5C291CA27200094D3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92A5DE5B291CA27200094D3E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -117,9 +117,9 @@
 		92A5DE4A291B70E200094D3E /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		92A5DE4C291B77EB00094D3E /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		92A5DE4E291B784200094D3E /* APIConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstant.swift; sourceTree = "<group>"; };
-		92A5DE55291B8CC900094D3E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		92A5DE57291B956B00094D3E /* CertificationNumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationNumberViewModel.swift; sourceTree = "<group>"; };
 		92A5DE59291BC10A00094D3E /* BaseViewModelAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModelAttribute.swift; sourceTree = "<group>"; };
+		92A5DE5B291CA27200094D3E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,7 +202,7 @@
 		925606F22918D51800A13FFB /* Mogakko */ = {
 			isa = PBXGroup;
 			children = (
-				92A5DE55291B8CC900094D3E /* GoogleService-Info.plist */,
+				92A5DE5B291CA27200094D3E /* GoogleService-Info.plist */,
 				9256070A2918D54F00A13FFB /* Global */,
 				925607092918D54A00A13FFB /* Network */,
 				925607082918D54500A13FFB /* Screen */,
@@ -512,7 +512,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				925607002918D51A00A13FFB /* LaunchScreen.storyboard in Resources */,
-				92A5DE56291B8CC900094D3E /* GoogleService-Info.plist in Resources */,
+				92A5DE5C291CA27200094D3E /* GoogleService-Info.plist in Resources */,
 				923DDE28291AB8F400A2FE75 /* .gitignore in Resources */,
 				92560752291925EF00A13FFB /* NotoSansCJKkr-Regular.otf in Resources */,
 				925607232918E42700A13FFB /* Image.xcassets in Resources */,
@@ -724,7 +724,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.soyeon.Mogakko;
+				PRODUCT_BUNDLE_IDENTIFIER = com.memolease.sesacslp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -756,7 +756,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.soyeon.Mogakko;
+				PRODUCT_BUNDLE_IDENTIFIER = com.memolease.sesacslp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
