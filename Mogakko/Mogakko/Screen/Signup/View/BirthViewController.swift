@@ -153,7 +153,7 @@ extension BirthViewController: BaseViewControllerAttribute {
         
         [yearTextField, monthTextField, dateTextField].forEach {
             $0.inputView = datePicker
-            $0.tintColor = .green
+            $0.tintColor = .clear
         }
     }
     
