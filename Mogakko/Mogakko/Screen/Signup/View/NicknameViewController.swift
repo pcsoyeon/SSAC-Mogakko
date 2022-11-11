@@ -49,6 +49,7 @@ final class NicknameViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        networkMoniter()
     }
 
     override func viewDidLoad() {

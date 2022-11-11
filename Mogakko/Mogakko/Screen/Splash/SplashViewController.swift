@@ -62,17 +62,22 @@ final class SplashViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let self = self else { return }
             
-            if UserDefaults.standard.bool(forKey: Constant.UserDefaults.isNotFirst) {
-                let viewController = UINavigationController(rootViewController: PhoneNumberViewController())
-                viewController.modalTransitionStyle = .crossDissolve
-                viewController.modalPresentationStyle = .fullScreen
-                self.present(viewController, animated: true)
-            } else {
-                let viewController = OnboardingViewController()
-                viewController.modalTransitionStyle = .crossDissolve
-                viewController.modalPresentationStyle = .fullScreen
-                self.present(viewController, animated: true)
-            }
+//            if UserDefaults.standard.bool(forKey: Constant.UserDefaults.isNotFirst) {
+//                let viewController = UINavigationController(rootViewController: PhoneNumberViewController())
+//                viewController.modalTransitionStyle = .crossDissolve
+//                viewController.modalPresentationStyle = .fullScreen
+//                self.present(viewController, animated: true)
+//            } else {
+//                let viewController = OnboardingViewController()
+//                viewController.modalTransitionStyle = .crossDissolve
+//                viewController.modalPresentationStyle = .fullScreen
+//                self.present(viewController, animated: true)
+//            }
+            
+            let viewController = UINavigationController(rootViewController: GenderViewController())
+            viewController.modalTransitionStyle = .crossDissolve
+            viewController.modalPresentationStyle = .fullScreen
+            self.present(viewController, animated: true)
         }
         
     }

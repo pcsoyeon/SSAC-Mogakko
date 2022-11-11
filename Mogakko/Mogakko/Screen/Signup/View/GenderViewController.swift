@@ -82,6 +82,7 @@ final class GenderViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        networkMoniter()
     }
     
     override func viewDidLoad() {
@@ -167,21 +168,21 @@ extension GenderViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, _ in
                 
-                UserAPI.shared.requestSignup(signup: SignupRequest(phoneNumber: UserDefaults.standard.string(forKey: Constant.UserDefaults.phoneNumber)!,
-                                                                   FCMtoken: "dfkejfoefje",
-                                                                   nick: UserDefaults.standard.string(forKey: Constant.UserDefaults.nick)!,
-                                                                   birth: UserDefaults.standard.string(forKey: Constant.UserDefaults.birth)!,
-                                                                   email: UserDefaults.standard.string(forKey: Constant.UserDefaults.email)!,
-                                                                   gender: UserDefaults.standard.integer(forKey: Constant.UserDefaults.nick))) { statusCode, error in
-                    guard let statusCode = statusCode else { return }
-                    
+                vc.viewModel.requestSignup { statusCode in
                     if statusCode == 200 {
                         print("🍋 홈 화면으로 이동")
                     } else if statusCode == 201 {
                         print("🍋 이미 가입한 유저 -> 로그인 화면으로 이동")
                         vc.showToast(message: "이미 가입한 유저입니다.")
                     } else if statusCode == 202 {
-                        print("🍋 사용할 수 없는 닉네임")
+                        print("🍋 사용할 수 없는 닉네임 -> 닉네임 화면으로 이동")
+
+                        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+
+                        sceneDelegate?.window?.rootViewController = UINavigationController(rootViewController: NicknameViewController())
+                        sceneDelegate?.window?.makeKeyAndVisible()
+
                     } else if statusCode == 401 {
                         print("🍋 Firebase Token Error")
                     } else if statusCode == 500 {
@@ -189,7 +190,6 @@ extension GenderViewController: BaseViewControllerAttribute {
                     } else if statusCode == 501 {
                         print("🍋 Header와 RequestBody에 값 확인")
                     }
-                    
                 }
             }
             .disposed(by: disposeBag)

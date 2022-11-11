@@ -64,6 +64,7 @@ final class CertificationNumberViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        networkMoniter()
     }
     
     override func viewDidLoad() {
@@ -217,7 +218,6 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                     
                     // 새로운 토큰 발급 받았다면, 다시 서버 통신
                     guard let idToken = idToken else { return }
-
                     print("✨ 새로 발급 받은 토큰: \(idToken)")
                 }
                 

@@ -12,4 +12,19 @@ import RxSwift
 
 final class GenderViewModel {
     
+    func requestSignup(completionHandler: @escaping (Int) -> Void) {
+        
+        let request = SignupRequest(phoneNumber: UserDefaults.standard.string(forKey: Constant.UserDefaults.phoneNumber)!,
+                                    FCMtoken: "dfkejfoefje",
+                                    nick: UserDefaults.standard.string(forKey: Constant.UserDefaults.nick)!,
+                                    birth: UserDefaults.standard.string(forKey: Constant.UserDefaults.birth)!,
+                                    email: UserDefaults.standard.string(forKey: Constant.UserDefaults.email)!,
+                                    gender: UserDefaults.standard.integer(forKey: Constant.UserDefaults.nick))
+        
+        UserAPI.shared.requestSignup(signup: request) { statusCode, error in
+            guard let statusCode = statusCode else { return }
+            
+            completionHandler(statusCode)
+        }
+    }
 }

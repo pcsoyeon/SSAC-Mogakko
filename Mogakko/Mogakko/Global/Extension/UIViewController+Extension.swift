@@ -10,7 +10,7 @@ import UIKit
 extension UIViewController {
     func showToast(message : String) {
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 150,
-                                               y: 90,
+                                               y: 100,
                                                width: 300,
                                                height: 40))
         
