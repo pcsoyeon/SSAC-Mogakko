@@ -77,6 +77,8 @@ final class GenderViewController: UIViewController {
     
     private let gender = [Gender.man, Gender.woman]
     
+    private var selected = false
+    
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -159,6 +161,7 @@ extension GenderViewController: BaseViewControllerAttribute {
                     UserDefaults.standard.set(0, forKey: Constant.UserDefaults.gender)
                 }
                 
+                self.selected = true
                 self.nextButton.type = .fill
             }
             .disposed(by: disposeBag)
@@ -168,31 +171,41 @@ extension GenderViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, _ in
                 
-                vc.viewModel.requestSignup { statusCode in
-                    if statusCode == 200 {
-                        print("🍋 홈 화면으로 이동")
-                    } else if statusCode == 201 {
-                        print("🍋 이미 가입한 유저 -> 로그인 화면으로 이동")
-                        vc.showToast(message: "이미 가입한 유저입니다.")
-                    } else if statusCode == 202 {
-                        print("🍋 사용할 수 없는 닉네임 -> 닉네임 화면으로 이동")
-
-                        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                        let sceneDelegate = windowScene?.delegate as? SceneDelegate
-
-                        sceneDelegate?.window?.rootViewController = UINavigationController(rootViewController: NicknameViewController())
-                        sceneDelegate?.window?.makeKeyAndVisible()
-
-                    } else if statusCode == 401 {
-                        print("🍋 Firebase Token Error")
-                    } else if statusCode == 500 {
-                        print("🍋 Server Error")
-                    } else if statusCode == 501 {
-                        print("🍋 Header와 RequestBody에 값 확인")
+                if vc.selected {
+                    
+                    vc.viewModel.requestSignup { statusCode in
+                        if statusCode == 200 {
+                            print("🍋 홈 화면으로 이동")
+                        } else if statusCode == 201 {
+                            print("🍋 이미 가입한 유저 -> 로그인 화면으로 이동")
+                            vc.showToast(message: "이미 가입한 유저입니다.")
+                        } else if statusCode == 202 {
+                            print("🍋 사용할 수 없는 닉네임 -> 닉네임 화면으로 이동")
+                            
+                            // 닉네임 화면까지 pop
+                            vc.popToNicknameView()
+                            
+                        } else if statusCode == 401 {
+                            print("🍋 Firebase Token Error")
+                        } else if statusCode == 500 {
+                            print("🍋 Server Error")
+                        } else if statusCode == 501 {
+                            print("🍋 Header와 RequestBody에 값 확인")
+                        }
                     }
+                    
+                } else {
+                    vc.showToast(message: "성별을 선택해주세요.")
                 }
+                
+
             }
             .disposed(by: disposeBag)
+    }
+    
+    private func popToNicknameView() {
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true)
     }
 }
 

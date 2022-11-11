@@ -120,8 +120,14 @@ extension NicknameViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, _ in
                 guard let nick = vc.nicknameTextField.text else { return }
-                UserDefaults.standard.set(nick, forKey: Constant.UserDefaults.nick)
-                vc.navigationController?.pushViewController(BirthViewController(), animated: true)
+                
+                if nick.count >= 1 && nick.count <= 10 {
+                    UserDefaults.standard.set(nick, forKey: Constant.UserDefaults.nick)
+                    vc.navigationController?.pushViewController(BirthViewController(), animated: true)
+                } else {
+                    vc.showToast(message: "닉네임은 1자 이상 10자 이내로 부탁드려요.")
+                }
+                
             }
             .disposed(by: disposeBag)
     }

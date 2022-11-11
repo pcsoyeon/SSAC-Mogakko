@@ -36,6 +36,7 @@ final class EmailViewController: UIViewController {
         $0.placeholder = "SeSAC@email.com"
         $0.tintColor = .green
         $0.type = .inactive
+        $0.becomeFirstResponder()
     }
     
     private var nextButton = MDSButton().then {
