@@ -159,14 +159,8 @@ extension BirthViewController: BaseViewControllerAttribute {
     }
     
     func bind() {
-        datePicker.rx.value
-            .skip(1)
-            .withUnretained(self)
-            .bind { vc, date in
-                vc.viewModel.changeDateToString(date)
-                vc.viewModel.calculateAge(date)
-            }
-            .disposed(by: disposeBag)
+        let input = BirthViewModel.Input(datePickerDate: datePicker.rx.value, nextButtonTap: nextButton.rx.tap)
+        let output = viewModel.transform(from: input)
         
         datePicker.rx.controlEvent([.valueChanged])
             .withUnretained(self)
@@ -174,15 +168,13 @@ extension BirthViewController: BaseViewControllerAttribute {
                 vc.yearTextField.type = .active
                 vc.monthTextField.type = .active
                 vc.dateTextField.type = .active
-                
-                vc.nextButton.type = .fill
             }
             .disposed(by: disposeBag)
         
         nextButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                if vc.viewModel.isValid.value {
+                if vc.nextButton.type == .fill {
                     UserDefaults.standard.set(vc.datePicker.date.toString(), forKey: Constant.UserDefaults.birth)
                     vc.navigationController?.pushViewController(EmailViewController(), animated: true)
                 } else {
@@ -191,15 +183,22 @@ extension BirthViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
         
-        viewModel.yearRelay
+        output.isValid
+            .withUnretained(self)
+            .bind { vc, value in
+                vc.nextButton.type = value ? .fill : .disable
+            }
+            .disposed(by: disposeBag)
+        
+        output.year
             .bind(to: yearTextField.rx.text)
             .disposed(by: disposeBag)
         
-        viewModel.monthRelay
+        output.month
             .bind(to: monthTextField.rx.text)
             .disposed(by: disposeBag)
         
-        viewModel.dateRelay
+        output.date
             .bind(to: dateTextField.rx.text)
             .disposed(by: disposeBag)
     }

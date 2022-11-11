@@ -74,7 +74,7 @@ final class SplashViewController: UIViewController {
 //                self.present(viewController, animated: true)
 //            }
             
-            let viewController = UINavigationController(rootViewController: PhoneNumberViewController())
+            let viewController = UINavigationController(rootViewController: BirthViewController())
             viewController.modalTransitionStyle = .crossDissolve
             viewController.modalPresentationStyle = .fullScreen
             self.present(viewController, animated: true)

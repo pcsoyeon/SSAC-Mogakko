@@ -10,56 +10,60 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-final class BirthViewModel {
-    
-    // MARK: - Property
-    
-    var yearRelay = BehaviorRelay<String>(value: "1990")
-    var monthRelay = BehaviorRelay<String>(value: "1")
-    var dateRelay = BehaviorRelay<String>(value: "1")
-    
-    var isValid = BehaviorRelay<Bool>(value: false)
+final class BirthViewModel: BaseViewModelAttribute {
     
     // MARK: - Input/Ouput
     
     struct Input {
-        
+        let datePickerDate: ControlProperty<Date>
+        let nextButtonTap: ControlEvent<Void>
     }
     
     struct Output {
+        let nextButtonTap: ControlEvent<Void>
         
+        let year: Observable<String>
+        let month: Observable<String>
+        let date: Observable<String>
+        
+        let isValid: Observable<Bool>
     }
     
-    func transform(from input: Input) {
+    func transform(from input: Input) -> Output{
+        let year = input.datePickerDate
+            .map { value in
+                let yearFormatter = DateFormatter()
+                yearFormatter.dateFormat = "yyyy"
+                return yearFormatter.string(from: value)
+            }
         
-    }
-    
-    // MARK: - Method
-    
-    func changeDateToString(_ date: Date) {
-        let yearFormatter = DateFormatter()
-        yearFormatter.dateFormat = "yyyy"
-        
-        let monthFormatter = DateFormatter()
-        monthFormatter.dateFormat = "MM"
+        let month = input.datePickerDate
+            .map { value in
+                let monthFormatter = DateFormatter()
+                monthFormatter.dateFormat = "MM"
+                return monthFormatter.string(from: value)
+            }
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd"
+        let day = input.datePickerDate
+            .map { value in
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd"
+                return dateFormatter.string(from: value)
+            }
         
-        yearRelay.accept(yearFormatter.string(from: date))
-        monthRelay.accept(monthFormatter.string(from: date))
-        dateRelay.accept(dateFormatter.string(from: date))
-    }
-    
-    func calculateAge(_ birthday: Date) {
-        let calendar = Calendar.current
-        let ageComponents = calendar.dateComponents([.year], from: birthday, to: Date())
-        let age = ageComponents.year!
+        let isValid = input.datePickerDate
+            .map { value in
+                let calendar = Calendar.current
+                let ageComponents = calendar.dateComponents([.year], from: value, to: Date())
+                let age = ageComponents.year!
+                
+                if age >= 17 {
+                    return true
+                } else {
+                    return false
+                }
+            }
         
-        if age >= 17 {
-            isValid.accept(true)
-        } else {
-            isValid.accept(false)
-        }
+        return Output(nextButtonTap: input.nextButtonTap, year: year, month: month, date: day, isValid: isValid)
     }
 }
