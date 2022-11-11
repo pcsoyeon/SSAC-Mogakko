@@ -24,7 +24,7 @@ final class TabBarViewController: UITabBarController, UITabBarControllerDelegate
         tabBar.isTranslucent = false
         
         // TODO: - 각 화면으로 수정 
-        let firstTabController = UIViewController()
+        let firstTabController = HomeViewController()
         let secondTabController = UIViewController()
         let thirdTabController = UIViewController()
         let fourthTabController = UIViewController()
