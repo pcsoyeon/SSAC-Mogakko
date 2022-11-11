@@ -167,7 +167,6 @@ extension GenderViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         nextButton.rx.tap
-            .skip(1)
             .withUnretained(self)
             .bind { vc, _ in
                 

@@ -152,12 +152,15 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
 
                 let credential = PhoneAuthProvider.provider().credential(withVerificationID: vc.verificationID, verificationCode: verificationCode)
 
-                Auth.auth().signIn(with: credential) { success, error in
-                    if error == nil {
+                Auth.auth().signIn(with: credential) { result, error in
+                    
+                    if let error = error {
+                        print("🔥 Fail to Signin with Firebase : \(error.localizedDescription)")
+                        vc.showToast(message: "전화 번호 인증 실패")
+                    } else {
                         print("✨ 인증번호 일치 -> Firebase idToken 요청")
 
-                        let currentUser = Auth.auth().currentUser
-                        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                        result?.user.getIDToken { idToken, error in
                             if let error = error {
                                 print("🔥 idToken Error : \(error)")
                                 return
@@ -170,10 +173,7 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
 
                             vc.requestLogin()
                         }
-
-                    } else {
-                        print("🔥 Fail to Signin with Firebase : \(error.debugDescription)")
-                        vc.showToast(message: "전화 번호 인증 실패")
+                        
                     }
                 }
                 
@@ -202,11 +202,19 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                 self.present(tabBarController, animated: true)
                 
             } else if statusCode == 401 {
-                self.showToast(message: "에러가 발생했습니다. 잠시 후 다시 시도해주세요.")
-                
                 // 1-4.
                 // 토큰이 만료된 경우, 새로 토큰 발급
                 print("💨 토큰 만료 !!! -> 새로 토큰 발급")
+                
+                let currentUser = Auth.auth().currentUser
+                currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                    if let error = error {
+                        print(error)
+                    } else {
+                        guard let idToken = idToken else { return }
+                        print("✨ 새로 발급 받은 토큰 - \(idToken)")
+                    }
+                }
                 
             } else if statusCode == 406 {
                 // 1-3.
@@ -219,5 +227,9 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
             }
             
         }
+    }
+    
+    private func refreshToken() {
+        
     }
 }
