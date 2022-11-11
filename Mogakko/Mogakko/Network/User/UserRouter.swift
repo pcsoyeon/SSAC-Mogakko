@@ -36,10 +36,10 @@ extension UserRouter: URLRequestConvertible {
         switch self {
         case .login:
             return [APIConstant.ContentType.contentType : APIConstant.ContentType.json,
-                    APIConstant.idtoken : UserDefaults.standard.string(forKey: "idtoken")! ]
+                    APIConstant.idtoken : APIKey.idToken ]
         case .signup, .withdraw, .updateFcmToken:
             return [APIConstant.ContentType.contentType : APIConstant.ContentType.formUrlEncoded,
-                    APIConstant.idtoken : UserDefaults.standard.string(forKey: "idtoken")!]
+                    APIConstant.idtoken : APIKey.idToken]
         }
     }
     

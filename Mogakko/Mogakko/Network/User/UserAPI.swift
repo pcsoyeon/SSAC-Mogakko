@@ -27,7 +27,10 @@ final class UserAPI {
                 case .success(let data):
                     
                     let decoder = JSONDecoder()
-                    guard let decodedData = try? decoder.decode(Login.self, from: data) else { return }
+                    guard let decodedData = try? decoder.decode(Login.self, from: data) else {
+                        completionHandler(nil, statusCode, nil)
+                        return
+                    }
                     
                     completionHandler(decodedData, statusCode, nil)
                     
@@ -47,6 +50,25 @@ final class UserAPI {
                 guard let statusCode = dataReponse.response?.statusCode else { return }
                 
                 switch dataReponse.result {
+                case .success(_):
+                    completionHandler(statusCode, nil)
+                    
+                case .failure(let error):
+                    completionHandler(statusCode, error)
+                }
+            }
+    }
+    
+    // MARK: - Withdraw
+    
+    func requestWithdraw(completionHandler: @escaping (Int?, Error?) -> Void) {
+        AF.request(UserRouter.withdraw)
+            .validate(statusCode: 200...500)
+            .responseData { dataReponse in
+                guard let statusCode = dataReponse.response?.statusCode else { return }
+                
+                switch dataReponse.result {
+                    
                 case .success(_):
                     completionHandler(statusCode, nil)
                     

@@ -14,6 +14,10 @@ extension Constant {
         
         static let isNotFirst = "isNotFirst"
         
+        // MARK: - 서버 통신
+        
+        static let idtoken = "idtoken"
+        
         // MARK: - 회원가입
         
         /*

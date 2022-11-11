@@ -147,35 +147,38 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                 
                 // MARK: - 유효 번호 검사
                 
-                guard let verificationCode = vc.numberTextField.text else { return }
+                vc.requestLogin()
                 
-                let credential = PhoneAuthProvider.provider().credential(withVerificationID: vc.verificationID, verificationCode: verificationCode)
+//                guard let verificationCode = vc.numberTextField.text else { return }
+//
+//                let credential = PhoneAuthProvider.provider().credential(withVerificationID: vc.verificationID, verificationCode: verificationCode)
+//
+//                Auth.auth().signIn(with: credential) { success, error in
+//                    if error == nil {
+//                        print("✨ 인증번호 일치 -> Firebase idToken 요청")
+//
+//                        let currentUser = Auth.auth().currentUser
+//                        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+//                            if let error = error {
+//                                print("🔥 idToken Error : \(error)")
+//                                return
+//                            }
+//
+//                            guard let idToken = idToken else { return }
+//                            print("✨ idToken : \(idToken)")
+//
+//                            UserDefaults.standard.set(idToken, forKey: "idtoken")
+//
+//                            vc.requestLogin()
+//
+//                        }
+//
+//                    } else {
+//                        print("🔥 Fail to Signin with Firebase : \(error.debugDescription)")
+//                        vc.showToast(message: "전화 번호 인증 실패")
+//                    }
+//                }
                 
-                Auth.auth().signIn(with: credential) { success, error in
-                    if error == nil {
-                        print("✨ 인증번호 일치 -> Firebase idToken 요청")
-                        
-                        let currentUser = Auth.auth().currentUser
-                        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-                            if let error = error {
-                                print("🔥 idToken Error : \(error)")
-                                return
-                            }
-                            
-                            guard let idToken = idToken else { return }
-                            print("✨ idToken : \(idToken)")
-                            
-                            UserDefaults.standard.set(idToken, forKey: "idtoken")
-                            
-                            vc.requestLogin()
-                            
-                        }
-                        
-                    } else {
-                        print("🔥 Fail to Signin with Firebase : \(error.debugDescription)")
-                        vc.showToast(message: "전화 번호 인증 실패")
-                    }
-                }
             }
             .disposed(by: disposeBag)
     }
@@ -187,9 +190,8 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
         // 1-1. 서버로부터 사용자 정보 확인 (get)
         UserAPI.shared.requestLogin { [weak self] data, statusCode, error in
             guard let self = self else { return }
-            guard let statusCode = statusCode else { return }
             
-            print(statusCode)
+            guard let statusCode = statusCode else { return }
             
             if statusCode == 200 {
                 // 1-2.
@@ -203,6 +205,23 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                 
             } else if statusCode == 401 {
                 self.showToast(message: "Firebase Token Error")
+                
+                // 1-4.
+                // 토큰이 만료된 경우, 새로 토큰 발급
+                let currentUser = Auth.auth().currentUser
+                currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                    if let error = error {
+                        print("🔥 Get IDToken Error: \(error)")
+                        return
+                    }
+                    
+                    // 새로운 토큰 발급 받았다면, 다시 서버 통신
+                    guard let idToken = idToken else { return }
+
+                    print("✨ 새로 발급 받은 토큰: \(idToken)")
+                }
+                
+                
             } else if statusCode == 406 {
                 // 1-3.
                 // 신규 사용자라면 -> 회원가입 화면으로

@@ -36,6 +36,13 @@ final class OnboardingViewController: UIViewController {
         $0.currentPageIndicatorTintColor = .black
     }
     
+    // MARK: - TODO REMOVE
+    
+    private var withdrawButton = UIButton().then {
+        $0.setTitle("탈퇴하기", for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+    }
+    
     // MARK: - Property
     
     private let list: [Onboarding] = [Onboarding(title: "위치 기반으로 빠르게\n주위 친구를 확인", image: Constant.Image.onboardingImg1),
@@ -56,7 +63,7 @@ final class OnboardingViewController: UIViewController {
 
 extension OnboardingViewController: BaseViewControllerAttribute {
     func configureHierarchy() {
-        view.addSubviews(collectionView, pageControl, button)
+        view.addSubviews(collectionView, pageControl, button, withdrawButton)
         
         collectionView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -66,6 +73,11 @@ extension OnboardingViewController: BaseViewControllerAttribute {
         pageControl.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(button.snp.top).inset(-42)
+        }
+        
+        withdrawButton.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview().inset(16)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(70)
         }
         
         button.snp.makeConstraints { make in
@@ -113,6 +125,25 @@ extension OnboardingViewController: BaseViewControllerAttribute {
                 viewController.modalPresentationStyle = .fullScreen
                 viewController.modalTransitionStyle = .crossDissolve
                 vc.present(viewController, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        withdrawButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                UserAPI.shared.requestWithdraw { statusCode, error in
+                    print("😫 회원 탈퇴 statusCode : \(statusCode)")
+                    
+                    if statusCode == 200 {
+                        print("회원 가입 탈퇴 성공")
+                    } else if statusCode == 401 {
+                        print("Firebase Token Error")
+                    } else if statusCode == 406 {
+                        print("탈퇴 처리된 회원(미가입 회원)")
+                    } else {
+                        print("Server Error")
+                    }
+                }
             }
             .disposed(by: disposeBag)
     }
