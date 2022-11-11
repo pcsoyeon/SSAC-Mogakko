@@ -18,11 +18,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
-        // MARK: - 최초 화면 분기처리
+        // TODO: - 최초 화면 분기처리
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = OnboardingViewController()
+        
+        if UserDefaults.standard.bool(forKey: Constant.UserDefaults.isNotFirst) {
+            window?.rootViewController = UINavigationController(rootViewController: PhoneNumberViewController())
+        } else {
+            window?.rootViewController = OnboardingViewController()
+        }
+        
         window?.makeKeyAndVisible()
         
         // MARK: - 네트워크 연결 상태 확인
@@ -35,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print("🦋 네트워크 연결 상태 Good")
             case .unsatisfied:
                 print("🍅 네트워크 연결 상태 Bad")
-                self.window?.rootViewController?.showToast(message: "네트워크 연결이 원활하지 않습니다. 연결상태 확인 후 다시 시도해 주세요!", font: MDSFont.Title4_R14.font)
+                self.window?.rootViewController?.showToast(message: "네트워크 연결이 원활하지 않습니다. 연결상태 확인 후 다시 시도해 주세요!")
             default:
                 break
             }

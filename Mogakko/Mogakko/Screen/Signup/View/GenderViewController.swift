@@ -179,7 +179,7 @@ extension GenderViewController: BaseViewControllerAttribute {
                         print("🍋 홈 화면으로 이동")
                     } else if statusCode == 201 {
                         print("🍋 이미 가입한 유저 -> 로그인 화면으로 이동")
-                        vc.showToast(message: "이미 가입한 유저입니다.", font: MDSFont.Title4_R14.font)
+                        vc.showToast(message: "이미 가입한 유저입니다.")
                     } else if statusCode == 202 {
                         print("🍋 사용할 수 없는 닉네임")
                     } else if statusCode == 401 {

@@ -173,7 +173,7 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                         
                     } else {
                         print("🔥 Fail to Signin with Firebase : \(error.debugDescription)")
-                        vc.showToast(message: "전화 번호 인증 실패", font: MDSFont.Title4_R14.font)
+                        vc.showToast(message: "전화 번호 인증 실패")
                     }
                 }
             }
@@ -195,12 +195,22 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                 // 1-2.
                 // 기존 사용자라면 -> 홈 화면으로
                 guard let data = data else { return }
-                dump(data)
+                print("🍀 사용자 정보 - \(data)")
+                let tabBarController = UINavigationController(rootViewController: TabBarViewController())
+                tabBarController.modalTransitionStyle = .crossDissolve
+                tabBarController.modalPresentationStyle = .fullScreen
+                self.present(tabBarController, animated: true)
                 
+            } else if statusCode == 401 {
+                self.showToast(message: "Firebase Token Error")
             } else if statusCode == 406 {
                 // 1-3.
                 // 신규 사용자라면 -> 회원가입 화면으로
                 self.navigationController?.pushViewController(NicknameViewController(), animated: true)
+            } else if statusCode == 500 {
+                self.showToast(message: "Server Error")
+            } else if statusCode == 501 {
+                self.showToast(message: "Client Error")
             }
             
         }

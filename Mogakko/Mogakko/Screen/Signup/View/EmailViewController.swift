@@ -119,7 +119,7 @@ extension EmailViewController: BaseViewControllerAttribute {
                     
                     vc.navigationController?.pushViewController(GenderViewController(), animated: true)
                 } else {
-                    vc.showToast(message: "이메일 형식이 올바르지 않습니다.", font: MDSFont.Title4_R14.font)
+                    vc.showToast(message: "이메일 형식이 올바르지 않습니다.")
                 }
             }
             .disposed(by: disposeBag)

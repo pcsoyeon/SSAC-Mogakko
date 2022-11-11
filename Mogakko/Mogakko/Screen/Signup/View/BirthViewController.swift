@@ -185,7 +185,7 @@ extension BirthViewController: BaseViewControllerAttribute {
                     UserDefaults.standard.set(vc.datePicker.date.toString(), forKey: "date")
                     vc.navigationController?.pushViewController(EmailViewController(), animated: true)
                 } else {
-                    vc.showToast(message: "새싹스터디는 만 17세 이상만 사용할 수 있습니다.", font: MDSFont.Title4_R14.font)
+                    vc.showToast(message: "새싹스터디는 만 17세 이상만 사용할 수 있습니다.")
                 }
             }
             .disposed(by: disposeBag)

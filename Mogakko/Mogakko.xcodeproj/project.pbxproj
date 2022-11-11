@@ -70,6 +70,7 @@
 		92A5DE67291D124700094D3E /* SignupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE66291D124700094D3E /* SignupRequest.swift */; };
 		92A5DE6B291DB66A00094D3E /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE6A291DB66A00094D3E /* UserDefaults.swift */; };
 		92A5DE6D291DB8EA00094D3E /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE6C291DB8EA00094D3E /* Date+Extension.swift */; };
+		92A5DE70291DBFE900094D3E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE6F291DBFE900094D3E /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -132,6 +133,7 @@
 		92A5DE66291D124700094D3E /* SignupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupRequest.swift; sourceTree = "<group>"; };
 		92A5DE6A291DB66A00094D3E /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		92A5DE6C291DB8EA00094D3E /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		92A5DE6F291DBFE900094D3E /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +240,7 @@
 		925607082918D54500A13FFB /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				92A5DE6E291DBFBD00094D3E /* Main */,
 				923DDE09291A3CC500A2FE75 /* Signup */,
 				9256076529194F1C00A13FFB /* Authorization */,
 				9256070F2918D5A300A13FFB /* Onboarding */,
@@ -472,6 +475,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		92A5DE6E291DBFBD00094D3E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				92A5DE6F291DBFE900094D3E /* TabBarViewController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -601,6 +612,7 @@
 				92560762291946FF00A13FFB /* BaseTableViewCell.swift in Sources */,
 				9256076F2919CC9D00A13FFB /* String+Extension.swift in Sources */,
 				92A5DE67291D124700094D3E /* SignupRequest.swift in Sources */,
+				92A5DE70291DBFE900094D3E /* TabBarViewController.swift in Sources */,
 				9256076B2919C21600A13FFB /* CertificationNumberViewController.swift in Sources */,
 				92A5DE4F291B784200094D3E /* APIConstant.swift in Sources */,
 				9256074C2918F95500A13FFB /* OnboardingViewController.swift in Sources */,

@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIViewController {
-    func showToast(message : String, font: UIFont) {
+    func showToast(message : String) {
         let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 150,
                                                y: 90,
                                                width: 300,
@@ -16,7 +16,7 @@ extension UIViewController {
         
         toastLabel.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
         toastLabel.textColor = UIColor.white
-        toastLabel.font = font
+        toastLabel.font = MDSFont.Title4_R14.font
         toastLabel.textAlignment = .center
         toastLabel.text = message
         toastLabel.alpha = 1.0
