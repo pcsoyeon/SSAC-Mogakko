@@ -145,12 +145,12 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
         
         output.isValid
             .map { $0 ? MDSButtonType.fill : MDSButtonType.disable }
-            .bind(to: button.rx.type)
+            .emit(to: button.rx.type)
             .disposed(by: disposeBag)
         
         output.isValid
             .withUnretained(self)
-            .bind { vc, value in
+            .emit { vc, value in
                 if value {
                     vc.numberTextField.type = .active
                 }

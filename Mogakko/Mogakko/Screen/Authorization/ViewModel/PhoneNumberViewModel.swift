@@ -30,7 +30,7 @@ final class PhoneNumberViewModel: BaseViewModelAttribute {
     struct Output {
         // property
         let phoneNumber: Observable<String>
-        let isValid: Observable<Bool>
+        let isValid: Signal<Bool>
         
         // event
         let buttonTap: ControlEvent<Void>
@@ -45,8 +45,11 @@ final class PhoneNumberViewModel: BaseViewModelAttribute {
         
         let isValid = input.numberTextFieldText.orEmpty
             .map { text in
-                text.count >= 12 ? true : false
+                let phoneNumRegex = "[0-1]{3}[-]+[0-9]{3,4}[-]+[0-9]{4}"
+                let pred = NSPredicate(format:"SELF MATCHES %@", phoneNumRegex)
+                return pred.evaluate(with: text)
             }
+            .asSignal(onErrorJustReturn: false)
         
         return Output(phoneNumber: phoneNumber,
                       isValid: isValid,
