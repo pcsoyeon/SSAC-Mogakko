@@ -22,13 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        
-        if UserDefaults.standard.bool(forKey: Constant.UserDefaults.isNotFirst) {
-            window?.rootViewController = UINavigationController(rootViewController: PhoneNumberViewController())
-        } else {
-            window?.rootViewController = OnboardingViewController()
-        }
-        
+        window?.rootViewController = UINavigationController(rootViewController: SplashViewController())
         window?.makeKeyAndVisible()
         
         // MARK: - 네트워크 연결 상태 확인

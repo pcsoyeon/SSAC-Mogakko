@@ -42,6 +42,11 @@ extension Constant {
         
         static let badge = UIImage(named: "badge")!
         
+        // splash
+        
+        static let splashLogo = UIImage(named: "splash_logo")
+        static let splashText = UIImage(named: "splash_text")
+        
         // Tap 
         static let friendsAct = UIImage(named: "friendsAct")!
         static let friendsInact = UIImage(named: "friendsInact")!
