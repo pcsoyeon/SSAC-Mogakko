@@ -11,11 +11,30 @@ import RxCocoa
 import RxSwift
 
 final class BirthViewModel {
+    
+    // MARK: - Property
+    
     var yearRelay = BehaviorRelay<String>(value: "1990")
     var monthRelay = BehaviorRelay<String>(value: "1")
     var dateRelay = BehaviorRelay<String>(value: "1")
     
     var isValid = BehaviorRelay<Bool>(value: false)
+    
+    // MARK: - Input/Ouput
+    
+    struct Input {
+        
+    }
+    
+    struct Output {
+        
+    }
+    
+    func transform(from input: Input) {
+        
+    }
+    
+    // MARK: - Method
     
     func changeDateToString(_ date: Date) {
         let yearFormatter = DateFormatter()

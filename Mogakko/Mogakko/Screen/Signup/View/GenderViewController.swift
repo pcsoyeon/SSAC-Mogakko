@@ -176,6 +176,12 @@ extension GenderViewController: BaseViewControllerAttribute {
                     vc.viewModel.requestSignup { statusCode in
                         if statusCode == 200 {
                             print("🍋 홈 화면으로 이동")
+                            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                            let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                            
+                            sceneDelegate?.window?.rootViewController = UINavigationController(rootViewController: TabBarViewController())
+                            sceneDelegate?.window?.makeKeyAndVisible()
+                            
                         } else if statusCode == 201 {
                             print("🍋 이미 가입한 유저 -> 로그인 화면으로 이동")
                             vc.showToast(message: "이미 가입한 유저입니다.")

@@ -30,6 +30,7 @@ final class NicknameViewController: UIViewController {
         $0.placeholder = "10자 이내로 입력"
         $0.tintColor = .green
         $0.type = .inactive
+        $0.becomeFirstResponder()
     }
     
     private var nextButton = MDSButton().then {
@@ -87,8 +88,6 @@ extension NicknameViewController: BaseViewControllerAttribute {
     
     func configureAttribute() {
         view.backgroundColor = .white
-        
-        nicknameTextField.becomeFirstResponder()
     }
     
     func bind() {

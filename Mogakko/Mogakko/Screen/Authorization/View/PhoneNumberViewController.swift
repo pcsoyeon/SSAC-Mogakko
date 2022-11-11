@@ -108,6 +108,8 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
                 // 1. 유효화 검사
                 if phonNumber.count >= 12 {
                     
+                    vc.showToast(message: "전화 번호 인증 시작")
+                    
                     vc.viewModel.requestVerificationCode(phoneNumber: phonNumber) { verificationID, error in
                         // 2-1. 요청 후 실패했을 경우, 그에 따른 토스트메시지 alert
                         if let error = error {
