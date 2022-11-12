@@ -167,6 +167,7 @@ extension GenderViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         nextButton.rx.tap
+            .throttle(.seconds(5), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .bind { vc, _ in
                 

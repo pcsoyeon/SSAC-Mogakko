@@ -143,6 +143,7 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         output.buttonTap
+            .throttle(.seconds(5), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .bind { vc, _ in
                 

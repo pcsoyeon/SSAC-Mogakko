@@ -100,7 +100,7 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         output.buttonTap
-            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .throttle(.seconds(5), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .bind { vc, _ in
                 

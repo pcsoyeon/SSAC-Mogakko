@@ -107,6 +107,7 @@ extension OnboardingViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         button.rx.tap
+            .throttle(.seconds(5), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .bind { vc, _ in
                 UserDefaults.standard.set(true, forKey: Constant.UserDefaults.isNotFirst)
