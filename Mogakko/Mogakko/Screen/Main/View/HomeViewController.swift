@@ -18,7 +18,11 @@ class HomeViewController: UIViewController {
     
     private var withdrawButton = UIButton().then {
         $0.setTitle("탈퇴하기", for: .normal)
-        $0.setTitleColor(.blue, for: .normal)
+        $0.setTitleColor(.lightGray, for: .normal)
+    }
+    
+    private var floatingButton = MDSFloatingButton().then {
+        $0.type = .plain
     }
     
     // MARK: - Property
@@ -35,14 +39,29 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        
-        view.addSubview(withdrawButton)
+        configureAttribute()
+        configureHierarchy()
+        bind()
+    }
+}
+
+extension HomeViewController: BaseViewControllerAttribute {
+    func configureHierarchy() {
+        view.addSubviews(withdrawButton, floatingButton)
         withdrawButton.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
         
+        floatingButton.snp.makeConstraints { make in
+            make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).inset(Metric.margin)
+        }
+    }
+    
+    func configureAttribute() {
+        view.backgroundColor = .darkGray
+    }
+    
+    func bind() {
         withdrawButton.rx.tap
             .bind {
                 UserAPI.shared.requestWithdraw { statusCode, error in
@@ -71,4 +90,6 @@ class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
     }
+    
+    
 }

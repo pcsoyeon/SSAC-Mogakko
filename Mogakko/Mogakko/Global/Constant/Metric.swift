@@ -44,3 +44,10 @@ extension Metric {
 extension Metric {
     static let searchBarHeight: CGFloat = 36
 }
+
+// MARK: - Floating Button
+
+extension Metric {
+    static let floatingButtonSize: CGFloat = 56
+    static let floatingButtonRadius: CGFloat = 28
+}
