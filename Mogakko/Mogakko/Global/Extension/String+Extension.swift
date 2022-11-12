@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    func toPhoneNumberPattern(pattern: String, replacmentCharacter: Character) -> String {
+    func changeToPhoneNumberPattern(pattern: String, replacmentCharacter: Character) -> String {
         var pureNumber = self.replacingOccurrences( of: "[^0-9]", with: "", options: .regularExpression)
         pureNumber = pureNumber.count > 11 ? String(pureNumber[...pureNumber.index(startIndex,offsetBy: 10)]) : pureNumber
         

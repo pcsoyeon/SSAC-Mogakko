@@ -40,7 +40,7 @@ final class PhoneNumberViewModel: BaseViewModelAttribute {
         let phoneNumber = input.numberTextFieldText.orEmpty
             .withUnretained(self)
             .map { vm, text in
-                text.count <= 12 ? text.toPhoneNumberPattern(pattern: "###-###-####", replacmentCharacter: "#") : text.toPhoneNumberPattern(pattern: "###-####-####", replacmentCharacter: "#")
+                text.count <= 12 ? text.changeToPhoneNumberPattern(pattern: "###-###-####", replacmentCharacter: "#") : text.changeToPhoneNumberPattern(pattern: "###-####-####", replacmentCharacter: "#")
             }
         
         let isValid = input.numberTextFieldText.orEmpty
