@@ -161,19 +161,18 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                     } else {
                         print("✨ 인증번호 일치 -> Firebase idToken 요청")
 
-                        result?.user.getIDToken { idToken, error in
+                        let currentUser = Auth.auth().currentUser
+                        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
                             if let error = error {
-                                print("🔥 idToken Error : \(error)")
-                                return
+                                print(error)
+                            } else {
+                                guard let idToken = idToken else { return }
+                                print("✨ 발급 받은 토큰 - \(idToken)")
+                                
+                                UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
+                                self.requestLogin()
+                                
                             }
-
-                            guard let idToken = idToken else { return }
-                            print("✨ idToken : \(idToken)")
-
-                            UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
-
-                            print("💨 메모리스 서버로 요청 !!!!")
-                            vc.requestLogin()
                         }
                         
                     }
@@ -208,15 +207,15 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                 // 토큰이 만료된 경우, 새로 토큰 발급
                 print("💨 토큰 만료 !!! -> 새로 토큰 발급")
                 
-                let currentUser = Auth.auth().currentUser
-                currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-                    if let error = error {
-                        print(error)
-                    } else {
-                        guard let idToken = idToken else { return }
-                        print("✨ 새로 발급 받은 토큰 - \(idToken)")
-                    }
-                }
+//                let currentUser = Auth.auth().currentUser
+//                currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+//                    if let error = error {
+//                        print(error)
+//                    } else {
+//                        guard let idToken = idToken else { return }
+//                        print("✨ 새로 발급 받은 토큰 - \(idToken)")
+//                    }
+//                }
                 
             } else if statusCode == 406 {
                 // 1-3.

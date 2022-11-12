@@ -114,7 +114,7 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
                     vc.viewModel.requestVerificationCode(phoneNumber: phonNumber) { verificationID, error in
                         // 2-1. 요청 후 실패했을 경우, 그에 따른 토스트메시지 alert
                         if let error = error {
-                            vc.showToast(message: "에러가 발생했습니다. 다시 시도해주세요")
+                            vc.showToast(message: "과도한 인증 시도가 있었습니다. 나중에 다시 시도해 주세요.")
                             print("🔴 Verification Error : \(error.localizedDescription)")
                             return
                         }

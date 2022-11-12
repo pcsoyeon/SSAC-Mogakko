@@ -64,12 +64,14 @@ final class SplashViewController: UIViewController {
             guard let self = self else { return }
             
             if UserDefaults.standard.bool(forKey: Constant.UserDefaults.isNotFirst) {
-                self.checkIdToken()
+                
+                if (UserDefaults.standard.string(forKey: Constant.UserDefaults.idtoken) != nil) {
+                    self.checkIdToken()
+                } else {
+                    Helper.convertNavigationRootViewController(view: self.view, controller: PhoneNumberViewController())
+                }
             } else {
-                let viewController = OnboardingViewController()
-                viewController.modalTransitionStyle = .crossDissolve
-                viewController.modalPresentationStyle = .fullScreen
-                self.present(viewController, animated: true)
+                Helper.convertRootViewController(view: self.view, controller: OnboardingViewController())
             }
             
         }
@@ -87,23 +89,13 @@ final class SplashViewController: UIViewController {
                 // 기존 사용자라면 -> 홈 화면으로
                 guard let data = data else { return }
                 print("🍀 사용자 정보 - \(data)")
-                
-                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                
-                sceneDelegate?.window?.rootViewController = UINavigationController(rootViewController: TabBarViewController())
-                sceneDelegate?.window?.makeKeyAndVisible()
+                Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
                 
             } else if statusCode == 401 {
                 // 1-4.
                 // 토큰이 만료된 경우, 새로 토큰 발급
                 print("💨 토큰 만료 !!! -> 다시 로그인 or 토근 새로 발급")
-                
-                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                
-                sceneDelegate?.window?.rootViewController = UINavigationController(rootViewController: PhoneNumberViewController())
-                sceneDelegate?.window?.makeKeyAndVisible()
+                Helper.convertNavigationRootViewController(view: self.view, controller: PhoneNumberViewController())
                 
                 // TODO: - REMOVE
 //                let currentUser = Auth.auth().currentUser
@@ -124,11 +116,7 @@ final class SplashViewController: UIViewController {
             } else if statusCode == 406 {
                 // 1-3.
                 // 신규 사용자라면 -> 회원가입 화면으로
-                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                
-                sceneDelegate?.window?.rootViewController = UINavigationController(rootViewController: NicknameViewController())
-                sceneDelegate?.window?.makeKeyAndVisible()
+                Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
             } else if statusCode == 500 {
                 self.showToast(message: "서버 내부 오류입니다. 잠시 후 재인증 해주세요.")
             } else if statusCode == 501 {

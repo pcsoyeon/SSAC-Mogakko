@@ -10,8 +10,8 @@ import UIKit
 class Helper {
     static func convertNavigationRootViewController(view: UIView, controller: UIViewController) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let nav = UINavigationController(rootViewController: controller)
-            view.window?.rootViewController = nav
+            let navi = UINavigationController(rootViewController: controller)
+            view.window?.rootViewController = navi
             UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
             view.window?.makeKeyAndVisible()
         }
