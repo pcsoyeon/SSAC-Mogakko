@@ -16,13 +16,13 @@ final class UserAPI {
     
     // MARK: - Login
     
-    func requestLogin(completionHandler: @escaping (Login?, Int?, Error?)-> Void) {
+    func requestLogin(completionHandler: @escaping (Login?, Int?, APIError?)-> Void) {
         AF.request(UserRouter.login)
             .validate(statusCode: 200...500)
-            .responseData { dataReponse in
-                guard let statusCode = dataReponse.response?.statusCode else { return }
+            .responseData { response in
+                guard let statusCode = response.response?.statusCode else { return }
                 
-                switch dataReponse.result {
+                switch response.result {
                     
                 case .success(let data):
                     
@@ -31,10 +31,11 @@ final class UserAPI {
                         completionHandler(nil, statusCode, nil)
                         return
                     }
-                    
                     completionHandler(decodedData, statusCode, nil)
                     
-                case .failure(let error):
+                case .failure(_):
+                    guard let statusCode = response.response?.statusCode else { return }
+                    guard let error = APIError(rawValue: statusCode) else { return }
                     
                     completionHandler(nil, statusCode, error)
                 }
@@ -46,14 +47,17 @@ final class UserAPI {
     func requestSignup(signup: SignupRequest, completionHandler: @escaping (Int?, Error?)-> Void) {
         AF.request(UserRouter.signup(signupRequest: signup))
             .validate(statusCode: 200...500)
-            .responseData { dataReponse in
-                guard let statusCode = dataReponse.response?.statusCode else { return }
+            .responseData { response in
+                guard let statusCode = response.response?.statusCode else { return }
                 
-                switch dataReponse.result {
+                switch response.result {
                 case .success(_):
                     completionHandler(statusCode, nil)
                     
-                case .failure(let error):
+                case .failure(_):
+                    guard let statusCode = response.response?.statusCode else { return }
+                    guard let error = APIError(rawValue: statusCode) else { return }
+                    
                     completionHandler(statusCode, error)
                 }
             }
@@ -64,15 +68,18 @@ final class UserAPI {
     func requestWithdraw(completionHandler: @escaping (Int?, Error?) -> Void) {
         AF.request(UserRouter.withdraw)
             .validate(statusCode: 200...500)
-            .responseData { dataReponse in
-                guard let statusCode = dataReponse.response?.statusCode else { return }
+            .responseData { response in
+                guard let statusCode = response.response?.statusCode else { return }
                 
-                switch dataReponse.result {
+                switch response.result {
                     
                 case .success(_):
                     completionHandler(statusCode, nil)
                     
-                case .failure(let error):
+                case .failure(_):
+                    guard let statusCode = response.response?.statusCode else { return }
+                    guard let error = APIError(rawValue: statusCode) else { return }
+                    
                     completionHandler(statusCode, error)
                 }
             }
