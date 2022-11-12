@@ -109,6 +109,8 @@ extension OnboardingViewController: BaseViewControllerAttribute {
         button.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
+                UserDefaults.standard.set(true, forKey: Constant.UserDefaults.isNotFirst)
+                
                 let viewController = UINavigationController(rootViewController: PhoneNumberViewController())
                 viewController.modalPresentationStyle = .fullScreen
                 viewController.modalTransitionStyle = .crossDissolve

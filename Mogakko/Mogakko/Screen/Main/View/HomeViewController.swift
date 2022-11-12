@@ -42,6 +42,15 @@ class HomeViewController: UIViewController {
                 UserAPI.shared.requestWithdraw { statusCode, error in
                     guard let statusCode = statusCode else { return }
                     print(statusCode)
+                    if statusCode == 200 {
+                        print("회원탈퇴 성공")
+                    } else if statusCode == 401 {
+                        print("Firebase Token Error")
+                    } else if statusCode == 406 {
+                        print("이미 탈퇴된 회원/미가입 회원")
+                    } else if statusCode == 500 {
+                        print("Server Error")
+                    }
                 }
             }
             .disposed(by: disposeBag)

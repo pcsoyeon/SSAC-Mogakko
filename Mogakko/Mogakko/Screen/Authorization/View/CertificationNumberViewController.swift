@@ -171,6 +171,7 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
 
                             UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
 
+                            print("💨 메모리스 서버로 요청 !!!!")
                             vc.requestLogin()
                         }
                         
