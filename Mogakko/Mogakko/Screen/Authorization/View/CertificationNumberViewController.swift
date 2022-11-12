@@ -147,8 +147,6 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, _ in
                 
-                // MARK: - 유효 번호 검사
-                
                 guard let verificationCode = vc.numberTextField.text else { return }
 
                 let credential = PhoneAuthProvider.provider().credential(withVerificationID: vc.verificationID, verificationCode: verificationCode)
@@ -168,7 +166,6 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                             
                             UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
                             self.requestLogin()
-                            
                         }
                         
                     }
@@ -181,25 +178,19 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
     // MARK: - Network
     
     private func requestLogin() {
-        // 1. 성공한 경우
-        // 1-1. 서버로부터 사용자 정보 확인 (get)
+        // 서버로부터 사용자 정보 확인 (get)
         UserAPI.shared.requestLogin { [weak self] data, statusCode, error in
             guard let self = self else { return }
             
             guard let statusCode = statusCode else { return }
             
             if statusCode == 200 {
-                // 1-2.
                 // 기존 사용자라면 -> 홈 화면으로
                 guard let data = data else { return }
                 print("🍀 사용자 정보 - \(data)")
-                let tabBarController = UINavigationController(rootViewController: TabBarViewController())
-                tabBarController.modalTransitionStyle = .crossDissolve
-                tabBarController.modalPresentationStyle = .fullScreen
-                self.present(tabBarController, animated: true)
+                Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
                 
             } else if statusCode == 401 {
-                // 1-4.
                 // 토큰이 만료된 경우, 새로 토큰 발급
                 print("💨 토큰 만료 !!! -> 새로 토큰 발급")
                 
@@ -217,7 +208,6 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                 }
                 
             } else if statusCode == 406 {
-                // 1-3.
                 // 신규 사용자라면 -> 회원가입 화면으로
                 self.navigationController?.pushViewController(NicknameViewController(), animated: true)
             } else if statusCode == 500 {
@@ -225,11 +215,6 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
             } else if statusCode == 501 {
                 self.showToast(message: "Client Error")
             }
-            
         }
-    }
-    
-    private func refreshToken() {
-        
     }
 }

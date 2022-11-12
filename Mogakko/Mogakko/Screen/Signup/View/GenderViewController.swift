@@ -175,28 +175,19 @@ extension GenderViewController: BaseViewControllerAttribute {
                     
                     vc.viewModel.requestSignup { statusCode in
                         if statusCode == 200 {
-                            print("🍋 홈 화면으로 이동")
-                            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                            
-                            sceneDelegate?.window?.rootViewController = UINavigationController(rootViewController: TabBarViewController())
-                            sceneDelegate?.window?.makeKeyAndVisible()
-                            
+                            Helper.convertNavigationRootViewController(view: vc.view, controller: TabBarViewController())
                         } else if statusCode == 201 {
-                            print("🍋 이미 가입한 유저 -> 로그인 화면으로 이동")
                             vc.showToast(message: "이미 가입한 유저입니다.")
+                            Helper.convertNavigationRootViewController(view: vc.view, controller: PhoneNumberViewController())
                         } else if statusCode == 202 {
-                            print("🍋 사용할 수 없는 닉네임 -> 닉네임 화면으로 이동")
-                            
-                            // 닉네임 화면까지 pop
+                            vc.showToast(message: "사용할 수 없는 닉네임입니다.")
                             vc.popToNicknameView()
-                            
                         } else if statusCode == 401 {
-                            print("🍋 Firebase Token Error")
+                            vc.showToast(message: "만료된 토큰입니다.")
                         } else if statusCode == 500 {
-                            print("🍋 Server Error")
+                            vc.showToast(message: "서버 에러입니다. 잠시 후 이용해주세요.")
                         } else if statusCode == 501 {
-                            print("🍋 Header와 RequestBody에 값 확인")
+                            vc.showToast(message: "request header/body를 확인해주세요.")
                         }
                     }
                     

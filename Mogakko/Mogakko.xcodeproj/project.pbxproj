@@ -11,6 +11,8 @@
 		920B6713291F64BF000191F1 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B6712291F64BF000191F1 /* UILabel+Extension.swift */; };
 		920B6715291F7D5D000191F1 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B6714291F7D5D000191F1 /* Helper.swift */; };
 		920B6717291F8F3D000191F1 /* MDSFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B6716291F8F3D000191F1 /* MDSFloatingButton.swift */; };
+		920B671A291FC064000191F1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 920B6719291FC064000191F1 /* FirebaseAuth */; };
+		920B671C291FC064000191F1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 920B671B291FC064000191F1 /* FirebaseMessaging */; };
 		923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE0C291A3CF500A2FE75 /* NicknameViewController.swift */; };
 		923DDE0F291A429400A2FE75 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE0E291A429400A2FE75 /* BirthViewController.swift */; };
 		923DDE11291A434700A2FE75 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE10291A434700A2FE75 /* BirthViewModel.swift */; };
@@ -64,7 +66,6 @@
 		92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE4A291B70E200094D3E /* NetworkMonitor.swift */; };
 		92A5DE4D291B77EB00094D3E /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE4C291B77EB00094D3E /* Endpoint.swift */; };
 		92A5DE4F291B784200094D3E /* APIConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE4E291B784200094D3E /* APIConstant.swift */; };
-		92A5DE52291B809200094D3E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 92A5DE51291B809200094D3E /* FirebaseAuth */; };
 		92A5DE58291B956B00094D3E /* CertificationNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE57291B956B00094D3E /* CertificationNumberViewModel.swift */; };
 		92A5DE5A291BC10A00094D3E /* BaseViewModelAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE59291BC10A00094D3E /* BaseViewModelAttribute.swift */; };
 		92A5DE5C291CA27200094D3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92A5DE5B291CA27200094D3E /* GoogleService-Info.plist */; };
@@ -152,7 +153,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				923DDE2D291ABA9E00A2FE75 /* Alamofire in Frameworks */,
-				92A5DE52291B809200094D3E /* FirebaseAuth in Frameworks */,
+				920B671A291FC064000191F1 /* FirebaseAuth in Frameworks */,
+				920B671C291FC064000191F1 /* FirebaseMessaging in Frameworks */,
 				92560759291945AA00A13FFB /* RxCocoa in Frameworks */,
 				925607182918DF1C00A13FFB /* SnapKit in Frameworks */,
 				9256075B291945AA00A13FFB /* RxSwift in Frameworks */,
@@ -536,7 +538,8 @@
 				92560758291945AA00A13FFB /* RxCocoa */,
 				9256075A291945AA00A13FFB /* RxSwift */,
 				923DDE2C291ABA9E00A2FE75 /* Alamofire */,
-				92A5DE51291B809200094D3E /* FirebaseAuth */,
+				920B6719291FC064000191F1 /* FirebaseAuth */,
+				920B671B291FC064000191F1 /* FirebaseMessaging */,
 			);
 			productName = Mogakko;
 			productReference = 925606F02918D51800A13FFB /* Mogakko.app */;
@@ -571,7 +574,7 @@
 				925607372918F0CB00A13FFB /* XCRemoteSwiftPackageReference "Then" */,
 				92560757291945AA00A13FFB /* XCRemoteSwiftPackageReference "RxSwift" */,
 				923DDE2B291ABA9E00A2FE75 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				92A5DE50291B809200094D3E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				920B6718291FC064000191F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 925606F12918D51800A13FFB /* Products */;
 			projectDirPath = "";
@@ -879,6 +882,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		920B6718291FC064000191F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		923DDE2B291ABA9E00A2FE75 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -911,17 +922,19 @@
 				kind = branch;
 			};
 		};
-		92A5DE50291B809200094D3E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		920B6719291FC064000191F1 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 920B6718291FC064000191F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		920B671B291FC064000191F1 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 920B6718291FC064000191F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		923DDE2C291ABA9E00A2FE75 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 923DDE2B291ABA9E00A2FE75 /* XCRemoteSwiftPackageReference "Alamofire" */;
@@ -946,11 +959,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 92560757291945AA00A13FFB /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
-		};
-		92A5DE51291B809200094D3E /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 92A5DE50291B809200094D3E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
