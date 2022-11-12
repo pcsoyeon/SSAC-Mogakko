@@ -50,6 +50,16 @@ class HomeViewController: UIViewController {
                     print(statusCode)
                     if statusCode == 200 {
                         print("회원탈퇴 성공")
+                        
+                        // UserDefaults 값 초기화
+                        for key in UserDefaults.standard.dictionaryRepresentation().keys {
+                            UserDefaults.standard.removeObject(forKey: key.description)
+                        }
+                        
+                        // Onboarding부터 시작할 수 있도록
+                        UserDefaults.standard.set(false, forKey: Constant.UserDefaults.isNotFirst)
+                        Helper.convertRootViewController(view: self.view, controller: OnboardingViewController())
+                        
                     } else if statusCode == 401 {
                         print("Firebase Token Error")
                     } else if statusCode == 406 {
