@@ -91,7 +91,7 @@ extension OnboardingViewController: BaseViewControllerAttribute {
     func bind() {
         let listObservable = Observable.of(list)
         listObservable.bind(to: collectionView.rx.items(cellIdentifier: OnboardingCollectionViewCell.reuseIdentifier, cellType: OnboardingCollectionViewCell.self)) { index, data, cell in
-            cell.setData(title: data.title, image: data.image)
+            cell.setData(title: data.title, image: data.image, index: index)
         }
         .disposed(by: disposeBag)
         

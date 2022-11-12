@@ -41,8 +41,15 @@ final class OnboardingCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    func setData(title: String, image: UIImage) {
-        titleLabel.text = title
+    func setData(title: String, image: UIImage, index: Int) {
         imageView.image = image
+        
+        if index == 0 {
+            titleLabel.setHighlighted(title, with: "위치 기반")
+        } else if index == 1{
+            titleLabel.setHighlighted(title, with: "스터디를 원하는 친구")
+        } else {
+            titleLabel.text = title
+        }
     }
 }
