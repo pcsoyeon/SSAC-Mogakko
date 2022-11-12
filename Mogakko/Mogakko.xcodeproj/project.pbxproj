@@ -18,6 +18,7 @@
 		920B672829200955000191F1 /* MyInfoHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B672729200955000191F1 /* MyInfoHeaderTableViewCell.swift */; };
 		920B672A29200B38000191F1 /* MyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B672929200B38000191F1 /* MyInfoViewModel.swift */; };
 		920B672D29200B78000191F1 /* MyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B672C29200B78000191F1 /* MyInfo.swift */; };
+		920B672F292015AA000191F1 /* MypageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B672E292015AA000191F1 /* MypageRequest.swift */; };
 		923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE0C291A3CF500A2FE75 /* NicknameViewController.swift */; };
 		923DDE0F291A429400A2FE75 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE0E291A429400A2FE75 /* BirthViewController.swift */; };
 		923DDE11291A434700A2FE75 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE10291A434700A2FE75 /* BirthViewModel.swift */; };
@@ -94,6 +95,7 @@
 		920B672729200955000191F1 /* MyInfoHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		920B672929200B38000191F1 /* MyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewModel.swift; sourceTree = "<group>"; };
 		920B672C29200B78000191F1 /* MyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfo.swift; sourceTree = "<group>"; };
+		920B672E292015AA000191F1 /* MypageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageRequest.swift; sourceTree = "<group>"; };
 		923DDE0C291A3CF500A2FE75 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		923DDE0E291A429400A2FE75 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
 		923DDE10291A434700A2FE75 /* BirthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewModel.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				920B672C29200B78000191F1 /* MyInfo.swift */,
+				920B672E292015AA000191F1 /* MypageRequest.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -707,6 +710,7 @@
 				920B6723292003EC000191F1 /* MyInfoViewController.swift in Sources */,
 				925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */,
 				925607472918F35200A13FFB /* MDSButton.swift in Sources */,
+				920B672F292015AA000191F1 /* MypageRequest.swift in Sources */,
 				92560762291946FF00A13FFB /* BaseTableViewCell.swift in Sources */,
 				9256076F2919CC9D00A13FFB /* String+Extension.swift in Sources */,
 				92A5DE67291D124700094D3E /* SignupRequest.swift in Sources */,

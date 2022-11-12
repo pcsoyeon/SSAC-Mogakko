@@ -14,6 +14,7 @@ enum UserRouter {
     case signup(signupRequest: SignupRequest)
     case withdraw
     case updateFcmToken
+    case mypage(mypageRequest: MypageRequest)
 }
 
 extension UserRouter: URLRequestConvertible {
@@ -29,6 +30,8 @@ extension UserRouter: URLRequestConvertible {
             return Endpoint.User.withDraw
         case .updateFcmToken:
             return Endpoint.User.updateFcmToken
+        case .mypage:
+            return Endpoint.User.mypage
         }
     }
     
@@ -37,7 +40,7 @@ extension UserRouter: URLRequestConvertible {
         case .login:
             return [APIConstant.ContentType.contentType : APIConstant.ContentType.json,
                     APIConstant.idtoken : APIKey.idToken ]
-        case .signup, .withdraw, .updateFcmToken:
+        case .signup, .withdraw, .updateFcmToken, .mypage:
             return [APIConstant.ContentType.contentType : APIConstant.ContentType.formUrlEncoded,
                     APIConstant.idtoken : APIKey.idToken]
         }
@@ -51,7 +54,7 @@ extension UserRouter: URLRequestConvertible {
             return .post
         case .withdraw:
             return .post
-        case .updateFcmToken:
+        case .updateFcmToken, .mypage:
             return .put
         }
     }
@@ -71,6 +74,12 @@ extension UserRouter: URLRequestConvertible {
             return ["" : ""]
         case .updateFcmToken:
             return ["" : ""]
+        case .mypage(let mypageRequest):
+            return ["searchable" : "\(mypageRequest.searchable)",
+                    "ageMin" : "\(mypageRequest.ageMin)",
+                    "ageMax" : "\(mypageRequest.ageMax)",
+                    "gender" : "\(mypageRequest.gender)",
+                    "study" : mypageRequest.study]
         }
     }
     
@@ -82,7 +91,7 @@ extension UserRouter: URLRequestConvertible {
         request.headers = HTTPHeaders(headers)
         
         switch self {
-        case .login, .signup, .withdraw, .updateFcmToken:
+        case .login, .signup, .withdraw, .updateFcmToken, .mypage:
             request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
         }
         

@@ -84,4 +84,26 @@ final class UserAPI {
                 }
             }
     }
+    
+    // MARK: - Mypage
+    
+    func requestMypage(mypage: MypageRequest, completionHandler: @escaping (Int?, Error?) -> Void) {
+        AF.request(UserRouter.mypage(mypageRequest: mypage))
+            .validate(statusCode: 200...500)
+            .responseData { response in
+                guard let statusCode = response.response?.statusCode else { return }
+                
+                switch response.result {
+                    
+                case .success(_):
+                    completionHandler(statusCode, nil)
+                    
+                case .failure(_):
+                    guard let statusCode = response.response?.statusCode else { return }
+                    guard let error = APIError(rawValue: statusCode) else { return }
+                    
+                    completionHandler(statusCode, error)
+                }
+            }
+    }
 }
