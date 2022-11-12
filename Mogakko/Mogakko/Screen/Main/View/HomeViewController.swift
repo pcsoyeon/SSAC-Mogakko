@@ -27,6 +27,12 @@ class HomeViewController: UIViewController {
     
     // MARK: - Life Cycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+        networkMoniter()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
