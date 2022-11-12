@@ -13,6 +13,11 @@
 		920B6717291F8F3D000191F1 /* MDSFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B6716291F8F3D000191F1 /* MDSFloatingButton.swift */; };
 		920B671A291FC064000191F1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 920B6719291FC064000191F1 /* FirebaseAuth */; };
 		920B671C291FC064000191F1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 920B671B291FC064000191F1 /* FirebaseMessaging */; };
+		920B6723292003EC000191F1 /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B6722292003EC000191F1 /* MyInfoViewController.swift */; };
+		920B6726292007C9000191F1 /* MyInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B6725292007C9000191F1 /* MyInfoTableViewCell.swift */; };
+		920B672829200955000191F1 /* MyInfoHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B672729200955000191F1 /* MyInfoHeaderTableViewCell.swift */; };
+		920B672A29200B38000191F1 /* MyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B672929200B38000191F1 /* MyInfoViewModel.swift */; };
+		920B672D29200B78000191F1 /* MyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B672C29200B78000191F1 /* MyInfo.swift */; };
 		923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE0C291A3CF500A2FE75 /* NicknameViewController.swift */; };
 		923DDE0F291A429400A2FE75 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE0E291A429400A2FE75 /* BirthViewController.swift */; };
 		923DDE11291A434700A2FE75 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE10291A434700A2FE75 /* BirthViewModel.swift */; };
@@ -84,6 +89,11 @@
 		920B6712291F64BF000191F1 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		920B6714291F7D5D000191F1 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		920B6716291F8F3D000191F1 /* MDSFloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSFloatingButton.swift; sourceTree = "<group>"; };
+		920B6722292003EC000191F1 /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
+		920B6725292007C9000191F1 /* MyInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoTableViewCell.swift; sourceTree = "<group>"; };
+		920B672729200955000191F1 /* MyInfoHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		920B672929200B38000191F1 /* MyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewModel.swift; sourceTree = "<group>"; };
+		920B672C29200B78000191F1 /* MyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfo.swift; sourceTree = "<group>"; };
 		923DDE0C291A3CF500A2FE75 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		923DDE0E291A429400A2FE75 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
 		923DDE10291A434700A2FE75 /* BirthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewModel.swift; sourceTree = "<group>"; };
@@ -165,6 +175,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		920B671F29200364000191F1 /* MyInfo */ = {
+			isa = PBXGroup;
+			children = (
+				920B672B29200B6E000191F1 /* Model */,
+				920B67202920038B000191F1 /* View */,
+				920B672129200390000191F1 /* ViewModel */,
+			);
+			path = MyInfo;
+			sourceTree = "<group>";
+		};
+		920B67202920038B000191F1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				920B6724292007B7000191F1 /* Cell */,
+				920B6722292003EC000191F1 /* MyInfoViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		920B672129200390000191F1 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				920B672929200B38000191F1 /* MyInfoViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		920B6724292007B7000191F1 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				920B6725292007C9000191F1 /* MyInfoTableViewCell.swift */,
+				920B672729200955000191F1 /* MyInfoHeaderTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		920B672B29200B6E000191F1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				920B672C29200B78000191F1 /* MyInfo.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		923DDE09291A3CC500A2FE75 /* Signup */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,7 +307,8 @@
 		925607082918D54500A13FFB /* Screen */ = {
 			isa = PBXGroup;
 			children = (
-				92A5DE6E291DBFBD00094D3E /* Main */,
+				920B671F29200364000191F1 /* MyInfo */,
+				92A5DE6E291DBFBD00094D3E /* Home */,
 				923DDE09291A3CC500A2FE75 /* Signup */,
 				9256076529194F1C00A13FFB /* Authorization */,
 				9256070F2918D5A300A13FFB /* Onboarding */,
@@ -491,13 +546,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		92A5DE6E291DBFBD00094D3E /* Main */ = {
+		92A5DE6E291DBFBD00094D3E /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				92A5DE75291E526A00094D3E /* View */,
 				92A5DE74291E526300094D3E /* ViewModel */,
 			);
-			path = Main;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		92A5DE74291E526300094D3E /* ViewModel */ = {
@@ -620,6 +675,8 @@
 				925607132918DDD100A13FFB /* BaseViewControllerAttribute.swift in Sources */,
 				92A5DE61291CFBF800094D3E /* UserAPI.swift in Sources */,
 				923DDE1D291A4CE000A2FE75 /* GenderViewController.swift in Sources */,
+				920B672A29200B38000191F1 /* MyInfoViewModel.swift in Sources */,
+				920B672D29200B78000191F1 /* MyInfo.swift in Sources */,
 				925607362918F0B400A13FFB /* MDSNavigationBar.swift in Sources */,
 				925607342918EF6300A13FFB /* BackButton.swift in Sources */,
 				92560756291926A700A13FFB /* MDSFont.swift in Sources */,
@@ -640,12 +697,14 @@
 				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,
 				92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */,
 				92A5DE5F291CF53100094D3E /* UserRouter.swift in Sources */,
+				920B672829200955000191F1 /* MyInfoHeaderTableViewCell.swift in Sources */,
 				9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */,
 				923DDE25291A671100A2FE75 /* UIViewController+Extension.swift in Sources */,
 				92A5DE5A291BC10A00094D3E /* BaseViewModelAttribute.swift in Sources */,
 				92A5DE58291B956B00094D3E /* CertificationNumberViewModel.swift in Sources */,
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
 				92A5DE6D291DB8EA00094D3E /* Date+Extension.swift in Sources */,
+				920B6723292003EC000191F1 /* MyInfoViewController.swift in Sources */,
 				925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */,
 				925607472918F35200A13FFB /* MDSButton.swift in Sources */,
 				92560762291946FF00A13FFB /* BaseTableViewCell.swift in Sources */,
@@ -661,6 +720,7 @@
 				92560764291948DE00A13FFB /* Onboarding.swift in Sources */,
 				92A5DE4D291B77EB00094D3E /* Endpoint.swift in Sources */,
 				9256073D2918F1BD00A13FFB /* UITextField+Extension.swift in Sources */,
+				920B6726292007C9000191F1 /* MyInfoTableViewCell.swift in Sources */,
 				925606F62918D51800A13FFB /* SceneDelegate.swift in Sources */,
 				925607152918DEBC00A13FFB /* Reusable.swift in Sources */,
 			);

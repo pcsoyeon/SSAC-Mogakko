@@ -27,7 +27,7 @@ final class TabBarViewController: UITabBarController, UITabBarControllerDelegate
         let firstTabController = HomeViewController()
         let secondTabController = UIViewController()
         let thirdTabController = UIViewController()
-        let fourthTabController = UIViewController()
+        let fourthTabController = UINavigationController(rootViewController: MyInfoViewController())
         
         firstTabController.tabBarItem = UITabBarItem(
             title: "홈",

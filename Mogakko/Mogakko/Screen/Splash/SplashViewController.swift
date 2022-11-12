@@ -102,7 +102,8 @@ final class SplashViewController: UIViewController {
                         print("✨ 새로 발급 받은 토큰 - \(idToken)")
                         UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
 
-                        Helper.convertNavigationRootViewController(view: self.view, controller: SplashViewController())
+                        // TODO: - 토큰 재발급 이후 로직 구현
+                        self.showToast(message: "에러가 발생했습니다. 잠시 후 다시 시도해주세요.")
                     }
                 }
                 

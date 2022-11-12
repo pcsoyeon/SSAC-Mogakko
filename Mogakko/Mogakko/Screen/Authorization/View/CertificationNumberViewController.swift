@@ -202,8 +202,7 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                         guard let idToken = idToken else { return }
                         print("✨ 새로 발급 받은 토큰 - \(idToken)")
                         UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
-                        
-                        Helper.convertRootViewController(view: self.view, controller: SplashViewController())
+                        self.showToast(message: "에러가 발생했습니다. 잠시 후 다시 시도해주세요.")
                     }
                 }
                 
