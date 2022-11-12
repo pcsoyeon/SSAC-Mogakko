@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        // 원격 알림 시스템에 앱을 등록
+        // MARK: - 원격 알림 등록
+        
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
             UNUserNotificationCenter.current().delegate = self
@@ -38,15 +39,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         
-        // 메시지 대리자 설정
+        // MARK: - 등록 토큰 액세스
+        
         Messaging.messaging().delegate = self
         
-        // 현재 등록된 토큰 가져오기
         Messaging.messaging().token { token, error in
             if let error = error {
                 print("Error fetching FCM registration token: \(error)")
             } else if let token = token {
                 print("FCM registration token: \(token)")
+                UserDefaults.standard.set(token, forKey: Constant.UserDefaults.FCMtoken)
             }
         }
         
@@ -73,26 +75,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 }
+// MARK: - UNUserNotificationCenterDelegate
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    // 재구성 사용 중지됨: APNs 토큰과 등록 토큰 매핑
-    func application(application: UIApplication,
-                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
     }
     
-    // foreground 알림 수신: 로컬 푸시와 동일
+    // foreground 수신
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
-        // .banner, .list, iOS 14+
-        completionHandler([.badge, .sound, .banner, .list])
+        completionHandler([.list, .banner, .badge, .sound])
     }
     
-    // 유저가 푸시를 클릭했을 때만 수신확인 가능
+    // 사용자가 푸시를 클릭했을 때
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("🍋 사용자가 푸시를 클릭했습니다. 🍋")
+                
+        // userInfo: key - 1 (광고), 2(채팅방), 3(사용자 설정)
+        print("사용자가 푸시를 눌렀습니다.", response.notification.request.content.userInfo)
+        print("사용자가 푸시를 눌렀습니다.", response.notification.request.content.body)
+        
+        let userInfo = response.notification.request.content.userInfo
+        if userInfo[AnyHashable("key")] as? Int == 1 {
+            print("광고 푸시 입니다.")
+        } else {
+            print("다른 푸시입니다.")
+        }
     }
 }
+
+// MARK: - MessagingDelegate
 
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
@@ -104,8 +115,5 @@ extension AppDelegate: MessagingDelegate {
             object: nil,
             userInfo: dataDict
         )
-        
-        // TODO: If necessary send token to application server.
-        // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
 }
