@@ -8,7 +8,6 @@
 import Foundation
 
 enum APIError: Int, Error {
-    case success = 200
     case invalidAuthorization = 401
     case takenEmail = 406
     case serverError = 500
@@ -18,8 +17,6 @@ enum APIError: Int, Error {
 extension APIError: LocalizedError {
     var errorDescription: String? {
         switch self {
-        case .success:
-            return "로그인 성공"
         case .invalidAuthorization:
             return "토큰이 만료되었습니다. 다시 로그인 해주세요."
         case .takenEmail:
