@@ -94,11 +94,7 @@ extension MyInfoViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .subscribe(onNext: { vc, indexPath in
                 if indexPath.row == 0 {
-                    // 화면 전환
-                    let param = MypageRequest(searchable: 1, ageMin: 20, ageMax: 30, gender: 0, study: "Coding")
-                    UserAPI.shared.requestMypage(mypage: param) { statusCode, error in
-                        print("🥑 마이페이지 수정 상태코드 : \(statusCode)")
-                    }
+                    vc.navigationController?.pushViewController(InfoManagementViewController(), animated: true)
                 }
                 vc.tableView.deselectRow(at: indexPath, animated: false)
             })

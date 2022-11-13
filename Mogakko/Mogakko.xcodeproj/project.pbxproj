@@ -19,6 +19,8 @@
 		920B672A29200B38000191F1 /* MyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B672929200B38000191F1 /* MyInfoViewModel.swift */; };
 		920B672D29200B78000191F1 /* MyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B672C29200B78000191F1 /* MyInfo.swift */; };
 		920B672F292015AA000191F1 /* MypageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B672E292015AA000191F1 /* MypageRequest.swift */; };
+		920B67312920A3B5000191F1 /* InfoManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B67302920A3B5000191F1 /* InfoManagementViewController.swift */; };
+		920B67332920A692000191F1 /* InfoManagementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B67322920A692000191F1 /* InfoManagementViewModel.swift */; };
 		923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE0C291A3CF500A2FE75 /* NicknameViewController.swift */; };
 		923DDE0F291A429400A2FE75 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE0E291A429400A2FE75 /* BirthViewController.swift */; };
 		923DDE11291A434700A2FE75 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE10291A434700A2FE75 /* BirthViewModel.swift */; };
@@ -96,6 +98,8 @@
 		920B672929200B38000191F1 /* MyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewModel.swift; sourceTree = "<group>"; };
 		920B672C29200B78000191F1 /* MyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfo.swift; sourceTree = "<group>"; };
 		920B672E292015AA000191F1 /* MypageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageRequest.swift; sourceTree = "<group>"; };
+		920B67302920A3B5000191F1 /* InfoManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoManagementViewController.swift; sourceTree = "<group>"; };
+		920B67322920A692000191F1 /* InfoManagementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoManagementViewModel.swift; sourceTree = "<group>"; };
 		923DDE0C291A3CF500A2FE75 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		923DDE0E291A429400A2FE75 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
 		923DDE10291A434700A2FE75 /* BirthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewModel.swift; sourceTree = "<group>"; };
@@ -192,6 +196,7 @@
 			children = (
 				920B6724292007B7000191F1 /* Cell */,
 				920B6722292003EC000191F1 /* MyInfoViewController.swift */,
+				920B67302920A3B5000191F1 /* InfoManagementViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -200,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				920B672929200B38000191F1 /* MyInfoViewModel.swift */,
+				920B67322920A692000191F1 /* InfoManagementViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -690,6 +696,7 @@
 				9256073F2918F2E700A13FFB /* MDSInputTextField.swift in Sources */,
 				92A5DE64291CFC5600094D3E /* Login.swift in Sources */,
 				9256073B2918F14D00A13FFB /* UIView+Extension.swift in Sources */,
+				920B67312920A3B5000191F1 /* InfoManagementViewController.swift in Sources */,
 				923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */,
 				92A5DE77291E529500094D3E /* HomeViewController.swift in Sources */,
 				92A5DE6B291DB66A00094D3E /* UserDefaults.swift in Sources */,
@@ -717,6 +724,7 @@
 				92A5DE70291DBFE900094D3E /* TabBarViewController.swift in Sources */,
 				9256076B2919C21600A13FFB /* CertificationNumberViewController.swift in Sources */,
 				92A5DE4F291B784200094D3E /* APIConstant.swift in Sources */,
+				920B67332920A692000191F1 /* InfoManagementViewModel.swift in Sources */,
 				9256074C2918F95500A13FFB /* OnboardingViewController.swift in Sources */,
 				9256072C2918EDC100A13FFB /* Metric.swift in Sources */,
 				923DDE19291A4B9200A2FE75 /* EmailViewController.swift in Sources */,
