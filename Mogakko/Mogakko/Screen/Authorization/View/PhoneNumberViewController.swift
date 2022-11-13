@@ -106,35 +106,32 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
                 
                 guard let phonNumber = vc.numberTextField.text else { return }
                 
-                // 1. 유효화 검사
                 if phonNumber.count >= 12 {
                     
                     vc.showToast(message: "전화 번호 인증 시작")
                     
-                    vc.viewModel.requestVerificationCode(phoneNumber: phonNumber) { verificationID, error in
-                        // 2-1. 요청 후 실패했을 경우, 그에 따른 토스트메시지 alert
-                        if let error = error {
-                            vc.showToast(message: "과도한 인증 시도가 있었습니다. 나중에 다시 시도해 주세요.")
-                            print("🔴 Verification Error : \(error.localizedDescription)")
-                            return
-                        }
+                    vc.viewModel.requestVerificationCode(phoneNumber: phonNumber) { [weak self] verificationID, error in
+                        guard let self = self else { return }
+                        guard let verificationID = verificationID else { return }
                         
-                        guard let verificationID = verificationID else {
-                            vc.showToast(message: "에러가 발생했습니다. 다시 시도해주세요")
-                            print("🔴 Verification ID is nil")
-                            return
+                        if let error = error as NSError? {
+                            guard let errorCode = AuthErrorCode.Code(rawValue: error.code) else { return }
+                            switch errorCode {
+                            case .tooManyRequests:
+                                self.showToast(message: "과도한 인증 시도가 있었습니다. 나중에 다시 시도해 주세요.")
+                            default:
+                                self.showToast(message: "에러가 발생했습니다. 다시 시도해주세요.")
+                            }
                         }
                         
                         print("🟢 Vertification ID : \(verificationID)")
                         
-                        // 2-2. 요청 후 성공하면 화면 전환
                         let viewController = CertificationNumberViewController()
                         viewController.verificationID = verificationID
                         vc.navigationController?.pushViewController(viewController, animated: true)
                     }
                     
                 } else {
-                    // 3. 유효하지 않은 경우, 원인 alert
                     vc.showToast(message: "잘못된 전화번호 형식입니다.")
                 }
             }
