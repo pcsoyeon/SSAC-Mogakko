@@ -178,42 +178,52 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
     // MARK: - Network
     
     private func requestLogin() {
-        // 서버로부터 사용자 정보 확인 (get)
-        UserAPI.shared.requestLogin { [weak self] data, statusCode, error in
+        
+        UserAPI.shared.requestLogin(type: Login.self) { [weak self] response in
             guard let self = self else { return }
             
-            guard let statusCode = statusCode else { return }
-            
-            if statusCode == 200 {
-                // 기존 사용자라면 -> 홈 화면으로
-                guard let data = data else { return }
-                print("🍀 사용자 정보 - \(data)")
+            switch response {
+            case .success(let data):
+                print("🍀 사용자 정보 \(data)")
                 Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
                 
-            } else if statusCode == 401 {
-                // 토큰이 만료된 경우, 새로 토큰 발급
-                print("💨 토큰 만료 !!! -> 새로 토큰 발급")
+            case .failure(let error):
+                print(error.errorDescription)
                 
-                let currentUser = Auth.auth().currentUser
-                currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-                    if let error = error {
-                        print(error)
-                    } else {
-                        guard let idToken = idToken else { return }
-                        print("✨ 새로 발급 받은 토큰 - \(idToken)")
-                        UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
-                        self.showToast(message: "에러가 발생했습니다. 잠시 후 다시 시도해주세요.")
+                switch error {
+                case .takenUser:
+                    return
+                case .invalidNickname:
+                    return
+                case .invalidAuthorization:
+                    // 토큰이 만료된 경우, 새로 토큰 발급
+                    print("💨 토큰 만료 !!! -> 다시 로그인 or 토근 새로 발급")
+                    
+                    let currentUser = Auth.auth().currentUser
+                    currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                        if let error = error {
+                            print(error)
+                        } else {
+                            guard let idToken = idToken else { return }
+                            print("✨ 새로 발급 받은 토큰 - \(idToken)")
+                            UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
+
+                            // TODO: - 토큰 재발급 이후 로직 구현
+                            self.showToast(message: "에러가 발생했습니다. 잠시 후 다시 시도해주세요.")
+                        }
                     }
+                case .unsubscribedUser:
+                    // 신규 사용자라면 -> 회원가입 화면으로
+                    Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
+                case .serverError:
+                    self.showToast(message: "서버 내부 오류입니다. 잠시 후 재인증 해주세요.")
+                case .emptyParameters:
+                    self.showToast(message: "Client Error")
                 }
                 
-            } else if statusCode == 406 {
-                // 신규 사용자라면 -> 회원가입 화면으로
-                self.navigationController?.pushViewController(NicknameViewController(), animated: true)
-            } else if statusCode == 500 {
-                self.showToast(message: "서버 내부 오류입니다. 잠시 후 재인증 해주세요.")
-            } else if statusCode == 501 {
-                self.showToast(message: "Client Error")
             }
         }
+        
+        
     }
 }
