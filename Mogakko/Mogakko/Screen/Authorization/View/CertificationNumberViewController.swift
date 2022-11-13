@@ -58,7 +58,7 @@ final class CertificationNumberViewController: UIViewController {
     
     var verificationID: String = ""
     private let viewModel = CertificationNumberViewModel()
-
+    
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -148,9 +148,9 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
             .bind { vc, _ in
                 
                 guard let verificationCode = vc.numberTextField.text else { return }
-
+                
                 let credential = PhoneAuthProvider.provider().credential(withVerificationID: vc.verificationID, verificationCode: verificationCode)
-
+                
                 Auth.auth().signIn(with: credential) { result, error in
                     
                     if let error = error {
@@ -158,7 +158,6 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                         vc.showToast(message: "전화 번호 인증 실패")
                     } else {
                         print("🌊 인증번호 일치 -> Firebase idToken 요청")
-                        
                         
                         result?.user.getIDToken { idToken, error in
                             guard let idToken = idToken else { return }
@@ -188,15 +187,12 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                 Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
                 
             case .failure(let error):
-                print(error.errorDescription)
-                
                 switch error {
                 case .takenUser:
                     return
                 case .invalidNickname:
                     return
                 case .invalidAuthorization:
-                    // 토큰이 만료된 경우, 새로 토큰 발급
                     print("💨 토큰 만료 !!! -> 다시 로그인 or 토근 새로 발급")
                     
                     let currentUser = Auth.auth().currentUser
@@ -207,23 +203,20 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                             guard let idToken = idToken else { return }
                             print("✨ 새로 발급 받은 토큰 - \(idToken)")
                             UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
-
+                            
                             // TODO: - 토큰 재발급 이후 로직 구현
                             self.showToast(message: "에러가 발생했습니다. 잠시 후 다시 시도해주세요.")
                         }
                     }
                 case .unsubscribedUser:
-                    // 신규 사용자라면 -> 회원가입 화면으로
                     Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
                 case .serverError:
                     self.showToast(message: "서버 내부 오류입니다. 잠시 후 재인증 해주세요.")
                 case .emptyParameters:
                     self.showToast(message: "Client Error")
                 }
-                
             }
         }
-        
         
     }
 }

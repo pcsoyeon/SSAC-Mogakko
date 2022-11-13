@@ -12,6 +12,8 @@ import RxSwift
 import SnapKit
 import Then
 
+import FirebaseMessaging
+
 final class OnboardingViewController: UIViewController {
     
     // MARK: - UI Property
@@ -45,6 +47,23 @@ final class OnboardingViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     // MARK: - Life Cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if UserDefaults.standard.string(forKey: Constant.UserDefaults.FCMtoken) == nil {
+            print("💨 갱신을 한다???????")
+            Messaging.messaging().delegate = self
+            
+            Messaging.messaging().token { token, error in
+                if let error = error {
+                    print("Error fetching FCM registration token: \(error)")
+                } else if let token = token {
+                    print("FCM registration token: \(token)")
+                    UserDefaults.standard.set(token, forKey: Constant.UserDefaults.FCMtoken)
+                }
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,5 +157,16 @@ extension OnboardingViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+}
+
+// MARK: - Update FCM
+
+extension OnboardingViewController: MessagingDelegate {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        print("Firebase registration token: \(String(describing: fcmToken))")
+        
+        guard let fcmToken = fcmToken else { return }
+        UserDefaults.standard.set(fcmToken, forKey: Constant.UserDefaults.FCMtoken)
     }
 }

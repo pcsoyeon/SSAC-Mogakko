@@ -37,8 +37,6 @@ final class SplashViewController: UIViewController {
     func configureHierarchy() {
         view.addSubviews(logoImageView, textImageView)
         
-        // TODO: - 이미지 크기 비율로 조정
-        
         logoImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(216)
             make.width.equalTo(220)
@@ -87,8 +85,6 @@ final class SplashViewController: UIViewController {
                 print("🍀 사용자 정보 \(data)")
                 Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
             case .failure(let error):
-                print(error.errorDescription)
-                
                 switch error {
                 case .takenUser:
                     return
@@ -105,10 +101,22 @@ final class SplashViewController: UIViewController {
                         } else {
                             guard let idToken = idToken else { return }
                             print("✨ 새로 발급 받은 토큰 - \(idToken)")
-                            UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
-
+                            
                             // TODO: - 토큰 재발급 이후 로직 구현
-                            self.showToast(message: "에러가 발생했습니다. 잠시 후 다시 시도해주세요.")
+                            
+                            UserDefaults.standard.removeObject(forKey: Constant.UserDefaults.idtoken)
+                            UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
+                            
+                            UserAPI.shared.requestLogin(type: Login.self) { response in
+                                switch response {
+                                case .success(let success):
+                                    print("🍀 사용자 정보 - \(success)")
+                                    Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
+                                case .failure(let failure):
+                                    print("🔥 재발급 이후 Error - \(failure)")
+                                }
+                            }
+
                         }
                     }
                 case .unsubscribedUser:
@@ -122,6 +130,5 @@ final class SplashViewController: UIViewController {
                 
             }
         }
-        
     }
 }

@@ -114,7 +114,6 @@ extension InfoManagementViewController {
                 
             case .failure(let error):
                 switch error {
-                    
                 case .takenUser:
                     return
                 case .invalidNickname:
@@ -129,8 +128,6 @@ extension InfoManagementViewController {
                     print("클라 요청 에러")
                 }
             }
-            
-            
         }
     }
     

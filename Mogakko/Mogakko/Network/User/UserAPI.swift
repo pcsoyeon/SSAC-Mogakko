@@ -23,8 +23,8 @@ final class UserAPI {
                 switch response.result {
                 case .success(let data):
                     completionHandler(.success(data))
-                case .failure(_):
                     
+                case .failure(_):
                     guard let statusCode = response.response?.statusCode else { return }
                     guard let error = APIError(rawValue: statusCode) else { return }
                     
@@ -33,49 +33,21 @@ final class UserAPI {
             }
     }
     
-//    func requestLogin(completionHandler: @escaping (Login?, Int?, APIError?)-> Void) {
-//        AF.request(UserRouter.login)
-//            .validate(statusCode: 200...500)
-//            .responseData { response in
-//                guard let statusCode = response.response?.statusCode else { return }
-//
-//                switch response.result {
-//
-//                case .success(let data):
-//
-//                    let decoder = JSONDecoder()
-//                    guard let decodedData = try? decoder.decode(Login.self, from: data) else {
-//                        completionHandler(nil, statusCode, nil)
-//                        return
-//                    }
-//                    completionHandler(decodedData, statusCode, nil)
-//
-//                case .failure(_):
-//                    guard let statusCode = response.response?.statusCode else { return }
-//                    guard let error = APIError(rawValue: statusCode) else { return }
-//
-//                    completionHandler(nil, statusCode, error)
-//                }
-//            }
-//    }
-    
     // MARK: - Signup
     
-    func requestSignup(signup: SignupRequest, completionHandler: @escaping (Int?, Error?)-> Void) {
+    func requestSignup(signup: SignupRequest, completionHandler: @escaping (Result<Int, APIError>)-> Void) {
         AF.request(UserRouter.signup(signupRequest: signup))
             .validate(statusCode: 200...500)
             .responseData { response in
-                guard let statusCode = response.response?.statusCode else { return }
-                
                 switch response.result {
                 case .success(_):
-                    completionHandler(statusCode, nil)
+                    completionHandler(.success(200))
                     
                 case .failure(_):
                     guard let statusCode = response.response?.statusCode else { return }
                     guard let error = APIError(rawValue: statusCode) else { return }
                     
-                    completionHandler(statusCode, error)
+                    completionHandler(.failure(error))
                 }
             }
     }

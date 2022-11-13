@@ -21,10 +21,14 @@ final class GenderViewModel {
                                     email: UserDefaults.standard.string(forKey: Constant.UserDefaults.email)!,
                                     gender: UserDefaults.standard.integer(forKey: Constant.UserDefaults.nick))
         
-        UserAPI.shared.requestSignup(signup: request) { statusCode, error in
-            guard let statusCode = statusCode else { return }
+        UserAPI.shared.requestSignup(signup: request) { response in
             
-            completionHandler(statusCode)
+            switch response {
+            case .success(let data):
+                completionHandler(data)
+            case .failure(let error):
+                completionHandler(error.rawValue)
+            }
         }
     }
 }

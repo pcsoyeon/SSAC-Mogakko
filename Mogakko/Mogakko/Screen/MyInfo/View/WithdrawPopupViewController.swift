@@ -20,7 +20,7 @@ final class WithdrawPopupViewController: UIViewController {
         $0.title = "정말 탈퇴하시겠습니까?"
         $0.subtitle = "탈퇴하시면 새싹 스터디를 이용할 수 없어요ㅠ"
     }
-
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -29,7 +29,6 @@ final class WithdrawPopupViewController: UIViewController {
         configureAttribute()
         bind()
     }
-
 }
 
 extension WithdrawPopupViewController: BaseViewControllerAttribute {
@@ -54,7 +53,6 @@ extension WithdrawPopupViewController: BaseViewControllerAttribute {
             self.requestWithdraw()
             Helper.convertNavigationRootViewController(view: self.view, controller: OnboardingViewController())
         }
-
     }
 }
 
@@ -66,7 +64,7 @@ extension WithdrawPopupViewController {
             guard let self = self else { return }
             
             switch response {
-            case .success(let data):
+            case .success(_):
                 self.showToast(message: "회원탈퇴 성공")
                 
                 // UserDefaults 값 초기화
@@ -81,7 +79,6 @@ extension WithdrawPopupViewController {
             case .failure(let error) :
                 
                 switch error {
-                    
                 case .takenUser:
                     return
                 case .invalidNickname:
