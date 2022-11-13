@@ -50,6 +50,7 @@ final class PhoneNumberViewModel: BaseViewModelAttribute {
                 return pred.evaluate(with: text)
             }
             .asSignal(onErrorJustReturn: false)
+            .distinctUntilChanged()
         
         return Output(phoneNumber: phoneNumber,
                       isValid: isValid,
