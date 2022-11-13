@@ -19,4 +19,8 @@ final class InfoManagementViewModel {
     struct Output {
         
     }
+    
+    private func updateMypage() {
+        
+    }
 }

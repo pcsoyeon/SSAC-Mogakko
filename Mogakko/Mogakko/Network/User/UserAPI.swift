@@ -82,44 +82,40 @@ final class UserAPI {
     
     // MARK: - Withdraw
     
-    func requestWithdraw(completionHandler: @escaping (Int?, Error?) -> Void) {
+    func requestWithdraw(completionHandler: @escaping (Result<Int, APIError>) -> Void) {
         AF.request(UserRouter.withdraw)
             .validate(statusCode: 200...500)
             .responseData { response in
-                guard let statusCode = response.response?.statusCode else { return }
-                
                 switch response.result {
                     
                 case .success(_):
-                    completionHandler(statusCode, nil)
+                    completionHandler(.success(200))
                     
                 case .failure(_):
                     guard let statusCode = response.response?.statusCode else { return }
                     guard let error = APIError(rawValue: statusCode) else { return }
                     
-                    completionHandler(statusCode, error)
+                    completionHandler(.failure(error))
                 }
             }
     }
     
     // MARK: - Mypage
     
-    func requestMypage(mypage: MypageRequest, completionHandler: @escaping (Int?, Error?) -> Void) {
+    func updateMypage(mypage: MypageRequest, completionHandler: @escaping (Result<Int, APIError>) -> Void) {
         AF.request(UserRouter.mypage(mypageRequest: mypage))
             .validate(statusCode: 200...500)
             .responseData { response in
-                guard let statusCode = response.response?.statusCode else { return }
-                
                 switch response.result {
                     
                 case .success(_):
-                    completionHandler(statusCode, nil)
+                    completionHandler(.success(200))
                     
                 case .failure(_):
                     guard let statusCode = response.response?.statusCode else { return }
                     guard let error = APIError(rawValue: statusCode) else { return }
                     
-                    completionHandler(statusCode, error)
+                    completionHandler(.failure(error))
                 }
             }
     }

@@ -22,6 +22,7 @@
 		920B67312920A3B5000191F1 /* InfoManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B67302920A3B5000191F1 /* InfoManagementViewController.swift */; };
 		920B67332920A692000191F1 /* InfoManagementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B67322920A692000191F1 /* InfoManagementViewModel.swift */; };
 		920B67352920B5B9000191F1 /* MDSPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B67342920B5B9000191F1 /* MDSPopupView.swift */; };
+		920B67372920DA33000191F1 /* WithdrawPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B67362920DA33000191F1 /* WithdrawPopupViewController.swift */; };
 		923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE0C291A3CF500A2FE75 /* NicknameViewController.swift */; };
 		923DDE0F291A429400A2FE75 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE0E291A429400A2FE75 /* BirthViewController.swift */; };
 		923DDE11291A434700A2FE75 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE10291A434700A2FE75 /* BirthViewModel.swift */; };
@@ -102,6 +103,7 @@
 		920B67302920A3B5000191F1 /* InfoManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoManagementViewController.swift; sourceTree = "<group>"; };
 		920B67322920A692000191F1 /* InfoManagementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoManagementViewModel.swift; sourceTree = "<group>"; };
 		920B67342920B5B9000191F1 /* MDSPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSPopupView.swift; sourceTree = "<group>"; };
+		920B67362920DA33000191F1 /* WithdrawPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawPopupViewController.swift; sourceTree = "<group>"; };
 		923DDE0C291A3CF500A2FE75 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		923DDE0E291A429400A2FE75 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
 		923DDE10291A434700A2FE75 /* BirthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewModel.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				920B6724292007B7000191F1 /* Cell */,
 				920B6722292003EC000191F1 /* MyInfoViewController.swift */,
 				920B67302920A3B5000191F1 /* InfoManagementViewController.swift */,
+				920B67362920DA33000191F1 /* WithdrawPopupViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -722,6 +725,7 @@
 				925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */,
 				925607472918F35200A13FFB /* MDSButton.swift in Sources */,
 				920B672F292015AA000191F1 /* MypageRequest.swift in Sources */,
+				920B67372920DA33000191F1 /* WithdrawPopupViewController.swift in Sources */,
 				92560762291946FF00A13FFB /* BaseTableViewCell.swift in Sources */,
 				9256076F2919CC9D00A13FFB /* String+Extension.swift in Sources */,
 				92A5DE67291D124700094D3E /* SignupRequest.swift in Sources */,
