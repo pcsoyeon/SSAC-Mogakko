@@ -88,6 +88,7 @@
 		92A5DE6D291DB8EA00094D3E /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE6C291DB8EA00094D3E /* Date+Extension.swift */; };
 		92A5DE70291DBFE900094D3E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE6F291DBFE900094D3E /* TabBarViewController.swift */; };
 		92A5DE77291E529500094D3E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE76291E529500094D3E /* HomeViewController.swift */; };
+		92A640072921DFE100A6F708 /* MDSSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A640062921DFE100A6F708 /* MDSSlider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -167,6 +168,7 @@
 		92A5DE6C291DB8EA00094D3E /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		92A5DE6F291DBFE900094D3E /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		92A5DE76291E529500094D3E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		92A640062921DFE100A6F708 /* MDSSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSSlider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -439,6 +441,7 @@
 				925607462918F35200A13FFB /* MDSButton.swift */,
 				920B6716291F8F3D000191F1 /* MDSFloatingButton.swift */,
 				920B67342920B5B9000191F1 /* MDSPopupView.swift */,
+				92A640062921DFE100A6F708 /* MDSSlider.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 				923DDE21291A4FDD00A2FE75 /* NicknameViewModel.swift in Sources */,
 				9256076729194F3700A13FFB /* PhoneNumberViewController.swift in Sources */,
 				923DDE2A291AB90500A2FE75 /* APIKey.swift in Sources */,
+				92A640072921DFE100A6F708 /* MDSSlider.swift in Sources */,
 				920B6711291F5138000191F1 /* APIError.swift in Sources */,
 				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,
 				92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */,

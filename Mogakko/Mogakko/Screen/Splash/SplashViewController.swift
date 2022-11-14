@@ -82,6 +82,9 @@ final class SplashViewController: UIViewController {
             switch response {
             case .success(let data):
                 print("🍀 사용자 정보 \(data)")
+                
+                UserDefaults.standard.set(data.nick, forKey: Constant.UserDefaults.nick)
+                
                 Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
                 
             case .failure(let error):
@@ -90,12 +93,16 @@ final class SplashViewController: UIViewController {
                     return
                 case .invalidAuthorization:
                     Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                        
                         if let error = error {
                             print(error)
+                            return
                         }
                         
                         if let idToken = idToken {
+                            UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
                             print("✨ 새로 발급 받은 토큰 - \(idToken)")
+                            
                             self.refreshToken(idToken: idToken)
                         }
                     }
@@ -112,8 +119,6 @@ final class SplashViewController: UIViewController {
     }
     
     private func refreshToken(idToken: String) {
-        UserDefaults.standard.removeObject(forKey: Constant.UserDefaults.idtoken)
-        UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
         
         GenericAPI.shared.requestDecodableData(type: Login.self, router: UserRouter.login) { response in
             switch response {
@@ -124,5 +129,6 @@ final class SplashViewController: UIViewController {
                 print("🔥 재발급 이후 Error - \(failure)")
             }
         }
+        
     }
 }
