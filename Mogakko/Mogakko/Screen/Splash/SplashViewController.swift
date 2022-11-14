@@ -127,6 +127,7 @@ final class SplashViewController: UIViewController {
                 Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
             case .failure(let failure):
                 print("🔥 재발급 이후 Error - \(failure)")
+                self.showToast(message: "토큰 만료, 잠시 후 다시 시도해주세요.")
             }
         }
         

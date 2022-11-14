@@ -87,8 +87,10 @@
 		92A5DE6B291DB66A00094D3E /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE6A291DB66A00094D3E /* UserDefaults.swift */; };
 		92A5DE6D291DB8EA00094D3E /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE6C291DB8EA00094D3E /* Date+Extension.swift */; };
 		92A5DE70291DBFE900094D3E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE6F291DBFE900094D3E /* TabBarViewController.swift */; };
-		92A5DE77291E529500094D3E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE76291E529500094D3E /* HomeViewController.swift */; };
+		92A5DE77291E529500094D3E /* HomeMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5DE76291E529500094D3E /* HomeMapViewController.swift */; };
 		92A640072921DFE100A6F708 /* MDSSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A640062921DFE100A6F708 /* MDSSlider.swift */; };
+		92A6400929221EA100A6F708 /* HomeMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6400829221EA100A6F708 /* HomeMapViewModel.swift */; };
+		92A6400C292221DD00A6F708 /* RxMKMapViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6400B292221DD00A6F708 /* RxMKMapViewDelegateProxy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -167,8 +169,10 @@
 		92A5DE6A291DB66A00094D3E /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		92A5DE6C291DB8EA00094D3E /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		92A5DE6F291DBFE900094D3E /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		92A5DE76291E529500094D3E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		92A5DE76291E529500094D3E /* HomeMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapViewController.swift; sourceTree = "<group>"; };
 		92A640062921DFE100A6F708 /* MDSSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSSlider.swift; sourceTree = "<group>"; };
+		92A6400829221EA100A6F708 /* HomeMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapViewModel.swift; sourceTree = "<group>"; };
+		92A6400B292221DD00A6F708 /* RxMKMapViewDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxMKMapViewDelegateProxy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,6 +352,7 @@
 		9256070A2918D54F00A13FFB /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				92A6400A292221BA00A6F708 /* DelegateProxy */,
 				9256075E291946BC00A13FFB /* Base */,
 				925607262918E66200A13FFB /* Constant */,
 				9256071F2918E08D00A13FFB /* Extension */,
@@ -579,6 +584,7 @@
 		92A5DE74291E526300094D3E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				92A6400829221EA100A6F708 /* HomeMapViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -587,9 +593,17 @@
 			isa = PBXGroup;
 			children = (
 				92A5DE6F291DBFE900094D3E /* TabBarViewController.swift */,
-				92A5DE76291E529500094D3E /* HomeViewController.swift */,
+				92A5DE76291E529500094D3E /* HomeMapViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		92A6400A292221BA00A6F708 /* DelegateProxy */ = {
+			isa = PBXGroup;
+			children = (
+				92A6400B292221DD00A6F708 /* RxMKMapViewDelegateProxy.swift */,
+			);
+			path = DelegateProxy;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -708,10 +722,11 @@
 				925607542919266600A13FFB /* UIFont+Extension.swift in Sources */,
 				9256073F2918F2E700A13FFB /* MDSInputTextField.swift in Sources */,
 				92A5DE64291CFC5600094D3E /* Login.swift in Sources */,
+				92A6400929221EA100A6F708 /* HomeMapViewModel.swift in Sources */,
 				9256073B2918F14D00A13FFB /* UIView+Extension.swift in Sources */,
 				920B67312920A3B5000191F1 /* InfoManagementViewController.swift in Sources */,
 				923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */,
-				92A5DE77291E529500094D3E /* HomeViewController.swift in Sources */,
+				92A5DE77291E529500094D3E /* HomeMapViewController.swift in Sources */,
 				92A5DE6B291DB66A00094D3E /* UserDefaults.swift in Sources */,
 				923DDE21291A4FDD00A2FE75 /* NicknameViewModel.swift in Sources */,
 				9256076729194F3700A13FFB /* PhoneNumberViewController.swift in Sources */,
@@ -746,6 +761,7 @@
 				923DDE19291A4B9200A2FE75 /* EmailViewController.swift in Sources */,
 				923DDE0F291A429400A2FE75 /* BirthViewController.swift in Sources */,
 				92560764291948DE00A13FFB /* Onboarding.swift in Sources */,
+				92A6400C292221DD00A6F708 /* RxMKMapViewDelegateProxy.swift in Sources */,
 				92A5DE4D291B77EB00094D3E /* Endpoint.swift in Sources */,
 				9256073D2918F1BD00A13FFB /* UITextField+Extension.swift in Sources */,
 				920B6726292007C9000191F1 /* MyInfoTableViewCell.swift in Sources */,
