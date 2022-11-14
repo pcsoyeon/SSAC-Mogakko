@@ -13,7 +13,7 @@ import RxSwift
 import SnapKit
 import Then
 
-class HomeMapViewController: UIViewController {
+final class HomeMapViewController: UIViewController {
     
     // MARK: - UI Property
     
@@ -23,6 +23,37 @@ class HomeMapViewController: UIViewController {
     
     private let mapView = MKMapView().then {
         $0.cameraZoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 500, maxCenterCoordinateDistance: 30000)
+    }
+    
+    private let genderButtonStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.distribution = .fillEqually
+        
+        // TODO: - 둘 중에 하나만 적용 .. 어떻게 해결 ??
+        $0.makeRound()
+    }
+    
+    private let totalButton = MDSFilterButton().then {
+        $0.isActive = true
+        $0.type = .total
+    }
+    
+    private let manButton = MDSFilterButton().then {
+        $0.isActive = false
+        $0.type = .man
+    }
+    
+    private let womanButton = MDSFilterButton().then {
+        $0.isActive = false
+        $0.type = .woman
+    }
+    
+    private let qpsButton = UIButton().then {
+        $0.setImage(Constant.Image.place, for: .normal)
+        $0.backgroundColor = .white
+        $0.widthAnchor.constraint(equalToConstant: 48).isActive = true
+        $0.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        $0.makeRound()
     }
     
     // MARK: - Property
@@ -55,7 +86,8 @@ class HomeMapViewController: UIViewController {
 
 extension HomeMapViewController: BaseViewControllerAttribute {
     func configureHierarchy() {
-        view.addSubviews(mapView, floatingButton)
+        view.addSubviews(mapView, floatingButton, genderButtonStackView, qpsButton)
+        genderButtonStackView.addArrangedSubviews(totalButton, manButton, womanButton)
         
         mapView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
@@ -64,6 +96,15 @@ extension HomeMapViewController: BaseViewControllerAttribute {
         
         floatingButton.snp.makeConstraints { make in
             make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).inset(Metric.margin)
+        }
+        
+        genderButtonStackView.snp.makeConstraints { make in
+            make.top.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
+        }
+        
+        qpsButton.snp.makeConstraints { make in
+            make.top.equalTo(genderButtonStackView.snp.bottom).offset(Metric.margin)
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(Metric.margin)
         }
     }
     
@@ -76,6 +117,30 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             .subscribe(onNext: { _ in
                 print("💨 맵 움직인다 !!!!")
             })
+            .disposed(by: disposeBag)
+        
+        totalButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.totalButton.isActive = true
+                [vc.manButton, vc.womanButton].forEach { $0.isActive = false }
+            }
+            .disposed(by: disposeBag)
+        
+        manButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.manButton.isActive = true
+                [vc.totalButton, vc.womanButton].forEach { $0.isActive = false }
+            }
+            .disposed(by: disposeBag)
+        
+        womanButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.womanButton.isActive = true
+                [vc.totalButton, vc.manButton].forEach { $0.isActive = false }
+            }
             .disposed(by: disposeBag)
     }
 }
