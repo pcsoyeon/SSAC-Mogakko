@@ -20,6 +20,16 @@ class HomeViewController: UIViewController {
         $0.type = .plain
     }
     
+    private lazy var slider: MDSSlider = {
+        let slider = MDSSlider()
+        slider.minValue = 1
+        slider.maxValue = 100
+        slider.lower = 1
+        slider.upper = 75
+        slider.addTarget(self, action: #selector(changeValue), for: .valueChanged)
+        return slider
+      }()
+    
     // MARK: - Property
     
     private var disposeBag = DisposeBag()
@@ -42,11 +52,17 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: BaseViewControllerAttribute {
     func configureHierarchy() {
-        view.addSubviews(floatingButton)
+        view.addSubviews(floatingButton, slider)
         
         floatingButton.snp.makeConstraints { make in
             make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).inset(Metric.margin)
         }
+        
+        slider.snp.makeConstraints {
+              $0.height.equalTo(22)
+              $0.width.equalTo(300)
+              $0.center.equalToSuperview()
+            }
     }
     
     func configureAttribute() {
@@ -56,4 +72,8 @@ extension HomeViewController: BaseViewControllerAttribute {
     func bind() {
         
     }
+    
+    @objc private func changeValue() {
+        print("\(Int(self.slider.lower)) ~ \(Int(self.slider.upper))")
+      }
 }
