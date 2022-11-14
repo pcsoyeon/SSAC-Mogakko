@@ -39,7 +39,7 @@ final class GenderCollectionViewCell: BaseCollectionViewCell {
         contentView.makeRound()
     }
     
-    override func setLayout() {
+    override func configureHierarchy() {
         contentView.addSubviews(genderLabel, genderImageView)
         
         genderLabel.snp.makeConstraints { make in

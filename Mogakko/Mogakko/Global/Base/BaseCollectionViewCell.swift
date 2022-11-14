@@ -11,7 +11,7 @@ class BaseCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureAttribute()
-        setLayout()
+        configureHierarchy()
     }
     
     required public init?(coder: NSCoder) {
@@ -19,5 +19,5 @@ class BaseCollectionViewCell: UICollectionViewCell {
     }
     
     func configureAttribute() {}
-    func setLayout() {}
+    func configureHierarchy() {}
 }

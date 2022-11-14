@@ -26,7 +26,7 @@ final class OnboardingCollectionViewCell: BaseCollectionViewCell {
         contentView.backgroundColor = .white
     }
     
-    override func setLayout() {
+    override func configureHierarchy() {
         contentView.addSubviews(titleLabel, imageView)
         
         titleLabel.snp.makeConstraints { make in
