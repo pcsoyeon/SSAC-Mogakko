@@ -124,7 +124,7 @@ extension PhoneNumberViewController: BaseViewControllerAttribute {
                             }
                         }
                         
-                        print("🟢 Vertification ID : \(verificationID)")
+                        print("🍀 Vertification ID : \(verificationID)")
                         
                         let viewController = CertificationNumberViewController()
                         viewController.verificationID = verificationID

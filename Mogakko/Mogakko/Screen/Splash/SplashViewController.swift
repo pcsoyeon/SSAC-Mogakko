@@ -76,51 +76,30 @@ final class SplashViewController: UIViewController {
     }
     
     private func checkIdToken() {
-        
-        UserAPI.shared.requestLogin(type: Login.self) { [weak self] response in
+        GenericAPI.shared.requestDecodableData(type: Login.self, router: UserRouter.login) { [weak self] response in
             guard let self = self else { return }
             
             switch response {
             case .success(let data):
                 print("🍀 사용자 정보 \(data)")
                 Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
+                
             case .failure(let error):
                 switch error {
-                case .takenUser:
-                    return
-                case .invalidNickname:
+                case .takenUser, .invalidNickname:
                     return
                 case .invalidAuthorization:
-                    // 토큰이 만료된 경우, 새로 토큰 발급
-                    print("💨 토큰 만료 !!! -> 다시 로그인 or 토근 새로 발급")
-                    
-                    let currentUser = Auth.auth().currentUser
-                    currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                    Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
                         if let error = error {
                             print(error)
-                        } else {
-                            guard let idToken = idToken else { return }
+                        }
+                        
+                        if let idToken = idToken {
                             print("✨ 새로 발급 받은 토큰 - \(idToken)")
-                            
-                            // TODO: - 토큰 재발급 이후 로직 구현
-                            
-                            UserDefaults.standard.removeObject(forKey: Constant.UserDefaults.idtoken)
-                            UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
-                            
-                            UserAPI.shared.requestLogin(type: Login.self) { response in
-                                switch response {
-                                case .success(let success):
-                                    print("🍀 사용자 정보 - \(success)")
-                                    Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
-                                case .failure(let failure):
-                                    print("🔥 재발급 이후 Error - \(failure)")
-                                }
-                            }
-
+                            self.refreshToken(idToken: idToken)
                         }
                     }
                 case .unsubscribedUser:
-                    // 신규 사용자라면 -> 회원가입 화면으로
                     Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
                 case .serverError:
                     self.showToast(message: "서버 내부 오류입니다. 잠시 후 재인증 해주세요.")
@@ -128,6 +107,21 @@ final class SplashViewController: UIViewController {
                     self.showToast(message: "Client Error")
                 }
                 
+            }
+        }
+    }
+    
+    private func refreshToken(idToken: String) {
+        UserDefaults.standard.removeObject(forKey: Constant.UserDefaults.idtoken)
+        UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
+        
+        GenericAPI.shared.requestDecodableData(type: Login.self, router: UserRouter.login) { response in
+            switch response {
+            case .success(let success):
+                print("🍀 사용자 정보 - \(success)")
+                Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
+            case .failure(let failure):
+                print("🔥 재발급 이후 Error - \(failure)")
             }
         }
     }

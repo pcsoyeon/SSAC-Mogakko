@@ -60,19 +60,18 @@ extension WithdrawPopupViewController: BaseViewControllerAttribute {
 
 extension WithdrawPopupViewController {
     private func requestWithdraw() {
-        UserAPI.shared.requestWithdraw { [weak self] response in
+        let router = UserRouter.withdraw
+        GenericAPI.shared.requestData(router: router) { [weak self] response in
             guard let self = self else { return }
             
             switch response {
             case .success(_):
                 self.showToast(message: "회원탈퇴 성공")
                 
-                // UserDefaults 값 초기화
                 for key in UserDefaults.standard.dictionaryRepresentation().keys {
                     UserDefaults.standard.removeObject(forKey: key.description)
                 }
                 
-                // Onboarding부터 시작할 수 있도록
                 UserDefaults.standard.set(false, forKey: Constant.UserDefaults.isNotFirst)
                 Helper.convertRootViewController(view: self.view, controller: OnboardingViewController())
                 

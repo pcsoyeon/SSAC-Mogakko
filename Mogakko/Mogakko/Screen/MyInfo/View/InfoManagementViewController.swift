@@ -103,8 +103,9 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
 extension InfoManagementViewController {
     private func updateMypage() {
         let param = MypageRequest(searchable: 1, ageMin: 20, ageMax: 35, gender: 0, study: "Jack&Hue \(Int.random(in: 1...100))")
+        let router = UserRouter.mypage(mypageRequest: param)
         
-        UserAPI.shared.updateMypage(mypage: param) { [weak self] response in
+        GenericAPI.shared.requestData(router: router) { [weak self] response in
             guard let self = self else { return }
             
             switch response {

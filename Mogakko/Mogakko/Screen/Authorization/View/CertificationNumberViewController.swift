@@ -178,14 +178,14 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
     
     private func requestLogin() {
         
-        UserAPI.shared.requestLogin(type: Login.self) { [weak self] response in
+        let router = UserRouter.login
+        GenericAPI.shared.requestDecodableData(type: Login.self, router: router) { [weak self] response in
             guard let self = self else { return }
             
             switch response {
             case .success(let data):
                 print("🍀 사용자 정보 \(data)")
                 Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
-                
             case .failure(let error):
                 switch error {
                 case .takenUser:
@@ -202,10 +202,22 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                         } else {
                             guard let idToken = idToken else { return }
                             print("✨ 새로 발급 받은 토큰 - \(idToken)")
-                            UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
                             
                             // TODO: - 토큰 재발급 이후 로직 구현
-                            self.showToast(message: "에러가 발생했습니다. 잠시 후 다시 시도해주세요.")
+                            
+                            UserDefaults.standard.removeObject(forKey: Constant.UserDefaults.idtoken)
+                            UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
+                            
+                            UserAPI.shared.requestLogin(type: Login.self) { response in
+                                switch response {
+                                case .success(let success):
+                                    print("🍀 사용자 정보 - \(success)")
+                                    Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
+                                case .failure(let failure):
+                                    print("🔥 재발급 이후 Error - \(failure)")
+                                }
+                            }
+
                         }
                     }
                 case .unsubscribedUser:
@@ -215,8 +227,10 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                 case .emptyParameters:
                     self.showToast(message: "Client Error")
                 }
+                
             }
         }
+        
         
     }
 }

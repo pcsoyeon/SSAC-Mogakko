@@ -21,8 +21,7 @@ final class GenderViewModel {
                                     email: UserDefaults.standard.string(forKey: Constant.UserDefaults.email)!,
                                     gender: UserDefaults.standard.integer(forKey: Constant.UserDefaults.nick))
         
-        UserAPI.shared.requestSignup(signup: request) { response in
-            
+        GenericAPI.shared.requestData(router: UserRouter.signup(signupRequest: request)) { response in
             switch response {
             case .success(let data):
                 completionHandler(data)
@@ -30,5 +29,6 @@ final class GenderViewModel {
                 completionHandler(error.rawValue)
             }
         }
+        
     }
 }
