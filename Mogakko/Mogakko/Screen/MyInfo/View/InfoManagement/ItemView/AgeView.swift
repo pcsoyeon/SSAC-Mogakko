@@ -17,8 +17,8 @@ final class AgeView: BaseView {
     var item: InfoManagementItem? {
         didSet {
             guard let item = item as? AgeItem else { return }
-            slider.minValue = Double(item.ageMin)
-            slider.maxValue = Double(item.ageMax)
+//            slider.minValue = Double(item.ageMin)
+//            slider.maxValue = Double(item.ageMax)
             ageLabel.text = "\(item.ageMin) - \(item.ageMax)"
         }
     }
@@ -36,7 +36,7 @@ final class AgeView: BaseView {
         $0.textColor = .green
     }
     
-    private var slider = MDSSlider().then {
+    var slider = MDSSlider().then {
         $0.minValue = 1
         $0.maxValue = 100
     }
@@ -49,11 +49,6 @@ final class AgeView: BaseView {
     
     override func configureHierarchy() {
         addSubviews(titleLabel, ageLabel, slider)
-        
-        snp.makeConstraints { make in
-            make.width.equalTo(self.frame.width)
-            make.height.equalTo(80)
-        }
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(13)
@@ -70,6 +65,7 @@ final class AgeView: BaseView {
             make.leading.equalToSuperview().inset(Metric.margin)
             make.trailing.equalToSuperview().inset(29)
             make.height.equalTo(22)
+            make.bottom.equalToSuperview().inset(8)
         }
     }
 }

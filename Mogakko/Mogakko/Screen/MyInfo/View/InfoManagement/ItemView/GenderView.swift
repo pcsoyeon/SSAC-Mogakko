@@ -38,11 +38,11 @@ final class GenderView: BaseView {
         $0.textColor = .black
     }
     
-    private var manButton = MDSButton().then {
+    var manButton = MDSButton().then {
         $0.text = "남자"
     }
     
-    private var womanButton = MDSButton().then {
+    var womanButton = MDSButton().then {
         $0.text = "여자"
     }
     
@@ -55,13 +55,8 @@ final class GenderView: BaseView {
     override func configureHierarchy() {
         addSubviews(titleLabel, manButton, womanButton)
         
-        snp.makeConstraints { make in
-            make.width.equalTo(self.frame.width)
-            make.height.equalTo(48)
-        }
-        
         titleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.verticalEdges.equalToSuperview().inset(13)
             make.leading.equalToSuperview().inset(Metric.margin)
         }
         

@@ -29,7 +29,7 @@ final class AllowSearchView: BaseView {
         $0.textColor = .black
     }
     
-    private var switchButton = UISwitch().then {
+    var switchButton = UISwitch().then {
         $0.isOn = true
         $0.tintColor = .green
     }
@@ -43,13 +43,8 @@ final class AllowSearchView: BaseView {
     override func configureHierarchy() {
         addSubviews(titleLabel, switchButton)
         
-        snp.makeConstraints { make in
-            make.width.equalTo(self.frame.width)
-            make.height.equalTo(48)
-        }
-        
         titleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.top.bottom.equalToSuperview().inset(13)
             make.leading.equalToSuperview().inset(Metric.margin)
         }
         

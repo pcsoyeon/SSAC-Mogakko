@@ -41,7 +41,6 @@ final class InfoManagementViewController: UIViewController {
         $0.spacing = 16
     }
     
-    private var imageView = InfoImageView()
     private var cardView = CardView()
     private var genderView = GenderView()
     private var studyView = StudyView()
@@ -53,6 +52,12 @@ final class InfoManagementViewController: UIViewController {
     
     private let viewModel = InfoManagementViewModel()
     private let disposeBag = DisposeBag()
+    
+    private var gender: Int = 0
+    private var study: String = ""
+    private var allowSearch: Int = 0
+    private var ageMin: Int = 18
+    private var ageMax: Int = 65
     
     // MARK: - Life Cycle
     
@@ -101,7 +106,7 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
         
         contentStackView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview()
         }
     }
     
@@ -125,18 +130,25 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
             }
             
             self.cardView.imageItem = ImageItem(background: data.background, sesac: data.sesac)
-            self.cardView.cardItem = CardItem(nickname: data.nick, reputation: data.reputation, review: (data.comment.count == 0) ? "" : data.comment[0])
+            self.cardView.cardItem = CardItem(nickname: data.nick, reputation: data.reputation, review: (data.comment.count == 0) ? "첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!" : data.comment[0])
             self.genderView.item = GenderItem(gender: data.gender)
             self.studyView.item = StudyItem(study: data.study)
             self.allowSearchView.item = AllowSearchItem(searchable: data.searchable)
             self.ageView.item = AgeItem(ageMin: data.ageMin, ageMax: data.ageMax)
             self.withdrawView.item = WithdrawItem()
+            
+            self.gender = data.gender
+            self.study = data.study
+            self.allowSearch = data.searchable
+            self.ageMin = data.ageMin
+            self.ageMax = data.ageMax
         }
         
-        cardView.isExpanded = false
+        cardView.touchUpExpandButton = false
     }
     
     func bind() {
+        // 저장 버튼
         saveButton.rx.tap
             .throttle(.seconds(3), scheduler: MainScheduler.instance)
             .withUnretained(self)
@@ -145,26 +157,83 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
         
+        // 카드 뷰
         cardView.expandButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                vc.cardView.isExpanded.toggle()
+                vc.cardView.touchUpExpandButton.toggle()
+                
+            }
+            .disposed(by: disposeBag)
+        
+        // 성별
+        genderView.manButton.rx.tap
+            .asDriver()
+            .drive { [weak self] _ in
+                guard let self = self else { return }
+                self.genderView.manButton.type = .fill
+                self.genderView.womanButton.type = .inactive
+                
+                self.gender = 1
+            }
+            .disposed(by: disposeBag)
+        
+        genderView.womanButton.rx.tap
+            .asDriver()
+            .drive { [weak self] _ in
+                guard let self = self else { return }
+                self.genderView.manButton.type = .inactive
+                self.genderView.womanButton.type = .fill
+                
+                self.gender = 0
+            }
+            .disposed(by: disposeBag)
+        
+        // 스터디
+        studyView.textField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .bind { vc, text in
+                vc.study = text
+            }
+            .disposed(by: disposeBag)
+        
+        // 검색허용
+        allowSearchView.switchButton.rx.isOn
+            .asDriver()
+            .drive { [weak self] isOn in
+                guard let self = self else { return }
+                print("검색 허용 - \(isOn)")
+                if isOn {
+                    self.allowSearch = 1
+                } else {
+                    self.allowSearch = 0
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 상대방 연령대
+        
+        // 회원탈퇴
+        withdrawView.withdrawButton.rx.tap
+            .asDriver()
+            .drive { [weak self] _ in
+                guard let self = self else { return }
+                print("회원탈퇴 시작 !!!")
+                let viewController = WithdrawPopupViewController()
+                viewController.modalTransitionStyle = .crossDissolve
+                viewController.modalPresentationStyle = .overFullScreen
+                self.present(viewController, animated: true)
             }
             .disposed(by: disposeBag)
     }
-}
-
-// MARK: - CollectionView
-
-extension InfoManagementViewController {
-    
 }
 
 // MARK: - Network
 
 extension InfoManagementViewController {
     private func updateMypage() {
-        let param = MypageRequest(searchable: 1, ageMin: 20, ageMax: 35, gender: 0, study: "Jack&Hue \(Int.random(in: 1...100))")
+        let param = MypageRequest(searchable: allowSearch, ageMin: ageMin, ageMax: ageMax, gender: gender, study: study)
         let router = UserRouter.mypage(mypageRequest: param)
         
         GenericAPI.shared.requestData(router: router) { [weak self] response in
@@ -193,4 +262,7 @@ extension InfoManagementViewController {
             }
         }
     }
+    
+    
+    
 }

@@ -22,10 +22,10 @@ final class WithdrawView: BaseView {
     
     // MARK: - UI Property
     
-    private var titleLabel = UILabel().then {
-        $0.text = "회원 탈퇴"
-        $0.font = MDSFont.Title4_R14.font
-        $0.textColor = .black
+    var withdrawButton = UIButton().then {
+        $0.setTitle("회원 탈퇴", for: .normal)
+        $0.titleLabel?.font = MDSFont.Title4_R14.font
+        $0.setTitleColor(.black, for: .normal)
     }
     
     // MARK: - UI Method
@@ -35,15 +35,10 @@ final class WithdrawView: BaseView {
     }
     
     override func configureHierarchy() {
-        addSubview(titleLabel)
+        addSubview(withdrawButton)
         
-        snp.makeConstraints { make in
-            make.width.equalTo(self.frame.width)
-            make.height.equalTo(48)
-        }
-        
-        titleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+        withdrawButton.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(13)
             make.leading.equalToSuperview().inset(Metric.margin)
         }
     }

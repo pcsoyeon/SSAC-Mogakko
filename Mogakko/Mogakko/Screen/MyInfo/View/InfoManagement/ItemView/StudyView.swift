@@ -29,7 +29,7 @@ final class StudyView: BaseView {
         $0.textColor = .black
     }
     
-    private var textField = MDSInputTextField().then {
+    var textField = MDSInputTextField().then {
         $0.type = .inactive
         $0.placeholder = "스터디를 입력해주세요"
     }
@@ -43,13 +43,8 @@ final class StudyView: BaseView {
     override func configureHierarchy() {
         addSubviews(titleLabel, textField)
         
-        snp.makeConstraints { make in
-            make.width.equalTo(self.frame.width)
-            make.height.equalTo(48)
-        }
-        
         titleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.verticalEdges.equalToSuperview().inset(13)
             make.leading.equalToSuperview().inset(Metric.margin)
         }
         

@@ -37,25 +37,20 @@ final class CardView: BaseView {
         }
     }
     
-    var isExpanded: Bool = false {
+    var touchUpExpandButton: Bool = false {
         didSet {
-            if isExpanded {
-                UIView.animate(withDuration: 3, delay: 0.1, options: .curveEaseInOut) { [weak self] in
-                    guard let self = self else { return }
-                    
-                    self.snp.updateConstraints { make in
-                        make.height.equalTo(194 + 310  + 16)
-                    }
+            if touchUpExpandButton {
+                
+                let labelHeight = reviewContentLabel.countCurrentLines() * 24
+                
+                snp.updateConstraints { make in
+                    make.height.equalTo(194 + 270 + labelHeight + 16)
                 }
                 
                 expandButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
             } else {
-                UIView.animate(withDuration: 3, delay: 0.1, options: .curveEaseInOut) { [weak self] in
-                    guard let self = self else { return }
-                    
-                    self.snp.updateConstraints { make in
-                        make.height.equalTo(194 + 58 + 16)
-                    }
+                snp.updateConstraints { make in
+                    make.height.equalTo(194 + 58 + 16)
                 }
                 
                 expandButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
@@ -82,7 +77,7 @@ final class CardView: BaseView {
         $0.tintColor = .black
     }
     
-    private lazy var stackView = UIView().then {
+    private lazy var backView = UIView().then {
         $0.clipsToBounds = true
         $0.makeRound()
         $0.layer.borderColor = UIColor.gray3.cgColor
@@ -120,11 +115,12 @@ final class CardView: BaseView {
         $0.text = "첫 리뷰를 기다리는 중이에요!"
         $0.textColor = .gray6
         $0.font = MDSFont.Body3_R14.font
+        $0.numberOfLines = 0
     }
     
     // MARK: - Property
     
-    private var reputation: [Int] = [] {
+    private var reputation: [Int] = Array(repeating: 0, count: 6) {
         didSet {
             collectionView.reloadData()
         }
@@ -138,14 +134,9 @@ final class CardView: BaseView {
     }
     
     override func configureHierarchy() {
-        addSubviews(backgroundImageView, stackView)
-        stackView.addSubviews(nicknameLabel, expandButton, titleLabel, collectionView, reviewLabel, reviewContentLabel)
+        addSubviews(backgroundImageView, backView)
+        backView.addSubviews(nicknameLabel, expandButton, titleLabel, collectionView, reviewLabel, reviewContentLabel)
         backgroundImageView.addSubview(sesacImageView)
-        
-        snp.makeConstraints { make in
-            make.width.equalTo(self.frame.width)
-            make.height.equalTo(194 + 58 + 16)
-        }
         
         backgroundImageView.snp.makeConstraints { make in
             make.top.equalTo(Metric.margin)
@@ -159,20 +150,20 @@ final class CardView: BaseView {
             make.centerX.equalToSuperview()
         }
         
-        stackView.snp.makeConstraints { make in
+        backView.snp.makeConstraints { make in
             make.top.equalTo(backgroundImageView.snp.bottom)
             make.bottom.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(16)
         }
         
         nicknameLabel.snp.makeConstraints { make in
-            make.top.equalTo(16)
-            make.leading.equalTo(16)
+            make.top.equalToSuperview().inset(16)
+            make.leading.equalToSuperview().inset(Metric.margin)
             make.height.equalTo(26)
         }
         
         expandButton.snp.makeConstraints { make in
-            make.width.height.equalTo(16)
+            make.width.height.equalTo(26)
             make.centerY.equalTo(nicknameLabel.snp.centerY)
             make.trailing.equalToSuperview().inset(26)
         }
