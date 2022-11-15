@@ -104,6 +104,7 @@
 		92A6402B292299AD00A6F708 /* InfoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6402A292299AD00A6F708 /* InfoImageView.swift */; };
 		92A6402D292299CA00A6F708 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6402C292299CA00A6F708 /* CardView.swift */; };
 		92A64031292358D300A6F708 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64030292358D300A6F708 /* BaseView.swift */; };
+		92A6403329237B5900A6F708 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6403229237B5900A6F708 /* TitleCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -199,6 +200,7 @@
 		92A6402A292299AD00A6F708 /* InfoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoImageView.swift; sourceTree = "<group>"; };
 		92A6402C292299CA00A6F708 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		92A64030292358D300A6F708 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		92A6403229237B5900A6F708 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -656,6 +658,7 @@
 				92A6401B2922497700A6F708 /* AllowSearchView.swift */,
 				92A6401D29224AC000A6F708 /* AgeView.swift */,
 				92A6401F29224C7E00A6F708 /* WithdrawView.swift */,
+				92A6403229237B5900A6F708 /* TitleCollectionViewCell.swift */,
 			);
 			path = ItemView;
 			sourceTree = "<group>";
@@ -816,6 +819,7 @@
 				92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */,
 				92A5DE5F291CF53100094D3E /* UserRouter.swift in Sources */,
 				920B672829200955000191F1 /* MyInfoHeaderTableViewCell.swift in Sources */,
+				92A6403329237B5900A6F708 /* TitleCollectionViewCell.swift in Sources */,
 				9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */,
 				923DDE25291A671100A2FE75 /* UIViewController+Extension.swift in Sources */,
 				92A5DE5A291BC10A00094D3E /* BaseViewModelAttribute.swift in Sources */,

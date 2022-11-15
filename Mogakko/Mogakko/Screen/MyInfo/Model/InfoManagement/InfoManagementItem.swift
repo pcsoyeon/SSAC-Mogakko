@@ -48,11 +48,13 @@ class CardItem: InfoManagementItem {
     var type: InfoManagementItemType { return .card }
     
     var nickname: String
+    var reputation: [Int]
     var review: String
     
-    init(nickname: String, review: String) {
+    init(nickname: String, reputation: [Int], review: String) {
         self.nickname = nickname
         self.review = review
+        self.reputation = reputation
     }
 }
 

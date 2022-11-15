@@ -125,7 +125,7 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
             }
             
             self.cardView.imageItem = ImageItem(background: data.background, sesac: data.sesac)
-            self.cardView.cardItem = CardItem(nickname: data.nick, review: (data.comment.count == 0) ? "" : data.comment[0])
+            self.cardView.cardItem = CardItem(nickname: data.nick, reputation: data.reputation, review: (data.comment.count == 0) ? "" : data.comment[0])
             self.genderView.item = GenderItem(gender: data.gender)
             self.studyView.item = StudyItem(study: data.study)
             self.allowSearchView.item = AllowSearchItem(searchable: data.searchable)
@@ -152,6 +152,12 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
     }
+}
+
+// MARK: - CollectionView
+
+extension InfoManagementViewController {
+    
 }
 
 // MARK: - Network

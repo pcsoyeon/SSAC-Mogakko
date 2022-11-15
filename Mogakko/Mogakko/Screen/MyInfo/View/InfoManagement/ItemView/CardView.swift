@@ -32,6 +32,8 @@ final class CardView: BaseView {
                 reviewContentLabel.text = "첫 리뷰를 기다리는 중이에요!"
                 reviewContentLabel.textColor = .gray6
             }
+            
+            reputation = item.reputation
         }
     }
     
@@ -95,11 +97,16 @@ final class CardView: BaseView {
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        layout.scrollDirection = .vertical
         
-        collectionView.backgroundColor = .green
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+                
+        collectionView.backgroundColor = .white
         collectionView.isScrollEnabled = false
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        
+        collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.reuseIdentifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
         return collectionView
     }()
     
@@ -114,6 +121,15 @@ final class CardView: BaseView {
         $0.textColor = .gray6
         $0.font = MDSFont.Body3_R14.font
     }
+    
+    // MARK: - Property
+    
+    private var reputation: [Int] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    private var reputationTitle: [String] = ["좋은 매너", "정확한 시간 약속", "빠른 응답", "친절한 성격", "능숙한 실력", "유익한 시간"]
     
     // MARK: - UI Method
     
@@ -184,3 +200,33 @@ final class CardView: BaseView {
     }
 }
 
+// MARK: - UICollectionView
+
+extension CardView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.frame.width - 8) / 2
+        let height = 32.0
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+}
+
+extension CardView: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return reputationTitle.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.reuseIdentifier, for: indexPath) as? TitleCollectionViewCell else { return UICollectionViewCell() }
+        cell.isSelected = reputation[indexPath.row] > 0 ? true : false
+        cell.title = reputationTitle[indexPath.row]
+        return cell
+    }
+}
