@@ -17,8 +17,8 @@ final class CardView: BaseView {
     var imageItem: InfoManagementItem? {
         didSet {
             guard let item = imageItem as? ImageItem else { return }
-            backgroundImageView.image = UIImage(named: "sesac_background_\(item.background)")
-            sesacImageView.image = UIImage(named: "sesac_face_\(item.sesac)")
+            backgroundImageView.image = UIImage(named: "sesac_background_\(item.background+1)")
+            sesacImageView.image = UIImage(named: "sesac_face_\(item.sesac+1)")
         }
     }
     
@@ -27,6 +27,11 @@ final class CardView: BaseView {
             guard let item = cardItem as? CardItem else { return }
             nicknameLabel.text = item.nickname
             reviewContentLabel.text = item.review
+            
+            if item.review == "" {
+                reviewContentLabel.text = "첫 리뷰를 기다리는 중이에요!"
+                reviewContentLabel.textColor = .gray6
+            }
         }
     }
     

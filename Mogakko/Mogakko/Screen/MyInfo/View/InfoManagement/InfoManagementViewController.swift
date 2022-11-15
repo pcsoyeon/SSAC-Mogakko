@@ -59,6 +59,7 @@ final class InfoManagementViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        networkMoniter()
     }
     
     override func viewDidLoad() {
@@ -116,21 +117,21 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
     }
     
     private func setItem() {
-        let image = ImageItem(background: 1, sesac: 1)
-        let card = CardItem(nickname: UserDefaults.standard.string(forKey: Constant.UserDefaults.nick)!, review: "악으로깡으로해냅니다김소연이죠?")
-        let gender = GenderItem(gender: 0)
-        let study = StudyItem(study: "알고리즘")
-        let allow = AllowSearchItem(searchable: 1)
-        let age = AgeItem(ageMin: 18, ageMax: 35)
-        let withdraw = WithdrawItem()
-        
-        cardView.imageItem = image
-        cardView.cardItem = card
-        genderView.item = gender
-        studyView.item = study
-        allowSearchView.item = allow
-        ageView.item = age
-        withdrawView.item = withdraw
+        viewModel.getUserInfo { [weak self] data in
+            guard let self = self else { return }
+            guard let data = data else {
+                print("오류처리")
+                return
+            }
+            
+            self.cardView.imageItem = ImageItem(background: data.background, sesac: data.sesac)
+            self.cardView.cardItem = CardItem(nickname: data.nick, review: (data.comment.count == 0) ? "" : data.comment[0])
+            self.genderView.item = GenderItem(gender: data.gender)
+            self.studyView.item = StudyItem(study: data.study)
+            self.allowSearchView.item = AllowSearchItem(searchable: data.searchable)
+            self.ageView.item = AgeItem(ageMin: data.ageMin, ageMax: data.ageMax)
+            self.withdrawView.item = WithdrawItem()
+        }
         
         cardView.isExpanded = false
     }
