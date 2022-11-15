@@ -50,7 +50,7 @@ enum MDSFont {
         case .Body2_R16:
             return FontProperty(font: .regular, size: 16, lineHeight: 29.6)
         case .Body3_R14:
-            return FontProperty(font: .medium, size: 14, lineHeight: 23.8)
+            return FontProperty(font: .regular, size: 14, lineHeight: 23.8)
         case .Body4_R12:
             return FontProperty(font: .regular, size: 12, lineHeight: 21.6)
         case .caption_R10:
