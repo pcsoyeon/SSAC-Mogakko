@@ -10,7 +10,16 @@ import UIKit
 import SnapKit
 import Then
 
-final class InfoStudyCollectionViewCell: BaseCollectionViewCell {
+final class StudyTableViewCell: BaseTableViewCell {
+    
+    // MARK: - Property
+    
+    var item: InfoManagementItem? {
+        didSet {
+            guard let item = item as? StudyItem else { return }
+            textField.text = item.study
+        }
+    }
     
     // MARK: - UI Property
     
@@ -25,7 +34,7 @@ final class InfoStudyCollectionViewCell: BaseCollectionViewCell {
         $0.placeholder = "스터디를 입력해주세요"
     }
     
-    // MARK: - Init UI
+    // MARK: - UI Method
     
     override func configureAttribute() {
         contentView.backgroundColor = .white

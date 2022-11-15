@@ -12,7 +12,23 @@ import RxSwift
 import SnapKit
 import Then
 
-final class InfoGenderCollectionViewCell: BaseCollectionViewCell {
+final class GenderTableViewCell: BaseTableViewCell {
+    
+    // MARK: - Property
+    
+    var item: InfoManagementItem? {
+        didSet {
+            guard let item = item as? GenderItem else { return }
+            
+            if item.gender == 0 {
+                manButton.type = .inactive
+                womanButton.type = .fill
+            } else {
+                manButton.type = .fill
+                womanButton.type = .inactive
+            }
+        }
+    }
     
     // MARK: - UI Property
     
@@ -30,7 +46,7 @@ final class InfoGenderCollectionViewCell: BaseCollectionViewCell {
         $0.text = "여자"
     }
     
-    // MARK: - Init UI
+    // MARK: - UI Method
     
     override func configureAttribute() {
         contentView.backgroundColor = .white
@@ -41,32 +57,21 @@ final class InfoGenderCollectionViewCell: BaseCollectionViewCell {
         
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(Metric.margin)
         }
         
         manButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.width.equalTo(26)
-            make.height.equalTo(24)
+            make.width.equalTo(56)
+            make.height.equalTo(48)
             make.trailing.equalTo(womanButton.snp.leading).offset(-8)
         }
         
         womanButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.width.equalTo(26)
-            make.height.equalTo(24)
+            make.width.equalTo(56)
+            make.height.equalTo(48)
             make.trailing.equalToSuperview().inset(Metric.margin)
-        }
-    }
-    
-    // MARK: - Data
-    
-    func setData(_ gender: Gender) {
-        if gender == .man {
-            manButton.type = .fill
-            womanButton.type = .inactive
-        } else {
-            manButton.type == .inactive
-            womanButton.type = .fill
         }
     }
 }

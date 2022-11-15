@@ -68,5 +68,22 @@ extension Constant {
         
         // info
         static let profileImage = UIImage(named: "profile_img")!
+        
+        // background
+        static let backgroundImage1 = UIImage(named: "sesac_background_1")
+        static let backgroundImage2 = UIImage(named: "sesac_background_2")
+        static let backgroundImage3 = UIImage(named: "sesac_background_3")
+        static let backgroundImage4 = UIImage(named: "sesac_background_4")
+        static let backgroundImage5 = UIImage(named: "sesac_background_5")
+        static let backgroundImage6 = UIImage(named: "sesac_background_6")
+        static let backgroundImage7 = UIImage(named: "sesac_background_7")
+        static let backgroundImage8 = UIImage(named: "sesac_background_8")
+        static let backgroundImage9 = UIImage(named: "sesac_background_9")
+        
+        // sesac
+        static let sesacFace1 = UIImage(named: "sesac_face_1")
+        static let sesacFace2 = UIImage(named: "sesac_face_2")
+        static let sesacFace3 = UIImage(named: "sesac_face_3")
+        static let sesacFace4 = UIImage(named: "sesac_face_4")
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class InfoWithdrawCollectionViewCell: BaseCollectionViewCell {
+final class WithdrawTableViewCell: BaseTableViewCell {
     
     // MARK: - UI Property
     
@@ -20,7 +20,7 @@ final class InfoWithdrawCollectionViewCell: BaseCollectionViewCell {
         $0.textColor = .black
     }
     
-    // MARK: - Init UI
+    // MARK: - UI Method
     
     override func configureAttribute() {
         contentView.backgroundColor = .white

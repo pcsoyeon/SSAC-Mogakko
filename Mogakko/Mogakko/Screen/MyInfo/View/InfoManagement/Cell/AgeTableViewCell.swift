@@ -10,7 +10,18 @@ import UIKit
 import SnapKit
 import Then
 
-final class InfoSliderCollectionViewCell: BaseCollectionViewCell {
+final class AgeTableViewCell: BaseTableViewCell {
+    
+    // MARK: - Property
+    
+    var item: InfoManagementItem? {
+        didSet {
+            guard let item = item as? AgeItem else { return }
+            slider.minValue = Double(item.ageMin)
+            slider.maxValue = Double(item.ageMax)
+            ageLabel.text = "\(item.ageMin) - \(item.ageMax)"
+        }
+    }
     
     // MARK: - UI Property
     
@@ -50,10 +61,10 @@ final class InfoSliderCollectionViewCell: BaseCollectionViewCell {
         }
         
         slider.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(1)
+            make.top.equalTo(titleLabel.snp.bottom).offset(14)
             make.leading.equalToSuperview().inset(Metric.margin)
             make.trailing.equalToSuperview().inset(29)
-            make.height.equalTo(48)
+            make.height.equalTo(22)
         }
     }
 }

@@ -95,11 +95,14 @@
 		92A64010292230CB00A6F708 /* UIStackView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6400F292230CB00A6F708 /* UIStackView+Extension.swift */; };
 		92A64012292233E900A6F708 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64011292233E900A6F708 /* CALayer+Extension.swift */; };
 		92A64014292237B800A6F708 /* MDSMoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64013292237B800A6F708 /* MDSMoreButton.swift */; };
-		92A640162922435F00A6F708 /* InfoGenderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A640152922435F00A6F708 /* InfoGenderCollectionViewCell.swift */; };
-		92A6401A292247BF00A6F708 /* InfoStudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64019292247BF00A6F708 /* InfoStudyCollectionViewCell.swift */; };
-		92A6401C2922497700A6F708 /* InfoAllowSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6401B2922497700A6F708 /* InfoAllowSearchCollectionViewCell.swift */; };
-		92A6401E29224AC000A6F708 /* InfoSliderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6401D29224AC000A6F708 /* InfoSliderCollectionViewCell.swift */; };
-		92A6402029224C7E00A6F708 /* InfoWithdrawCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6401F29224C7E00A6F708 /* InfoWithdrawCollectionViewCell.swift */; };
+		92A640162922435F00A6F708 /* GenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A640152922435F00A6F708 /* GenderTableViewCell.swift */; };
+		92A6401A292247BF00A6F708 /* StudyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64019292247BF00A6F708 /* StudyTableViewCell.swift */; };
+		92A6401C2922497700A6F708 /* AllowSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6401B2922497700A6F708 /* AllowSearchTableViewCell.swift */; };
+		92A6401E29224AC000A6F708 /* AgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6401D29224AC000A6F708 /* AgeTableViewCell.swift */; };
+		92A6402029224C7E00A6F708 /* WithdrawTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6401F29224C7E00A6F708 /* WithdrawTableViewCell.swift */; };
+		92A640292922975E00A6F708 /* InfoManagementItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A640282922975E00A6F708 /* InfoManagementItem.swift */; };
+		92A6402B292299AD00A6F708 /* InfoImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6402A292299AD00A6F708 /* InfoImageTableViewCell.swift */; };
+		92A6402D292299CA00A6F708 /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6402C292299CA00A6F708 /* CardTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -186,11 +189,14 @@
 		92A6400F292230CB00A6F708 /* UIStackView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extension.swift"; sourceTree = "<group>"; };
 		92A64011292233E900A6F708 /* CALayer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
 		92A64013292237B800A6F708 /* MDSMoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSMoreButton.swift; sourceTree = "<group>"; };
-		92A640152922435F00A6F708 /* InfoGenderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoGenderCollectionViewCell.swift; sourceTree = "<group>"; };
-		92A64019292247BF00A6F708 /* InfoStudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoStudyCollectionViewCell.swift; sourceTree = "<group>"; };
-		92A6401B2922497700A6F708 /* InfoAllowSearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAllowSearchCollectionViewCell.swift; sourceTree = "<group>"; };
-		92A6401D29224AC000A6F708 /* InfoSliderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoSliderCollectionViewCell.swift; sourceTree = "<group>"; };
-		92A6401F29224C7E00A6F708 /* InfoWithdrawCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoWithdrawCollectionViewCell.swift; sourceTree = "<group>"; };
+		92A640152922435F00A6F708 /* GenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderTableViewCell.swift; sourceTree = "<group>"; };
+		92A64019292247BF00A6F708 /* StudyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyTableViewCell.swift; sourceTree = "<group>"; };
+		92A6401B2922497700A6F708 /* AllowSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowSearchTableViewCell.swift; sourceTree = "<group>"; };
+		92A6401D29224AC000A6F708 /* AgeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeTableViewCell.swift; sourceTree = "<group>"; };
+		92A6401F29224C7E00A6F708 /* WithdrawTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawTableViewCell.swift; sourceTree = "<group>"; };
+		92A640282922975E00A6F708 /* InfoManagementItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoManagementItem.swift; sourceTree = "<group>"; };
+		92A6402A292299AD00A6F708 /* InfoImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoImageTableViewCell.swift; sourceTree = "<group>"; };
+		92A6402C292299CA00A6F708 /* CardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,8 +248,8 @@
 		920B672B29200B6E000191F1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				920B672C29200B78000191F1 /* MyInfo.swift */,
-				920B672E292015AA000191F1 /* MypageRequest.swift */,
+				92A640252922549B00A6F708 /* InfoManagement */,
+				92A640242922549100A6F708 /* MyInfo */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -640,13 +646,32 @@
 		92A64021292250FC00A6F708 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				92A640152922435F00A6F708 /* InfoGenderCollectionViewCell.swift */,
-				92A64019292247BF00A6F708 /* InfoStudyCollectionViewCell.swift */,
-				92A6401B2922497700A6F708 /* InfoAllowSearchCollectionViewCell.swift */,
-				92A6401D29224AC000A6F708 /* InfoSliderCollectionViewCell.swift */,
-				92A6401F29224C7E00A6F708 /* InfoWithdrawCollectionViewCell.swift */,
+				92A6402A292299AD00A6F708 /* InfoImageTableViewCell.swift */,
+				92A6402C292299CA00A6F708 /* CardTableViewCell.swift */,
+				92A640152922435F00A6F708 /* GenderTableViewCell.swift */,
+				92A64019292247BF00A6F708 /* StudyTableViewCell.swift */,
+				92A6401B2922497700A6F708 /* AllowSearchTableViewCell.swift */,
+				92A6401D29224AC000A6F708 /* AgeTableViewCell.swift */,
+				92A6401F29224C7E00A6F708 /* WithdrawTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		92A640242922549100A6F708 /* MyInfo */ = {
+			isa = PBXGroup;
+			children = (
+				920B672C29200B78000191F1 /* MyInfo.swift */,
+			);
+			path = MyInfo;
+			sourceTree = "<group>";
+		};
+		92A640252922549B00A6F708 /* InfoManagement */ = {
+			isa = PBXGroup;
+			children = (
+				920B672E292015AA000191F1 /* MypageRequest.swift */,
+				92A640282922975E00A6F708 /* InfoManagementItem.swift */,
+			);
+			path = InfoManagement;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -743,7 +768,7 @@
 			files = (
 				920B67352920B5B9000191F1 /* MDSPopupView.swift in Sources */,
 				923DDE11291A434700A2FE75 /* BirthViewModel.swift in Sources */,
-				92A6402029224C7E00A6F708 /* InfoWithdrawCollectionViewCell.swift in Sources */,
+				92A6402029224C7E00A6F708 /* WithdrawTableViewCell.swift in Sources */,
 				925607282918E67700A13FFB /* Constant.swift in Sources */,
 				920B6713291F64BF000191F1 /* UILabel+Extension.swift in Sources */,
 				9256072A2918E68A00A13FFB /* Image.swift in Sources */,
@@ -754,12 +779,14 @@
 				923DDE1F291A4D8500A2FE75 /* GenderViewModel.swift in Sources */,
 				925607132918DDD100A13FFB /* BaseViewControllerAttribute.swift in Sources */,
 				92A64012292233E900A6F708 /* CALayer+Extension.swift in Sources */,
+				92A6402D292299CA00A6F708 /* CardTableViewCell.swift in Sources */,
 				92A5DE61291CFBF800094D3E /* UserAPI.swift in Sources */,
 				923DDE1D291A4CE000A2FE75 /* GenderViewController.swift in Sources */,
 				920B672A29200B38000191F1 /* MyInfoViewModel.swift in Sources */,
 				920B672D29200B78000191F1 /* MyInfo.swift in Sources */,
 				925607362918F0B400A13FFB /* MDSNavigationBar.swift in Sources */,
 				925607342918EF6300A13FFB /* BackButton.swift in Sources */,
+				92A640292922975E00A6F708 /* InfoManagementItem.swift in Sources */,
 				92560756291926A700A13FFB /* MDSFont.swift in Sources */,
 				9256075D2919468400A13FFB /* OnboardingCollectionViewCell.swift in Sources */,
 				920B6717291F8F3D000191F1 /* MDSFloatingButton.swift in Sources */,
@@ -773,14 +800,15 @@
 				923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */,
 				92A5DE77291E529500094D3E /* HomeMapViewController.swift in Sources */,
 				92A5DE6B291DB66A00094D3E /* UserDefaults.swift in Sources */,
+				92A6402B292299AD00A6F708 /* InfoImageTableViewCell.swift in Sources */,
 				923DDE21291A4FDD00A2FE75 /* NicknameViewModel.swift in Sources */,
 				9256076729194F3700A13FFB /* PhoneNumberViewController.swift in Sources */,
-				92A640162922435F00A6F708 /* InfoGenderCollectionViewCell.swift in Sources */,
+				92A640162922435F00A6F708 /* GenderTableViewCell.swift in Sources */,
 				923DDE2A291AB90500A2FE75 /* APIKey.swift in Sources */,
 				92A640072921DFE100A6F708 /* MDSSlider.swift in Sources */,
 				920B6711291F5138000191F1 /* APIError.swift in Sources */,
 				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,
-				92A6401C2922497700A6F708 /* InfoAllowSearchCollectionViewCell.swift in Sources */,
+				92A6401C2922497700A6F708 /* AllowSearchTableViewCell.swift in Sources */,
 				92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */,
 				92A5DE5F291CF53100094D3E /* UserRouter.swift in Sources */,
 				920B672829200955000191F1 /* MyInfoHeaderTableViewCell.swift in Sources */,
@@ -799,7 +827,7 @@
 				920B672F292015AA000191F1 /* MypageRequest.swift in Sources */,
 				920B67372920DA33000191F1 /* WithdrawPopupViewController.swift in Sources */,
 				92560762291946FF00A13FFB /* BaseTableViewCell.swift in Sources */,
-				92A6401E29224AC000A6F708 /* InfoSliderCollectionViewCell.swift in Sources */,
+				92A6401E29224AC000A6F708 /* AgeTableViewCell.swift in Sources */,
 				9256076F2919CC9D00A13FFB /* String+Extension.swift in Sources */,
 				92A5DE67291D124700094D3E /* SignupRequest.swift in Sources */,
 				92A5DE70291DBFE900094D3E /* TabBarViewController.swift in Sources */,
@@ -813,7 +841,7 @@
 				92560764291948DE00A13FFB /* Onboarding.swift in Sources */,
 				92A6400C292221DD00A6F708 /* RxMKMapViewDelegateProxy.swift in Sources */,
 				92A5DE4D291B77EB00094D3E /* Endpoint.swift in Sources */,
-				92A6401A292247BF00A6F708 /* InfoStudyCollectionViewCell.swift in Sources */,
+				92A6401A292247BF00A6F708 /* StudyTableViewCell.swift in Sources */,
 				92A6400E29222D1300A6F708 /* MDSFilterButton.swift in Sources */,
 				9256073D2918F1BD00A13FFB /* UITextField+Extension.swift in Sources */,
 				920B6726292007C9000191F1 /* MyInfoTableViewCell.swift in Sources */,

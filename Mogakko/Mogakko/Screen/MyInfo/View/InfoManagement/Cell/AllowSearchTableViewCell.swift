@@ -10,7 +10,16 @@ import UIKit
 import SnapKit
 import Then
 
-final class InfoAllowSearchCollectionViewCell: BaseCollectionViewCell {
+final class AllowSearchTableViewCell: BaseTableViewCell {
+    
+    // MARK: - Property
+    
+    var item: InfoManagementItem? {
+        didSet {
+            guard let item = item as? AllowSearchItem else { return }
+            switchButton.isOn = (item.searchable != 0)
+        }
+    }
     
     // MARK: - UI Property
     
@@ -25,7 +34,7 @@ final class InfoAllowSearchCollectionViewCell: BaseCollectionViewCell {
         $0.tintColor = .green
     }
     
-    // MARK: - Init UI
+    // MARK: - UI Method
     
     override func configureAttribute() {
         contentView.backgroundColor = .white
