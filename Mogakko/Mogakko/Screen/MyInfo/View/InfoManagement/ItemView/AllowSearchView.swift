@@ -1,5 +1,5 @@
 //
-//  InfoStudyCollectionViewCell.swift
+//  InfoAllowSearchCollectionViewCell.swift
 //  Mogakko
 //
 //  Created by 소연 on 2022/11/14.
@@ -10,48 +10,55 @@ import UIKit
 import SnapKit
 import Then
 
-final class StudyTableViewCell: BaseTableViewCell {
+final class AllowSearchView: BaseView {
     
     // MARK: - Property
     
     var item: InfoManagementItem? {
         didSet {
-            guard let item = item as? StudyItem else { return }
-            textField.text = item.study
+            guard let item = item as? AllowSearchItem else { return }
+            switchButton.isOn = (item.searchable != 0)
         }
     }
     
     // MARK: - UI Property
     
     private var titleLabel = UILabel().then {
-        $0.text = "자주 하는 스터디"
+        $0.text = "내 번호 검색 허용"
         $0.font = MDSFont.Title4_R14.font
         $0.textColor = .black
     }
     
-    private var textField = MDSInputTextField().then {
-        $0.type = .inactive
-        $0.placeholder = "스터디를 입력해주세요"
+    private var switchButton = UISwitch().then {
+        $0.isOn = true
+        $0.tintColor = .green
     }
     
     // MARK: - UI Method
     
     override func configureAttribute() {
-        contentView.backgroundColor = .white
+        backgroundColor = .white
     }
     
     override func configureHierarchy() {
-        contentView.addSubviews(titleLabel, textField)
+        addSubviews(titleLabel, switchButton)
+        
+        snp.makeConstraints { make in
+            make.width.equalTo(self.frame.width)
+            make.height.equalTo(48)
+        }
         
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().inset(Metric.margin)
         }
         
-        textField.snp.makeConstraints { make in
+        switchButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(Metric.margin)
-            make.width.equalTo(164)
+            make.width.equalTo(52)
+            make.height.equalTo(28)
         }
     }
 }
+

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class InfoImageTableViewCell: BaseTableViewCell {
+final class InfoImageView: BaseView {
     
     // MARK: - Property
     
@@ -15,7 +15,7 @@ final class InfoImageTableViewCell: BaseTableViewCell {
         didSet {
             guard let item = item as? ImageItem else { return }
             backgroundImageView.image = UIImage(named: "sesac_background_\(item.background)")
-            sesacImageView.image = UIImage(named: "sesac_image\(item.sesac)")
+            sesacImageView.image = UIImage(named: "sesac_face_\(item.sesac)")
         }
     }
     
@@ -30,11 +30,17 @@ final class InfoImageTableViewCell: BaseTableViewCell {
     // MARK: - UI Method
     
     override func configureAttribute() {
-        contentView.backgroundColor = .white
+        backgroundColor = .white
     }
     
     override func configureHierarchy() {
-        contentView.addSubviews(backgroundImageView, sesacImageView)
+        addSubviews(backgroundImageView)
+        backgroundImageView.addSubview(sesacImageView)
+        
+        snp.makeConstraints { make in
+            make.width.equalTo(self.frame.width)
+            make.height.equalTo(210)
+        }
         
         backgroundImageView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(Metric.margin)
@@ -43,7 +49,8 @@ final class InfoImageTableViewCell: BaseTableViewCell {
         }
         
         sesacImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(35)
+            make.top.equalToSuperview().inset(19)
+            make.width.height.equalTo(184)
             make.centerX.equalToSuperview()
         }
     }

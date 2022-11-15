@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class AgeTableViewCell: BaseTableViewCell {
+final class AgeView: BaseView {
     
     // MARK: - Property
     
@@ -44,11 +44,16 @@ final class AgeTableViewCell: BaseTableViewCell {
     // MARK: - UI Method
     
     override func configureAttribute() {
-        contentView.backgroundColor = .white
+        backgroundColor = .white
     }
     
     override func configureHierarchy() {
-        contentView.addSubviews(titleLabel, ageLabel, slider)
+        addSubviews(titleLabel, ageLabel, slider)
+        
+        snp.makeConstraints { make in
+            make.width.equalTo(self.frame.width)
+            make.height.equalTo(80)
+        }
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(13)

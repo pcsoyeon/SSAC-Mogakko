@@ -87,7 +87,7 @@ final class MDSButton: UIButton {
     var type: MDSButtonType = .inactive {
         didSet {
             setBackgroundColor(type: type)
-            setForegroundColor(type: type)
+            setTitleColor(type.titleColor, for: .normal)
             setBorderColor(type: type)
         }
     }
@@ -118,10 +118,6 @@ final class MDSButton: UIButton {
     
     private func setBackgroundColor(type: MDSButtonType) {
         backgroundColor = type.backgrounColor
-    }
-    
-    private func setForegroundColor(type: MDSButtonType) {
-        titleLabel?.textColor = type.titleColor
     }
     
     private func setBorderColor(type: MDSButtonType) {

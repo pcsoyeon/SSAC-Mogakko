@@ -10,7 +10,15 @@ import UIKit
 import SnapKit
 import Then
 
-final class WithdrawTableViewCell: BaseTableViewCell {
+final class WithdrawView: BaseView {
+    
+    // MARK: - Property
+    
+    var item: InfoManagementItem? {
+        didSet {
+            guard let item = item as? WithdrawView else { return }
+        }
+    }
     
     // MARK: - UI Property
     
@@ -23,11 +31,16 @@ final class WithdrawTableViewCell: BaseTableViewCell {
     // MARK: - UI Method
     
     override func configureAttribute() {
-        contentView.backgroundColor = .white
+        backgroundColor = .white
     }
     
     override func configureHierarchy() {
-        contentView.addSubview(titleLabel)
+        addSubview(titleLabel)
+        
+        snp.makeConstraints { make in
+            make.width.equalTo(self.frame.width)
+            make.height.equalTo(48)
+        }
         
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()

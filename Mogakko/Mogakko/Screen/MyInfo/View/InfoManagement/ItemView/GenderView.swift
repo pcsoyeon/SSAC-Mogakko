@@ -12,7 +12,7 @@ import RxSwift
 import SnapKit
 import Then
 
-final class GenderTableViewCell: BaseTableViewCell {
+final class GenderView: BaseView {
     
     // MARK: - Property
     
@@ -49,11 +49,16 @@ final class GenderTableViewCell: BaseTableViewCell {
     // MARK: - UI Method
     
     override func configureAttribute() {
-        contentView.backgroundColor = .white
+        backgroundColor = .white
     }
     
     override func configureHierarchy() {
-        contentView.addSubviews(titleLabel, manButton, womanButton)
+        addSubviews(titleLabel, manButton, womanButton)
+        
+        snp.makeConstraints { make in
+            make.width.equalTo(self.frame.width)
+            make.height.equalTo(48)
+        }
         
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
