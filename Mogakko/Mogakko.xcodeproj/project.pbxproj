@@ -104,6 +104,7 @@
 		92A6402D292299CA00A6F708 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6402C292299CA00A6F708 /* CardView.swift */; };
 		92A64031292358D300A6F708 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64030292358D300A6F708 /* BaseView.swift */; };
 		92A6403329237B5900A6F708 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6403229237B5900A6F708 /* TitleCollectionViewCell.swift */; };
+		92A640382924B45800A6F708 /* Reactive+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A640372924B45800A6F708 /* Reactive+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -199,6 +200,7 @@
 		92A6402C292299CA00A6F708 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		92A64030292358D300A6F708 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		92A6403229237B5900A6F708 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		92A640372924B45800A6F708 /* Reactive+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -490,6 +492,7 @@
 				920B6714291F7D5D000191F1 /* Helper.swift */,
 				92A6400F292230CB00A6F708 /* UIStackView+Extension.swift */,
 				92A64011292233E900A6F708 /* CALayer+Extension.swift */,
+				92A640372924B45800A6F708 /* Reactive+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -797,6 +800,7 @@
 				92560760291946C600A13FFB /* BaseCollectionViewCell.swift in Sources */,
 				925607542919266600A13FFB /* UIFont+Extension.swift in Sources */,
 				9256073F2918F2E700A13FFB /* MDSInputTextField.swift in Sources */,
+				92A640382924B45800A6F708 /* Reactive+Extension.swift in Sources */,
 				92A5DE64291CFC5600094D3E /* Login.swift in Sources */,
 				92A6400929221EA100A6F708 /* HomeMapViewModel.swift in Sources */,
 				9256073B2918F14D00A13FFB /* UIView+Extension.swift in Sources */,

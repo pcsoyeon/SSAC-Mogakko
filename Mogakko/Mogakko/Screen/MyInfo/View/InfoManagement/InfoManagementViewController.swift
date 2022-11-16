@@ -56,12 +56,6 @@ final class InfoManagementViewController: UIViewController {
     private let viewModel = InfoManagementViewModel()
     private let disposeBag = DisposeBag()
     
-    private var gender: Int = 0
-    private var study: String = ""
-    private var allowSearch: Int = 0
-    private var ageMin: Int = 18
-    private var ageMax: Int = 65
-    
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,8 +67,6 @@ final class InfoManagementViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setItem()
-        
         configureHierarchy()
         configureAttribute()
         bind()
@@ -116,43 +108,34 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
     
     func configureAttribute() {
         view.backgroundColor = .white
-        
         configureContentView()
-        setItem()
     }
     
     private func configureContentView() {
         contentStackView.addArrangedSubviews(cardView, genderView, studyView, allowSearchView, ageView, withdrawView)
     }
     
-    private func setItem() {
-        viewModel.getUserInfo { [weak self] data in
-            guard let self = self else { return }
-            guard let data = data else {
-                print("오류처리")
-                return
-            }
-            
-            self.cardView.imageItem = ImageItem(background: data.background, sesac: data.sesac)
-            self.cardView.cardItem = CardItem(nickname: data.nick, reputation: data.reputation, comment: data.comment)
-            self.genderView.item = GenderItem(gender: data.gender)
-            self.studyView.item = StudyItem(study: data.study)
-            self.allowSearchView.item = AllowSearchItem(searchable: data.searchable)
-            self.ageView.item = AgeItem(ageMin: data.ageMin, ageMax: data.ageMax)
-            self.withdrawView.item = WithdrawItem()
-            
-            self.gender = data.gender
-            self.study = data.study
-            self.allowSearch = data.searchable
-            self.ageMin = data.ageMin
-            self.ageMax = data.ageMax
-        }
-    }
-    
     func bind() {
+        let input = InfoManagementViewModel.Input(viewWillAppear: rx.viewWillAppear, saveButtonTap: saveButton.rx.tap, expandButtonTap: cardView.expandButton.rx.tap, manButtonTap: genderView.manButton.rx.tap, womanButtonTap: genderView.womanButton.rx.tap, studyTextFieldText: studyView.textField.rx.text, searchSwithchIsOn: allowSearchView.switchButton.rx.isOn, withdrawTap: withdrawView.withdrawButton.rx.tap)
+        
+        let output = viewModel.transform(from: input)
+        
+        // 화면 전환 후, 데이터 받아서 -> UI 업데이트
+        output.info
+            .withUnretained(self)
+            .bind { vc, data in
+                vc.cardView.imageItem = ImageItem(background: data.background, sesac: data.sesac)
+                vc.cardView.cardItem = CardItem(nickname: data.nick, reputation: data.reputation, comment: data.comment)
+                vc.genderView.item = GenderItem(gender: data.gender)
+                vc.studyView.item = StudyItem(study: data.study)
+                vc.allowSearchView.item = AllowSearchItem(searchable: data.searchable)
+                
+                // 연령대 설정
+            }
+            .disposed(by: disposeBag)
+        
         // 저장 버튼
-        saveButton.rx.tap
-            .throttle(.seconds(3), scheduler: MainScheduler.instance)
+        output.saveButtonTap
             .withUnretained(self)
             .bind { vc, _ in
                 vc.updateMypage()
@@ -160,54 +143,50 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         // 카드 뷰
-        cardView.expandButton.rx.tap
-            .withUnretained(self)
-            .bind { vc, _ in
-                vc.cardView.touchUpExpandButton.toggle()
+        output.expandButtonTap
+            .drive { [weak self] _ in
+                guard let self = self else { return }
+                self.cardView.touchUpExpandButton.toggle()
             }
             .disposed(by: disposeBag)
         
         // 성별
-        genderView.manButton.rx.tap
-            .asDriver()
+        output.manButtonTap
             .drive { [weak self] _ in
                 guard let self = self else { return }
                 self.genderView.manButton.type = .fill
                 self.genderView.womanButton.type = .inactive
                 
-                self.gender = 1
+                self.viewModel.gender.accept(1)
             }
             .disposed(by: disposeBag)
         
-        genderView.womanButton.rx.tap
-            .asDriver()
+        output.womanButtonTap
             .drive { [weak self] _ in
                 guard let self = self else { return }
                 self.genderView.manButton.type = .inactive
                 self.genderView.womanButton.type = .fill
                 
-                self.gender = 0
+                self.viewModel.gender.accept(0)
             }
             .disposed(by: disposeBag)
         
         // 스터디
-        studyView.textField.rx.text.orEmpty
-            .distinctUntilChanged()
+        output.studyTextFieldText
             .withUnretained(self)
             .bind { vc, text in
-                vc.study = text
+                vc.viewModel.study.accept(text)
             }
             .disposed(by: disposeBag)
         
         // 검색허용
-        allowSearchView.switchButton.rx.isOn
-            .asDriver()
+        output.searchSwithchIsOn
             .drive { [weak self] isOn in
                 guard let self = self else { return }
                 if isOn {
-                    self.allowSearch = 1
+                    self.viewModel.allowSearch.accept(1)
                 } else {
-                    self.allowSearch = 0
+                    self.viewModel.allowSearch.accept(0)
                 }
             }
             .disposed(by: disposeBag)
@@ -215,8 +194,7 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
         // 상대방 연령대
         
         // 회원탈퇴
-        withdrawView.withdrawButton.rx.tap
-            .asDriver()
+        output.withdrawTap
             .drive { [weak self] _ in
                 guard let self = self else { return }
                 let viewController = WithdrawPopupViewController()
@@ -232,7 +210,12 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
 
 extension InfoManagementViewController {
     private func updateMypage() {
-        let param = MypageRequest(searchable: allowSearch, ageMin: ageMin, ageMax: ageMax, gender: gender, study: study)
+        
+        let param = MypageRequest(searchable: viewModel.allowSearch.value,
+                                  ageMin: viewModel.ageMin.value,
+                                  ageMax: viewModel.ageMax.value,
+                                  gender: viewModel.gender.value,
+                                  study: viewModel.study.value)
         let router = UserRouter.mypage(mypageRequest: param)
         
         GenericAPI.shared.requestData(router: router) { [weak self] response in
