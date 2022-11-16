@@ -25,6 +25,10 @@ final class HomeMapViewController: UIViewController {
         $0.cameraZoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 500, maxCenterCoordinateDistance: 30000)
     }
     
+    private let annotationImageView = UIImageView().then {
+        $0.image = Constant.Image.mapMarker
+    }
+    
     private let genderButtonStackView = UIStackView().then {
         $0.axis = .vertical
         $0.distribution = .fillEqually
@@ -91,10 +95,15 @@ extension HomeMapViewController: BaseViewControllerAttribute {
     func configureHierarchy() {
         view.addSubviews(mapView, floatingButton, genderButtonStackView, qpsButton)
         genderButtonStackView.addArrangedSubviews(totalButton, manButton, womanButton)
+        mapView.addSubview(annotationImageView)
         
         mapView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        annotationImageView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
         
         floatingButton.snp.makeConstraints { make in
@@ -117,8 +126,12 @@ extension HomeMapViewController: BaseViewControllerAttribute {
     
     func bind() {
         mapView.rx.regionDidChangeAnimated
-            .subscribe(onNext: { _ in
-                print("💨 맵 움직인다 !!!!")
+            .throttle(.microseconds(10), scheduler: MainScheduler.instance)
+            .withUnretained(self)
+            .subscribe(onNext: { vc, _ in
+                let mapLatitude = vc.mapView.centerCoordinate.latitude
+                let mapLongitude = vc.mapView.centerCoordinate.longitude
+                print("지도의 중간 지점 - Latitude: \(mapLatitude) Longitude: \(mapLongitude)")
             })
             .disposed(by: disposeBag)
         
