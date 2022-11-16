@@ -173,8 +173,6 @@ extension HomeMapViewController {
         currentLocation = locationManager.location
         
         mapView.setRegion(MKCoordinateRegion(center: defaultLocationCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
-        
-//        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
     }
 }
 
@@ -205,7 +203,6 @@ extension HomeMapViewController {
         case .restricted, .denied:
             print("LocationDisable")
             viewModel.isLocationEnable.accept(false)
-            //            viewModel.calculateRegion(lat: 37.517819364682694, long: 126.88647317074734)
             presentSettingAlert()
         case .authorizedAlways, .authorizedWhenInUse:
             print("LocationEnable")

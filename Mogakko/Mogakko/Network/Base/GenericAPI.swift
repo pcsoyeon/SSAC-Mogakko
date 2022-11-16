@@ -42,7 +42,14 @@ final class GenericAPI {
                 switch response.result {
                     
                 case .success(_):
-                    completionHandler(.success(200))
+                    guard let statusCode = response.response?.statusCode else { return }
+                    
+                    if statusCode == 200 {
+                        completionHandler(.success(200))
+                    } else {
+                        guard let error = APIError(rawValue: statusCode) else { return }
+                        completionHandler(.failure(error))
+                    }
                     
                 case .failure(_):
                     guard let statusCode = response.response?.statusCode else { return }
