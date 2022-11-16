@@ -224,7 +224,10 @@ extension InfoManagementViewController {
             switch response {
             case .success(_):
                 self.showToast(message: "내 정보 업데이트!")
-                self.navigationController?.popViewController(animated: true)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.navigationController?.popViewController(animated: true)
+                }
                 
             case .failure(let error):
                 switch error {
