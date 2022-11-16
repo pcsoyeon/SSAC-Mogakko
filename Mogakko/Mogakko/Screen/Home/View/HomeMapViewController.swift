@@ -28,14 +28,14 @@ final class HomeMapViewController: UIViewController {
     private let genderButtonStackView = UIStackView().then {
         $0.axis = .vertical
         $0.distribution = .fillEqually
-        
-        $0.makeRound()
         $0.makeShadow(color: UIColor.black.cgColor, radius: 3, offset: CGSize(width: 0, height: 1), opacity: 0.3)
     }
     
     private let totalButton = MDSFilterButton().then {
         $0.isActive = true
         $0.type = .total
+        $0.layer.cornerRadius = 8
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
     private let manButton = MDSFilterButton().then {
@@ -46,6 +46,8 @@ final class HomeMapViewController: UIViewController {
     private let womanButton = MDSFilterButton().then {
         $0.isActive = false
         $0.type = .woman
+        $0.layer.cornerRadius = 8
+        $0.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
     
     private let qpsButton = UIButton().then {
