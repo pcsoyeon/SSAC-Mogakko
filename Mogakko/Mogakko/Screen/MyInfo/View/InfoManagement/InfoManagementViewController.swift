@@ -41,7 +41,10 @@ final class InfoManagementViewController: UIViewController {
         $0.spacing = 16
     }
     
-    private var cardView = CardView()
+    private var cardView = CardView().then {
+        $0.type = .info
+        $0.touchUpExpandButton = false
+    }
     private var genderView = GenderView()
     private var studyView = StudyView()
     private var allowSearchView = AllowSearchView()
@@ -65,6 +68,7 @@ final class InfoManagementViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
         networkMoniter()
+        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidLoad() {
@@ -130,7 +134,7 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
             }
             
             self.cardView.imageItem = ImageItem(background: data.background, sesac: data.sesac)
-            self.cardView.cardItem = CardItem(nickname: data.nick, reputation: data.reputation, review: (data.comment.count == 0) ? "첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!첫 리뷰를 기다리는 중이에요!" : data.comment[0])
+            self.cardView.cardItem = CardItem(nickname: data.nick, reputation: data.reputation, comment: data.comment)
             self.genderView.item = GenderItem(gender: data.gender)
             self.studyView.item = StudyItem(study: data.study)
             self.allowSearchView.item = AllowSearchItem(searchable: data.searchable)
@@ -143,8 +147,6 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
             self.ageMin = data.ageMin
             self.ageMax = data.ageMax
         }
-        
-        cardView.touchUpExpandButton = false
     }
     
     func bind() {
@@ -162,7 +164,6 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, _ in
                 vc.cardView.touchUpExpandButton.toggle()
-                
             }
             .disposed(by: disposeBag)
         
@@ -203,7 +204,6 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
             .asDriver()
             .drive { [weak self] isOn in
                 guard let self = self else { return }
-                print("검색 허용 - \(isOn)")
                 if isOn {
                     self.allowSearch = 1
                 } else {
@@ -219,7 +219,6 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
             .asDriver()
             .drive { [weak self] _ in
                 guard let self = self else { return }
-                print("회원탈퇴 시작 !!!")
                 let viewController = WithdrawPopupViewController()
                 viewController.modalTransitionStyle = .crossDissolve
                 viewController.modalPresentationStyle = .overFullScreen
@@ -262,7 +261,4 @@ extension InfoManagementViewController {
             }
         }
     }
-    
-    
-    
 }

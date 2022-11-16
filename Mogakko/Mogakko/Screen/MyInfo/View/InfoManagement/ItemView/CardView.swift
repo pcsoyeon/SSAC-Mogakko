@@ -10,9 +10,25 @@ import UIKit
 import SnapKit
 import Then
 
+@frozen
+enum CardViewType {
+    case plain
+    case info
+}
+
 final class CardView: BaseView {
     
     // MARK: - Property
+    
+    var type: CardViewType = .info {
+        didSet {
+            if type == .info {
+                setInfoLayout()
+            } else {
+                setPlainLayout()
+            }
+        }
+    }
     
     var imageItem: InfoManagementItem? {
         didSet {
@@ -26,11 +42,15 @@ final class CardView: BaseView {
         didSet {
             guard let item = cardItem as? CardItem else { return }
             nicknameLabel.text = item.nickname
-            reviewContentLabel.text = item.review
             
-            if item.review == "" {
+            if item.comment.isEmpty {
                 reviewContentLabel.text = "첫 리뷰를 기다리는 중이에요!"
                 reviewContentLabel.textColor = .gray6
+            } else if item.comment.count == 1 {
+                reviewContentLabel.text = item.comment[0]
+            } else {
+                reviewContentLabel.text = item.comment[0]
+                moreButton.isHidden = false
             }
             
             reputation = item.reputation
@@ -41,10 +61,18 @@ final class CardView: BaseView {
         didSet {
             if touchUpExpandButton {
                 
-                let labelHeight = reviewContentLabel.countCurrentLines() * 24
-                
-                snp.updateConstraints { make in
-                    make.height.equalTo(194 + 270 + labelHeight + 16)
+                if type == .info {
+                    let labelHeight = reviewContentLabel.countCurrentLines() * 24
+                    
+                    snp.updateConstraints { make in
+                        make.height.equalTo(194 + 270 + labelHeight + 16 + 10)
+                    }
+                } else {
+                    let labelHeight = reviewContentLabel.countCurrentLines() * 24
+                    
+                    snp.updateConstraints { make in
+                        make.height.equalTo(194 + 270 + 165 + labelHeight + 16 + 10)
+                    }
                 }
                 
                 expandButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
@@ -57,6 +85,14 @@ final class CardView: BaseView {
             }
         }
     }
+    
+    private var reputation: [Int] = Array(repeating: 0, count: 6) {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
+    private var reputationTitle: [String] = ["좋은 매너", "정확한 시간 약속", "빠른 응답", "친절한 성격", "능숙한 실력", "유익한 시간"]
     
     // MARK: - UI Property
     
@@ -118,14 +154,28 @@ final class CardView: BaseView {
         $0.numberOfLines = 0
     }
     
-    // MARK: - Property
-    
-    private var reputation: [Int] = Array(repeating: 0, count: 6) {
-        didSet {
-            collectionView.reloadData()
-        }
+    private var moreButton = UIButton().then {
+        $0.setImage(Constant.Image.moreArrow, for: .normal)
+        $0.isHidden = true
     }
-    private var reputationTitle: [String] = ["좋은 매너", "정확한 시간 약속", "빠른 응답", "친절한 성격", "능숙한 실력", "유익한 시간"]
+    
+    private var studyLabel = UILabel().then {
+        $0.text = "하고 싶은 스터디"
+        $0.textColor = .black
+        $0.font = MDSFont.Title6_R12.font
+    }
+    
+    private lazy var studyCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+                
+        collectionView.backgroundColor = .green
+        collectionView.isScrollEnabled = false
+
+        return collectionView
+    }()
     
     // MARK: - UI Method
     
@@ -135,7 +185,6 @@ final class CardView: BaseView {
     
     override func configureHierarchy() {
         addSubviews(backgroundImageView, backView)
-        backView.addSubviews(nicknameLabel, expandButton, titleLabel, collectionView, reviewLabel, reviewContentLabel)
         backgroundImageView.addSubview(sesacImageView)
         
         backgroundImageView.snp.makeConstraints { make in
@@ -155,6 +204,10 @@ final class CardView: BaseView {
             make.bottom.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(16)
         }
+    }
+    
+    private func setInfoLayout() {
+        backView.addSubviews(nicknameLabel, expandButton, titleLabel, collectionView, reviewLabel, moreButton, reviewContentLabel)
         
         nicknameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(16)
@@ -181,7 +234,65 @@ final class CardView: BaseView {
         
         reviewLabel.snp.makeConstraints { make in
             make.top.equalTo(collectionView.snp.bottom).offset(24)
+            make.leading.equalToSuperview().inset(Metric.margin)
+        }
+        
+        moreButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(Metric.margin)
+            make.centerY.equalTo(reviewLabel.snp.centerY)
+        }
+        
+        reviewContentLabel.snp.makeConstraints { make in
+            make.top.equalTo(reviewLabel.snp.bottom).offset(16)
+            make.horizontalEdges.bottom.equalToSuperview().inset(Metric.margin)
+        }
+    }
+    
+    private func setPlainLayout() {
+        backView.addSubviews(nicknameLabel, expandButton, titleLabel, collectionView, studyLabel, studyCollectionView, reviewLabel, moreButton, reviewContentLabel)
+        
+        nicknameLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(16)
+            make.leading.equalToSuperview().inset(Metric.margin)
+            make.height.equalTo(26)
+        }
+        
+        expandButton.snp.makeConstraints { make in
+            make.width.height.equalTo(26)
+            make.centerY.equalTo(nicknameLabel.snp.centerY)
+            make.trailing.equalToSuperview().inset(26)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(nicknameLabel.snp.bottom).offset(24)
             make.horizontalEdges.equalToSuperview().inset(Metric.margin)
+        }
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
+            make.horizontalEdges.equalToSuperview().inset(Metric.margin)
+            make.height.equalTo(112)
+        }
+        
+        studyLabel.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(24)
+            make.leading.equalToSuperview().inset(Metric.margin)
+        }
+        
+        studyCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(studyLabel.snp.bottom).offset(16)
+            make.horizontalEdges.equalToSuperview().inset(Metric.margin)
+            make.height.equalTo(112)
+        }
+        
+        reviewLabel.snp.makeConstraints { make in
+            make.top.equalTo(studyCollectionView.snp.bottom).offset(24)
+            make.leading.equalToSuperview().inset(Metric.margin)
+        }
+        
+        moreButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(Metric.margin)
+            make.top.equalTo(studyCollectionView.snp.bottom).offset(24)
         }
         
         reviewContentLabel.snp.makeConstraints { make in

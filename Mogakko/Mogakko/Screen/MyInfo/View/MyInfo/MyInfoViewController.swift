@@ -35,6 +35,7 @@ final class MyInfoViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
         networkMoniter()
+        tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidLoad() {

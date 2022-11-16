@@ -29,8 +29,8 @@ final class HomeMapViewController: UIViewController {
         $0.axis = .vertical
         $0.distribution = .fillEqually
         
-        // TODO: - 둘 중에 하나만 적용 .. 어떻게 해결 ??
         $0.makeRound()
+        $0.makeShadow(color: UIColor.black.cgColor, radius: 3, offset: CGSize(width: 0, height: 1), opacity: 0.3)
     }
     
     private let totalButton = MDSFilterButton().then {
@@ -54,6 +54,7 @@ final class HomeMapViewController: UIViewController {
         $0.widthAnchor.constraint(equalToConstant: 48).isActive = true
         $0.heightAnchor.constraint(equalToConstant: 48).isActive = true
         $0.makeRound()
+        $0.makeShadow(color: UIColor.black.cgColor, radius: 3, offset: CGSize(width: 0, height: 1), opacity: 0.3)
     }
     
     // MARK: - Property

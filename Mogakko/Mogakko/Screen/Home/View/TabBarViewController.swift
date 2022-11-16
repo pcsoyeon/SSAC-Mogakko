@@ -19,11 +19,14 @@ final class TabBarViewController: UITabBarController, UITabBarControllerDelegate
         delegate = self
         
         UITabBar.appearance().backgroundColor = .white
-        tabBar.tintColor = .green
-        tabBar.barTintColor = .white
-        tabBar.isTranslucent = false
+        UITabBar.appearance().tintColor = .green
         
-        // TODO: - 각 화면으로 수정 
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        self.tabBar.standardAppearance = appearance;
+        self.tabBar.scrollEdgeAppearance = self.tabBar.standardAppearance
+        
         let firstTabController = HomeMapViewController()
         let secondTabController = UIViewController()
         let thirdTabController = UIViewController()
