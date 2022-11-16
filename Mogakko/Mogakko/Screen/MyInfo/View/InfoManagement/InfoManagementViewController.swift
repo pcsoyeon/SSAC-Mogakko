@@ -129,8 +129,7 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
                 vc.genderView.item = GenderItem(gender: data.gender)
                 vc.studyView.item = StudyItem(study: data.study)
                 vc.allowSearchView.item = AllowSearchItem(searchable: data.searchable)
-                
-                // 연령대 설정
+                vc.ageView.item = AgeItem(ageMin: data.ageMin, ageMax: data.ageMax)
             }
             .disposed(by: disposeBag)
         
@@ -192,6 +191,8 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         // 상대방 연령대
+        ageView.slider
+            .addTarget(self, action: #selector(changeValue), for: .valueChanged)
         
         // 회원탈퇴
         output.withdrawTap
@@ -203,6 +204,13 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
                 self.present(viewController, animated: true)
             }
             .disposed(by: disposeBag)
+    }
+    
+    // MARK: - @objc
+    
+    @objc private func changeValue() {
+        viewModel.ageMin.accept((Int(ageView.slider.lower)))
+        viewModel.ageMax.accept((Int(ageView.slider.upper)))
     }
 }
 

@@ -17,8 +17,8 @@ final class AgeView: BaseView {
     var item: InfoManagementItem? {
         didSet {
             guard let item = item as? AgeItem else { return }
-//            slider.minValue = Double(item.ageMin)
-//            slider.maxValue = Double(item.ageMax)
+            slider.lower = Double(item.ageMin)
+            slider.upper = Double(item.ageMax)
             ageLabel.text = "\(item.ageMin) - \(item.ageMax)"
         }
     }
@@ -36,9 +36,8 @@ final class AgeView: BaseView {
         $0.textColor = .green
     }
     
-    var slider = MDSSlider().then {
-        $0.minValue = 1
-        $0.maxValue = 100
+    lazy var slider = MDSSlider().then {
+        $0.addTarget(self, action: #selector(changeValue), for: .valueChanged)
     }
     
     // MARK: - UI Method
@@ -67,5 +66,9 @@ final class AgeView: BaseView {
             make.height.equalTo(22)
             make.bottom.equalToSuperview().inset(8)
         }
+    }
+    
+    @objc private func changeValue() {
+        ageLabel.text = "\(Int(self.slider.lower)) ~ \(Int(self.slider.upper))"
     }
 }

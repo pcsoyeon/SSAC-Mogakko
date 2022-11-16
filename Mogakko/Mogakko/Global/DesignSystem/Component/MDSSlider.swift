@@ -15,7 +15,7 @@ final class MDSSlider: UIControl {
     // MARK: - Metric
     
     private enum SliderMetric {
-        static let barRatio = 1.0/10.0
+        static let barRatio = 18.0/65.0
     }
     
     // MARK: - UI Property
@@ -40,11 +40,11 @@ final class MDSSlider: UIControl {
     
     // MARK: - Property
     
-    var minValue = 0.0 {
+    var minValue = 18.0 {
         didSet { self.lower = self.minValue }
     }
     
-    var maxValue = 10.0 {
+    var maxValue = 65.0 {
         didSet { self.upper = self.maxValue }
     }
     
