@@ -45,7 +45,8 @@ final class HomeMapViewModel {
                 self.fromRequestedQueue.accept(data.fromQueueDBRequested)
                 self.recommend.accept(data.fromRecommend)
                 
-                self.filterQueneByGender(data.fromQueueDB)
+                self.filterQueueByGender(data.fromQueueDB, data.fromQueueDBRequested)
+                
                 
                 completionHandler(nil)
                 
@@ -55,8 +56,19 @@ final class HomeMapViewModel {
         }
     }
     
-    private func filterQueneByGender(_ queue: [FromQueue]) {
+    private func filterQueueByGender(_ queue: [FromQueue], _ requestedQueue: [FromQueue]) {
         for item in queue {
+            switch item.gender {
+            case 0:
+                self.womanList.append(item)
+            case 1:
+                self.manList.append(item)
+            default:
+                return
+            }
+        }
+        
+        for item in requestedQueue {
             switch item.gender {
             case 0:
                 self.womanList.append(item)

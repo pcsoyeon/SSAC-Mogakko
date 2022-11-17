@@ -92,40 +92,6 @@ final class HomeMapViewController: UIViewController {
         
         setLocation()
         setMapView()
-        
-        viewModel.requestMyState { [weak self] response, error in
-            guard let self = self else { return }
-            
-            // 201 등의 에러
-            if let error = error {
-                switch error {
-                case .takenUser:
-                    // 일반 상태
-                    self.floatingButton.type = .plain
-                case .invalidNickname:
-                    return
-                case .invalidAuthorization:
-                    print("갱신해라")
-                case .unsubscribedUser:
-                    return
-                case .serverError:
-                    self.showToast(message: "서버 에러입니다.")
-                case .emptyParameters:
-                    self.showToast(message: "요청 값이 부족합니다.")
-                }
-            }
-            
-            // 200일 때
-            if let response = response {
-                if response.matched == 0 {
-                    // 매칭 대기중
-                    self.floatingButton.type = .matching
-                } else {
-                    // 매칭된 
-                    self.floatingButton.type = .matched
-                }
-            }
-        }
     }
 }
 
@@ -265,6 +231,40 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                 }
             }
             .disposed(by: disposeBag)
+        
+        viewModel.requestMyState { [weak self] response, error in
+            guard let self = self else { return }
+            
+            // 201 등의 에러
+            if let error = error {
+                switch error {
+                case .takenUser:
+                    // 일반 상태
+                    self.floatingButton.type = .plain
+                case .invalidNickname:
+                    return
+                case .invalidAuthorization:
+                    print("갱신해라")
+                case .unsubscribedUser:
+                    return
+                case .serverError:
+                    self.showToast(message: "서버 에러입니다.")
+                case .emptyParameters:
+                    self.showToast(message: "요청 값이 부족합니다.")
+                }
+            }
+            
+            // 200일 때
+            if let response = response {
+                if response.matched == 0 {
+                    // 매칭 대기중
+                    self.floatingButton.type = .matching
+                } else {
+                    // 매칭된
+                    self.floatingButton.type = .matched
+                }
+            }
+        }
     }
     
     private func setFromQueueAnnotation(_ queueList: [FromQueue]) {
