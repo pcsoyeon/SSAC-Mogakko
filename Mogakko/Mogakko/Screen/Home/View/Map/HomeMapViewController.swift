@@ -76,6 +76,8 @@ final class HomeMapViewController: UIViewController {
     private var currentLatitude: Double?
     private var currentLongtitude: Double?
     
+    private var recommend: [String] = []
+    
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -265,6 +267,26 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                 }
             }
         }
+        
+        floatingButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                
+                if vc.floatingButton.type == .plain {
+                    let viewController = StudyViewController()
+                    viewController.viewModel.recommend.accept(vc.recommend)
+                    print(vc.recommend)
+                    vc.navigationController?.pushViewController(viewController, animated: true)
+                } else if vc.floatingButton.type == .matching {
+                    
+                } else {
+                    
+                }
+                
+            }
+            .disposed(by: disposeBag)
+        
+        
     }
     
     private func setFromQueueAnnotation(_ queueList: [FromQueue]) {
