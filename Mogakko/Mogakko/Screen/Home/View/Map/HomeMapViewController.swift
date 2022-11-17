@@ -73,9 +73,6 @@ final class HomeMapViewController: UIViewController {
     private var currentLocation: CLLocation!
     private let defaultLocationCoordinate = CLLocationCoordinate2D(latitude: 37.516509, longitude: 126.885025)
     
-    // TODO: - View Model로 이동
-    private var fromQueue: [FromQueue] = []
-    
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -130,27 +127,13 @@ extension HomeMapViewController: BaseViewControllerAttribute {
     
     func bind() {
         mapView.rx.regionDidChangeAnimated
-            .throttle(.microseconds(1), scheduler: MainScheduler.instance)
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .subscribe(onNext: { vc, _ in
                 let mapLatitude = vc.mapView.centerCoordinate.latitude
                 let mapLongitude = vc.mapView.centerCoordinate.longitude
                 
-                vc.viewModel.requestSearch(request: SearchRequest(lat: mapLatitude, long: mapLongitude)) { data, error in
-                    
-                    if let data = data {
-                        print("================ 주변 새싹 찾기 성공 ================")
-                        
-                        vc.fromQueue = data.fromQueueDB
-                        vc.setFromQueueAnnotation()
-                        
-                        print("✨ 나에게 스터디를 요청한 새싹")
-                        dump(data.fromQueueDBRequested)
-                        
-                        print("================================")
-                        
-                        
-                    }
+                vc.viewModel.requestSearch(request: SearchRequest(lat: mapLatitude, long: mapLongitude)) { error in
                     
                     if let error = error {
                         switch error {
@@ -169,6 +152,23 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                     }
                 }
             })
+            .disposed(by: disposeBag)
+        
+        viewModel.fromQueue
+            .withUnretained(self)
+            .bind { vc, fromQueue in
+                print("============ 🌱 주변 새싹 🌱 ============")
+                dump(fromQueue)
+                vc.setFromQueueAnnotation(fromQueue)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.fromRequestedQueue
+            .withUnretained(self)
+            .bind { vc, fromRequestQueue in
+                print("============ 🍀 나에게 요청한 새싹 🍀 ============")
+                dump(fromRequestQueue)
+            }
             .disposed(by: disposeBag)
         
         totalButton.rx.tap
@@ -196,11 +196,11 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
     }
     
-    private func setFromQueueAnnotation() {
+    private func setFromQueueAnnotation(_ queueList: [FromQueue]) {
         let annotations = mapView.annotations
         mapView.removeAnnotations(annotations)
         
-        for queue in fromQueue {
+        for queue in queueList {
             let queueCoordinate = CLLocationCoordinate2D(latitude: queue.lat, longitude: queue.long)
             let queueAnnotation = CustomAnnotation(sesac_image: queue.sesac, coordinate: queueCoordinate)
             mapView.addAnnotation(queueAnnotation)
