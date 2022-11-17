@@ -54,7 +54,7 @@ final class HomeMapViewController: UIViewController {
         $0.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
     
-    private let qpsButton = UIButton().then {
+    private let gpsButton = UIButton().then {
         $0.setImage(Constant.Image.place, for: .normal)
         $0.backgroundColor = .white
         $0.widthAnchor.constraint(equalToConstant: 48).isActive = true
@@ -72,6 +72,9 @@ final class HomeMapViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private var currentLocation: CLLocation!
     private let defaultLocationCoordinate = CLLocationCoordinate2D(latitude: 37.516509, longitude: 126.885025)
+    
+    private var currentLatitude: Double?
+    private var currentLongtitude: Double?
     
     // MARK: - Life Cycle
     
@@ -94,7 +97,7 @@ final class HomeMapViewController: UIViewController {
 
 extension HomeMapViewController: BaseViewControllerAttribute {
     func configureHierarchy() {
-        view.addSubviews(mapView, floatingButton, genderButtonStackView, qpsButton)
+        view.addSubviews(mapView, floatingButton, genderButtonStackView, gpsButton)
         genderButtonStackView.addArrangedSubviews(totalButton, manButton, womanButton)
         mapView.addSubview(annotationImageView)
         
@@ -115,7 +118,7 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             make.top.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
         
-        qpsButton.snp.makeConstraints { make in
+        gpsButton.snp.makeConstraints { make in
             make.top.equalTo(genderButtonStackView.snp.bottom).offset(Metric.margin)
             make.leading.equalTo(view.safeAreaLayoutGuide).inset(Metric.margin)
         }
@@ -195,6 +198,37 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                 vc.womanButton.isActive = true
                 [vc.totalButton, vc.manButton].forEach { $0.isActive = false }
                 vc.setFromQueueAnnotation(vc.viewModel.womanQueue.value)
+            }
+            .disposed(by: disposeBag)
+        
+        gpsButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                if let latitude = vc.currentLatitude, let longtitude = vc.currentLongtitude {
+                    let center = CLLocationCoordinate2D(latitude: latitude, longitude: longtitude)
+                    vc.mapView.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longtitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+                }
+                
+                let mapLatitude = vc.mapView.centerCoordinate.latitude
+                let mapLongitude = vc.mapView.centerCoordinate.longitude
+                
+                vc.viewModel.requestSearch(request: SearchRequest(lat: mapLatitude, long: mapLongitude)) { error in
+                    
+                    if let error = error {
+                        switch error {
+                        case .takenUser, .invalidNickname:
+                            return
+                        case .invalidAuthorization:
+                            vc.showToast(message: "만료된 토큰입니다. 잠시 후 다시 시도해주세요.")
+                        case .unsubscribedUser:
+                            vc.showToast(message: "미가입 회원입니다.")
+                        case .serverError:
+                            vc.showToast(message: "서버 오류입니다. 잠시 후 다시 시도해주세요.")
+                        case .emptyParameters:
+                            vc.showToast(message: "요청 값이 부족합니다.")
+                        }
+                    }
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -290,7 +324,6 @@ extension HomeMapViewController: CLLocationManagerDelegate {
         
         if CLLocationManager.locationServicesEnabled() {
             checkCurrentLocationAuthorization(authorizationStatus)
-            // TODO: - 가까운 친구 찾기
         }
     }
     
@@ -313,6 +346,11 @@ extension HomeMapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let coordinate = locations.last?.coordinate {
             mapView.setRegion(MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+            
+            currentLatitude = coordinate.latitude
+            currentLongtitude = coordinate.longitude
+            
+            
         }
         locationManager.stopUpdatingLocation()
     }
