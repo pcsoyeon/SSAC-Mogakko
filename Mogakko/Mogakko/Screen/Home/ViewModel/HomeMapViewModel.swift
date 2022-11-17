@@ -70,4 +70,16 @@ final class HomeMapViewModel {
         womanQueue.accept(womanList)
         manQueue.accept(manList)
     }
+    
+    func requestMyState(completionHandler: @escaping (MyStateResponse?, APIError?) -> Void) {
+        GenericAPI.shared.requestDecodableData(type: MyStateResponse.self, router: QueueRouter.myQueueState) { response in
+            switch response {
+            case .success(let data):
+                print("============ ✨ 내 상태 GET ✨ ============")
+                completionHandler(data, nil)
+            case .failure(let error):
+                completionHandler(nil, error)
+            }
+        }
+    }
 }
