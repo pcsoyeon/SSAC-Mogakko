@@ -8,6 +8,7 @@
 import Foundation
 
 import Alamofire
+import FirebaseAuth
 
 final class UserAPI {
     static let shared = UserAPI()
@@ -90,5 +91,22 @@ final class UserAPI {
                     completionHandler(.failure(error))
                 }
             }
+    }
+    
+    // MARK: - Refresh IdToken
+    
+    func refreshIdToken(completion: @escaping (Result<String, Error>) -> Void) {
+        Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            if let idToken = idToken {
+                UserData.idtoken = idToken
+                completion(.success(idToken))
+            }
+        }
     }
 }
