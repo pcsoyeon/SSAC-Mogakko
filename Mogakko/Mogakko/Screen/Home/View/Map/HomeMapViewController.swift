@@ -130,7 +130,7 @@ extension HomeMapViewController: BaseViewControllerAttribute {
     
     func bind() {
         mapView.rx.regionDidChangeAnimated
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .subscribe(onNext: { vc, _ in
                 let mapLatitude = vc.mapView.centerCoordinate.latitude
