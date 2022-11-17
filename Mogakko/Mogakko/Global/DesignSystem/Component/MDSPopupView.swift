@@ -29,6 +29,12 @@ final class MDSPopupView: UIView {
         $0.font = MDSFont.Title4_R14.font
     }
     
+    private var buttonStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.spacing = 8
+        $0.distribution = .fillEqually
+    }
+    
     private var cancelButton = UIButton().then {
         $0.titleLabel?.font = MDSFont.Body3_R14.font
         $0.setTitle("취소", for: .normal)
@@ -75,7 +81,8 @@ final class MDSPopupView: UIView {
     
     private func configureHierarchy() {
         self.addSubview(backView)
-        backView.addSubviews(titleLabel, subTitleLabel, cancelButton, confirmButton)
+        backView.addSubviews(titleLabel, subTitleLabel, buttonStackView)
+        buttonStackView.addArrangedSubviews(cancelButton, confirmButton)
         
         backView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
@@ -93,16 +100,10 @@ final class MDSPopupView: UIView {
             make.centerX.equalToSuperview()
         }
         
-        cancelButton.snp.makeConstraints { make in
+        buttonStackView.snp.makeConstraints { make in
             make.top.equalTo(subTitleLabel.snp.bottom).offset(16)
-            make.leading.bottom.equalToSuperview().inset(Metric.margin)
-            make.trailing.equalToSuperview().inset(176)
-        }
-        
-        confirmButton.snp.makeConstraints { make in
-            make.top.equalTo(subTitleLabel.snp.bottom).offset(16)
-            make.trailing.bottom.equalToSuperview().inset(Metric.margin)
-            make.leading.equalToSuperview().inset(176)
+            make.horizontalEdges.bottom.equalToSuperview().inset(Metric.margin)
+            make.height.equalTo(48)
         }
     }
     
