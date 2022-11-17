@@ -176,6 +176,7 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             .bind { vc, _ in
                 vc.totalButton.isActive = true
                 [vc.manButton, vc.womanButton].forEach { $0.isActive = false }
+                vc.setFromQueueAnnotation(vc.viewModel.fromQueue.value)
             }
             .disposed(by: disposeBag)
         
@@ -184,6 +185,7 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             .bind { vc, _ in
                 vc.manButton.isActive = true
                 [vc.totalButton, vc.womanButton].forEach { $0.isActive = false }
+                vc.setFromQueueAnnotation(vc.viewModel.manQueue.value)
             }
             .disposed(by: disposeBag)
         
@@ -192,6 +194,7 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             .bind { vc, _ in
                 vc.womanButton.isActive = true
                 [vc.totalButton, vc.manButton].forEach { $0.isActive = false }
+                vc.setFromQueueAnnotation(vc.viewModel.womanQueue.value)
             }
             .disposed(by: disposeBag)
     }

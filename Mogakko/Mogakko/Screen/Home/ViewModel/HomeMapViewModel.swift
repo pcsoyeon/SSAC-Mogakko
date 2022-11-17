@@ -14,13 +14,21 @@ import RxSwift
 
 final class HomeMapViewModel {
     
-    // MARK: - Property
+    // MARK: - Rx Property
     
     var isLocationEnable = BehaviorRelay<Bool>(value: false)
     
     var fromQueue = BehaviorRelay<[FromQueue]>(value: [])
     var fromRequestedQueue = BehaviorRelay<[FromQueue]>(value: [])
     var recommend = BehaviorRelay<[String]>(value: [])
+    
+    var manQueue = BehaviorRelay<[FromQueue]>(value: [])
+    var womanQueue = BehaviorRelay<[FromQueue]>(value: [])
+    
+    // MARK: - Property
+    
+    private var manList: [FromQueue] = []
+    private var womanList: [FromQueue] = []
     
     // MARK: - Network
     
@@ -36,11 +44,30 @@ final class HomeMapViewModel {
                 self.fromQueue.accept(data.fromQueueDB)
                 self.fromRequestedQueue.accept(data.fromQueueDBRequested)
                 self.recommend.accept(data.fromRecommend)
+                
+                self.filterQueneByGender(data.fromQueueDB)
+                
                 completionHandler(nil)
                 
             case .failure(let error):
                 completionHandler(error)
             }
         }
+    }
+    
+    private func filterQueneByGender(_ queue: [FromQueue]) {
+        for item in queue {
+            switch item.gender {
+            case 0:
+                self.womanList.append(item)
+            case 1:
+                self.manList.append(item)
+            default:
+                return
+            }
+        }
+        
+        womanQueue.accept(womanList)
+        manQueue.accept(manList)
     }
 }
