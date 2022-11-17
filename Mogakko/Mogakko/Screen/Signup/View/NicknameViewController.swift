@@ -121,7 +121,7 @@ extension NicknameViewController: BaseViewControllerAttribute {
                 guard let nick = vc.nicknameTextField.text else { return }
                 
                 if nick.count >= 1 && nick.count <= 10 {
-                    UserDefaults.standard.set(nick, forKey: Constant.UserDefaults.nick)
+                    UserData.nickName = nick
                     vc.navigationController?.pushViewController(BirthViewController(), animated: true)
                 } else {
                     vc.showToast(message: "닉네임은 1자 이상 10자 이내로 부탁드려요.")

@@ -117,7 +117,7 @@ extension EmailViewController: BaseViewControllerAttribute {
             .bind { vc, _ in
                 if vc.viewModel.isValid.value {
                     guard let email = vc.emailTextField.text else { return }
-                    UserDefaults.standard.set(email, forKey: Constant.UserDefaults.email)
+                    UserData.email = email
                     
                     vc.navigationController?.pushViewController(GenderViewController(), animated: true)
                 } else {

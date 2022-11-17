@@ -163,7 +163,7 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                             guard let idToken = idToken else { return }
                             print("✨ 발급 받은 토큰 - \(idToken)")
                             
-                            UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
+                            UserData.idtoken = idToken
                             self.requestLogin()
                         }
                         
@@ -194,30 +194,14 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                     return
                 case .invalidAuthorization:
                     print("💨 토큰 만료 !!! -> 다시 로그인 or 토근 새로 발급")
-                    
-                    let currentUser = Auth.auth().currentUser
-                    currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-                        if let error = error {
-                            print(error)
-                        } else {
-                            guard let idToken = idToken else { return }
-                            print("✨ 새로 발급 받은 토큰 - \(idToken)")
-                            
-                            // TODO: - 토큰 재발급 이후 로직 구현
-                            
-                            UserDefaults.standard.removeObject(forKey: Constant.UserDefaults.idtoken)
-                            UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
-                            
-                            UserAPI.shared.requestLogin(type: Login.self) { response in
-                                switch response {
-                                case .success(let success):
-                                    print("🍀 사용자 정보 - \(success)")
-                                    Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
-                                case .failure(let failure):
-                                    print("🔥 재발급 이후 Error - \(failure)")
-                                }
-                            }
-
+                    UserAPI.shared.refreshIdToken { result in
+                        switch result {
+                        case .success:
+                            print(UserData.idtoken)
+                            self.requestLogin()
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            return
                         }
                     }
                 case .unsubscribedUser:

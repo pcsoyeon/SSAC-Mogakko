@@ -72,11 +72,11 @@ extension WithdrawPopupViewController {
                     UserDefaults.standard.removeObject(forKey: key.description)
                 }
                 
-                UserDefaults.standard.set(false, forKey: Constant.UserDefaults.isNotFirst)
+                UserData.isNotFirst = false
+                
                 Helper.convertRootViewController(view: self.view, controller: OnboardingViewController())
                 
             case .failure(let error) :
-                
                 switch error {
                 case .takenUser:
                     return

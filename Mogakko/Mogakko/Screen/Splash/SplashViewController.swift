@@ -61,12 +61,11 @@ final class SplashViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let self = self else { return }
             
-            if UserDefaults.standard.bool(forKey: Constant.UserDefaults.isNotFirst) {
-                
-                if (UserDefaults.standard.string(forKey: Constant.UserDefaults.idtoken) != nil) {
-                    self.checkIdToken()
-                } else {
+            if UserData.isNotFirst {
+                if (UserData.idtoken == "") {
                     Helper.convertNavigationRootViewController(view: self.view, controller: PhoneNumberViewController())
+                } else {
+                    self.checkIdToken()
                 }
             } else {
                 Helper.convertRootViewController(view: self.view, controller: OnboardingViewController())
@@ -82,8 +81,7 @@ final class SplashViewController: UIViewController {
             switch response {
             case .success(let data):
                 print("🍀 사용자 정보 \(data)")
-                
-                UserDefaults.standard.set(data.nick, forKey: Constant.UserDefaults.nick)
+                UserData.nickName = data.nick
                 
                 Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
                 
@@ -92,18 +90,14 @@ final class SplashViewController: UIViewController {
                 case .takenUser, .invalidNickname:
                     return
                 case .invalidAuthorization:
-                    Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-                        
-                        if let error = error {
-                            print(error)
+                    UserAPI.shared.refreshIdToken { result in
+                        switch result {
+                        case .success:
+                            print(UserData.idtoken)
+                            self.checkIdToken()
+                        case .failure(let error):
+                            print(error.localizedDescription)
                             return
-                        }
-                        
-                        if let idToken = idToken {
-                            UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
-                            print("✨ 새로 발급 받은 토큰 - \(idToken)")
-                            
-                            self.refreshToken(idToken: idToken)
                         }
                     }
                 case .unsubscribedUser:
@@ -116,20 +110,5 @@ final class SplashViewController: UIViewController {
                 
             }
         }
-    }
-    
-    private func refreshToken(idToken: String) {
-        
-        GenericAPI.shared.requestDecodableData(type: Login.self, router: UserRouter.login) { response in
-            switch response {
-            case .success(let success):
-                print("🍀 사용자 정보 - \(success)")
-                Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
-            case .failure(let failure):
-                print("🔥 재발급 이후 Error - \(failure)")
-                self.showToast(message: "토큰 만료, 잠시 후 다시 시도해주세요.")
-            }
-        }
-        
     }
 }

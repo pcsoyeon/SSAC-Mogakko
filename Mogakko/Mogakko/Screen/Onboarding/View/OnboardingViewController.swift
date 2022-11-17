@@ -50,7 +50,7 @@ final class OnboardingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if UserDefaults.standard.string(forKey: Constant.UserDefaults.FCMtoken) == nil {
+        if UserData.FCMtoken == "" {
             print("💨 갱신을 한다???????")
             Messaging.messaging().delegate = self
             
@@ -59,7 +59,7 @@ final class OnboardingViewController: UIViewController {
                     print("Error fetching FCM registration token: \(error)")
                 } else if let token = token {
                     print("FCM registration token: \(token)")
-                    UserDefaults.standard.set(token, forKey: Constant.UserDefaults.FCMtoken)
+                    UserData.FCMtoken = token
                 }
             }
         }
@@ -129,7 +129,7 @@ extension OnboardingViewController: BaseViewControllerAttribute {
             .throttle(.seconds(5), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .bind { vc, _ in
-                UserDefaults.standard.set(true, forKey: Constant.UserDefaults.isNotFirst)
+                UserData.isNotFirst = true
                 
                 let viewController = UINavigationController(rootViewController: PhoneNumberViewController())
                 viewController.modalPresentationStyle = .fullScreen
@@ -167,6 +167,6 @@ extension OnboardingViewController: MessagingDelegate {
         print("Firebase registration token: \(String(describing: fcmToken))")
         
         guard let fcmToken = fcmToken else { return }
-        UserDefaults.standard.set(fcmToken, forKey: Constant.UserDefaults.FCMtoken)
+        UserData.FCMtoken = fcmToken
     }
 }

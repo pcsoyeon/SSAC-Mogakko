@@ -175,7 +175,7 @@ extension BirthViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, _ in
                 if vc.nextButton.type == .fill {
-                    UserDefaults.standard.set(vc.datePicker.date.toBirthString(), forKey: Constant.UserDefaults.birth)
+                    UserData.birth = vc.datePicker.date.toBirthString()
                     vc.navigationController?.pushViewController(EmailViewController(), animated: true)
                 } else {
                     vc.showToast(message: "새싹스터디는 만 17세 이상만 사용할 수 있습니다.")

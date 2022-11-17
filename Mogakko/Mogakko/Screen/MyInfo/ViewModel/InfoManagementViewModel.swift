@@ -115,7 +115,7 @@ final class InfoManagementViewModel {
                         }
                         
                         if let idToken = idToken {
-                            UserDefaults.standard.set(idToken, forKey: Constant.UserDefaults.idtoken)
+                            UserData.idtoken = idToken
                             print("✨ 새로 발급 받은 토큰 - \(idToken)")
                         }
                     }

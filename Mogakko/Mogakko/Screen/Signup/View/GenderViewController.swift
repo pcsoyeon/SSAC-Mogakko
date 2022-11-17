@@ -156,9 +156,9 @@ extension GenderViewController: BaseViewControllerAttribute {
                 guard let self = self else { return }
                 
                 if indexPath.row == 0 {
-                    UserDefaults.standard.set(1, forKey: Constant.UserDefaults.gender)
+                    UserData.gender = 1
                 } else {
-                    UserDefaults.standard.set(0, forKey: Constant.UserDefaults.gender)
+                    UserData.gender = 0
                 }
                 
                 self.selected = true
