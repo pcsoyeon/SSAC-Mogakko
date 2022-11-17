@@ -11,6 +11,7 @@ import Alamofire
 
 enum UserRouter {
     case login
+    case refresh(idToken: String)
     case signup(signupRequest: SignupRequest)
     case withdraw
     case updateFcmToken
@@ -24,7 +25,7 @@ extension UserRouter: URLRequestConvertible {
     
     var path: String {
         switch self {
-        case .login, .signup:
+        case .login, .signup, .refresh:
             return Endpoint.User.user
         case .withdraw:
             return Endpoint.User.withDraw
@@ -40,6 +41,9 @@ extension UserRouter: URLRequestConvertible {
         case .login:
             return [APIConstant.ContentType.contentType : APIConstant.ContentType.json,
                     APIConstant.idtoken : APIKey.idToken ]
+        case .refresh(let idToken):
+            return [APIConstant.ContentType.contentType : APIConstant.ContentType.json,
+                    APIConstant.idtoken : idToken]
         case .signup, .withdraw, .updateFcmToken, .mypage:
             return [APIConstant.ContentType.contentType : APIConstant.ContentType.formUrlEncoded,
                     APIConstant.idtoken : APIKey.idToken]
@@ -48,7 +52,7 @@ extension UserRouter: URLRequestConvertible {
     
     var method: HTTPMethod {
         switch self {
-        case .login:
+        case .login, .refresh:
             return .get
         case .signup:
             return .post
@@ -61,7 +65,7 @@ extension UserRouter: URLRequestConvertible {
     
     var parameters: [String: String] {
         switch self {
-        case .login:
+        case .login, .refresh:
             return ["" : ""]
         case .signup(let signupRequest):
             return ["phoneNumber" : signupRequest.phoneNumber,
@@ -91,7 +95,7 @@ extension UserRouter: URLRequestConvertible {
         request.headers = HTTPHeaders(headers)
         
         switch self {
-        case .login, .signup, .withdraw, .updateFcmToken, .mypage:
+        case .login, .signup, .withdraw, .updateFcmToken, .mypage, .refresh:
             request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
         }
         

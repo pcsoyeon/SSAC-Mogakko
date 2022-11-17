@@ -110,6 +110,7 @@
 		92A640402925378E00A6F708 /* QueueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6403F2925378E00A6F708 /* QueueRequest.swift */; };
 		92A640442925389900A6F708 /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A640432925389900A6F708 /* SearchRequest.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
+		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -211,6 +212,7 @@
 		92A6403F2925378E00A6F708 /* QueueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRequest.swift; sourceTree = "<group>"; };
 		92A640432925389900A6F708 /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -722,6 +724,7 @@
 			isa = PBXGroup;
 			children = (
 				92A6403A292532D800A6F708 /* SearchResponse.swift */,
+				92E74DE629260FA400B15D71 /* MyStateResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -827,6 +830,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */,
 				920B67352920B5B9000191F1 /* MDSPopupView.swift in Sources */,
 				923DDE11291A434700A2FE75 /* BirthViewModel.swift in Sources */,
 				92A6402029224C7E00A6F708 /* WithdrawView.swift in Sources */,

@@ -76,11 +76,11 @@ final class SplashViewController: UIViewController {
     
     private func checkIdToken() {
         GenericAPI.shared.requestDecodableData(type: Login.self, router: UserRouter.login) { [weak self] response in
+            print("기존 - ", UserData.idtoken)
             guard let self = self else { return }
             
             switch response {
             case .success(let data):
-                print("🍀 사용자 정보 \(data)")
                 UserData.nickName = data.nick
                 
                 Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
@@ -92,9 +92,10 @@ final class SplashViewController: UIViewController {
                 case .invalidAuthorization:
                     UserAPI.shared.refreshIdToken { result in
                         switch result {
-                        case .success:
-                            print(UserData.idtoken)
-                            self.checkIdToken()
+                        case .success(let idtoken):
+                            print("갱신 - ", UserData.idtoken)
+                            self.refreshToken(idtoken)
+                            
                         case .failure(let error):
                             print(error.localizedDescription)
                             return
@@ -111,4 +112,17 @@ final class SplashViewController: UIViewController {
             }
         }
     }
+    
+    private func refreshToken(_ idtoken: String) {
+        GenericAPI.shared.requestDecodableData(type: Login.self, router: UserRouter.refresh(idToken: idtoken)) { response in
+            switch response {
+            case .success(let data):
+                UserData.nickName = data.nick
+                Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
+            case .failure(let error):
+                print("재발급 이후 에러 \(error)")
+            }
+        }
+    }
+    
 }
