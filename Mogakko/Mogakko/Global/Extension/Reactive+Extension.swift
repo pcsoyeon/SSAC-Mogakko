@@ -10,11 +10,15 @@ import UIKit
 import RxSwift
 
 extension Reactive where Base: UIViewController {
-    internal var viewWillAppear: Observable<[Any]> {
+    var viewWillAppear: Observable<[Any]> {
         return sentMessage(#selector(UIViewController.viewWillAppear(_:)))
     }
     
-    internal var viewDidAppear: Observable<[Any]> {
+    var viewDidAppear: Observable<[Any]> {
         return sentMessage(#selector(UIViewController.viewDidAppear(_:)))
+    }
+    
+    var viewDidLoad: Observable<[Any]> {
+        return sentMessage(#selector(UIViewController.viewDidLoad))
     }
 }

@@ -73,6 +73,9 @@ final class HomeMapViewController: UIViewController {
     private var currentLocation: CLLocation!
     private let defaultLocationCoordinate = CLLocationCoordinate2D(latitude: 37.516509, longitude: 126.885025)
     
+    // TODO: - View Model로 이동
+    private var fromQueue: [FromQueue] = []
+    
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,6 +91,7 @@ final class HomeMapViewController: UIViewController {
         bind()
         
         setLocation()
+        setMapView()
     }
 }
 
@@ -126,12 +130,44 @@ extension HomeMapViewController: BaseViewControllerAttribute {
     
     func bind() {
         mapView.rx.regionDidChangeAnimated
-            .throttle(.microseconds(10), scheduler: MainScheduler.instance)
+            .throttle(.microseconds(1), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .subscribe(onNext: { vc, _ in
                 let mapLatitude = vc.mapView.centerCoordinate.latitude
                 let mapLongitude = vc.mapView.centerCoordinate.longitude
-                print("지도의 중간 지점 - Latitude: \(mapLatitude) Longitude: \(mapLongitude)")
+                
+                vc.viewModel.requestSearch(request: SearchRequest(lat: mapLatitude, long: mapLongitude)) { data, error in
+                    
+                    if let data = data {
+                        print("================ 주변 새싹 찾기 성공 ================")
+                        
+                        vc.fromQueue = data.fromQueueDB
+                        vc.setFromQueueAnnotation()
+                        
+                        print("✨ 나에게 스터디를 요청한 새싹")
+                        dump(data.fromQueueDBRequested)
+                        
+                        print("================================")
+                        
+                        
+                    }
+                    
+                    if let error = error {
+                        switch error {
+                        case .takenUser, .invalidNickname:
+                            return
+                        case .invalidAuthorization:
+                            vc.showToast(message: "만료된 토큰입니다. 잠시 후 다시 시도해주세요.")
+                        case .unsubscribedUser:
+                            vc.showToast(message: "미가입 회원입니다.")
+                            // TODO: - 회원가입 화면으로 이동
+                        case .serverError:
+                            vc.showToast(message: "서버 오류입니다. 잠시 후 다시 시도해주세요.")
+                        case .emptyParameters:
+                            vc.showToast(message: "요청 값이 부족합니다.")
+                        }
+                    }
+                }
             })
             .disposed(by: disposeBag)
         
@@ -159,6 +195,19 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
     }
+    
+    private func setFromQueueAnnotation() {
+        let annotations = mapView.annotations
+        mapView.removeAnnotations(annotations)
+        
+        for queue in fromQueue {
+            let queueCoordinate = CLLocationCoordinate2D(latitude: queue.lat, longitude: queue.long)
+            let queueAnnotation = MKPointAnnotation()
+            
+            queueAnnotation.coordinate = queueCoordinate
+            mapView.addAnnotation(queueAnnotation)
+        }
+    }
 }
 
 // MARK: - Location
@@ -171,8 +220,14 @@ extension HomeMapViewController {
         locationManager.startUpdatingLocation()
         locationManager.startMonitoringSignificantLocationChanges()
         currentLocation = locationManager.location
-        
+    }
+    
+    func setMapView() {
         mapView.setRegion(MKCoordinateRegion(center: defaultLocationCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+        
+        mapView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -263,5 +318,26 @@ extension HomeMapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(#function, error)
+    }
+}
+
+// MARK: - MapKit Protocol
+
+extension HomeMapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation) else { return nil }
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "custom")
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "custom")
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+        // friends.sesac 값에 따른 이미지 분기처리
+        annotationView?.image = Constant.Image.sesacFace1
+        annotationView?.frame.size = CGSize(width: 83, height: 83)
+        return annotationView
     }
 }

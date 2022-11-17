@@ -61,4 +61,30 @@ extension Reactive where Base: MKMapView {
             }
         return ControlEvent(events: source)
     }
+    
+    var didAddAnnotationViews: ControlEvent<[MKAnnotationView]> {
+        let selector: Selector
+        #if swift(>=5.7)
+        selector = #selector(
+            (MKMapViewDelegate.mapView(_:didAdd:))
+            as (MKMapViewDelegate) -> ((MKMapView, [MKAnnotationView]) -> Void)?
+        )
+        #else
+        selector = #selector(
+            (MKMapViewDelegate.mapView(_:didAdd:))!
+            as (MKMapViewDelegate) -> (MKMapView, [MKAnnotationView]) -> Void
+        )
+        #endif
+        let source = delegate
+            .methodInvoked(selector)
+            .map { a in
+                return try castOrThrow([MKAnnotationView].self, a[1])
+            }
+        return ControlEvent(events: source)
+    }
+    
+    func setDelegate(_ delegate: MKMapViewDelegate)
+    -> Disposable {
+        return RxMKMapViewDelegateProxy.installForwardDelegate(delegate, retainDelegate: false, onProxyForObject: self.base)
+    }
 }

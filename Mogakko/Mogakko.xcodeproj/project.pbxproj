@@ -105,6 +105,10 @@
 		92A64031292358D300A6F708 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A64030292358D300A6F708 /* BaseView.swift */; };
 		92A6403329237B5900A6F708 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6403229237B5900A6F708 /* TitleCollectionViewCell.swift */; };
 		92A640382924B45800A6F708 /* Reactive+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A640372924B45800A6F708 /* Reactive+Extension.swift */; };
+		92A6403B292532D800A6F708 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6403A292532D800A6F708 /* SearchResponse.swift */; };
+		92A6403E292533ED00A6F708 /* QueueRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6403D292533ED00A6F708 /* QueueRouter.swift */; };
+		92A640402925378E00A6F708 /* QueueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6403F2925378E00A6F708 /* QueueRequest.swift */; };
+		92A640442925389900A6F708 /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A640432925389900A6F708 /* SearchRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -201,6 +205,10 @@
 		92A64030292358D300A6F708 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		92A6403229237B5900A6F708 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		92A640372924B45800A6F708 /* Reactive+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+Extension.swift"; sourceTree = "<group>"; };
+		92A6403A292532D800A6F708 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
+		92A6403D292533ED00A6F708 /* QueueRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRouter.swift; sourceTree = "<group>"; };
+		92A6403F2925378E00A6F708 /* QueueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRequest.swift; sourceTree = "<group>"; };
+		92A640432925389900A6F708 /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,6 +368,7 @@
 		925607092918D54A00A13FFB /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				92A6403C2925339900A6F708 /* Queue */,
 				92A5DE49291B703100094D3E /* User */,
 				923DDE26291AB8DB00A2FE75 /* Base */,
 			);
@@ -598,6 +607,7 @@
 		92A5DE6E291DBFBD00094D3E /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				92A64039292532CE00A6F708 /* Model */,
 				92A5DE75291E526A00094D3E /* View */,
 				92A5DE74291E526300094D3E /* ViewModel */,
 			);
@@ -678,6 +688,40 @@
 				92A640282922975E00A6F708 /* InfoManagementItem.swift */,
 			);
 			path = InfoManagement;
+			sourceTree = "<group>";
+		};
+		92A64039292532CE00A6F708 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				92A640422925387300A6F708 /* Response */,
+				92A640412925386D00A6F708 /* Request */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		92A6403C2925339900A6F708 /* Queue */ = {
+			isa = PBXGroup;
+			children = (
+				92A6403D292533ED00A6F708 /* QueueRouter.swift */,
+			);
+			path = Queue;
+			sourceTree = "<group>";
+		};
+		92A640412925386D00A6F708 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				92A6403F2925378E00A6F708 /* QueueRequest.swift */,
+				92A640432925389900A6F708 /* SearchRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		92A640422925387300A6F708 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				92A6403A292532D800A6F708 /* SearchResponse.swift */,
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -779,6 +823,7 @@
 				920B6713291F64BF000191F1 /* UILabel+Extension.swift in Sources */,
 				9256072A2918E68A00A13FFB /* Image.swift in Sources */,
 				923DDE1B291A4C2000A2FE75 /* EmailViewModel.swift in Sources */,
+				92A640442925389900A6F708 /* SearchRequest.swift in Sources */,
 				920B6715291F7D5D000191F1 /* Helper.swift in Sources */,
 				925606F82918D51800A13FFB /* SplashViewController.swift in Sources */,
 				923DDE23291A501200A2FE75 /* GenderCollectionViewCell.swift in Sources */,
@@ -787,11 +832,13 @@
 				92A64012292233E900A6F708 /* CALayer+Extension.swift in Sources */,
 				92A6402D292299CA00A6F708 /* CardView.swift in Sources */,
 				92A5DE61291CFBF800094D3E /* UserAPI.swift in Sources */,
+				92A640402925378E00A6F708 /* QueueRequest.swift in Sources */,
 				923DDE1D291A4CE000A2FE75 /* GenderViewController.swift in Sources */,
 				920B672A29200B38000191F1 /* MyInfoViewModel.swift in Sources */,
 				920B672D29200B78000191F1 /* MyInfo.swift in Sources */,
 				925607362918F0B400A13FFB /* MDSNavigationBar.swift in Sources */,
 				92A64031292358D300A6F708 /* BaseView.swift in Sources */,
+				92A6403E292533ED00A6F708 /* QueueRouter.swift in Sources */,
 				925607342918EF6300A13FFB /* BackButton.swift in Sources */,
 				92A640292922975E00A6F708 /* InfoManagementItem.swift in Sources */,
 				92560756291926A700A13FFB /* MDSFont.swift in Sources */,
@@ -828,6 +875,7 @@
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
 				92A5DE6D291DB8EA00094D3E /* Date+Extension.swift in Sources */,
 				92A64010292230CB00A6F708 /* UIStackView+Extension.swift in Sources */,
+				92A6403B292532D800A6F708 /* SearchResponse.swift in Sources */,
 				920B6723292003EC000191F1 /* MyInfoViewController.swift in Sources */,
 				920B67392921530C000191F1 /* GenericAPI.swift in Sources */,
 				925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */,
