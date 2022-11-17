@@ -109,6 +109,7 @@
 		92A6403E292533ED00A6F708 /* QueueRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6403D292533ED00A6F708 /* QueueRouter.swift */; };
 		92A640402925378E00A6F708 /* QueueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6403F2925378E00A6F708 /* QueueRequest.swift */; };
 		92A640442925389900A6F708 /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A640432925389900A6F708 /* SearchRequest.swift */; };
+		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -209,6 +210,7 @@
 		92A6403D292533ED00A6F708 /* QueueRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRouter.swift; sourceTree = "<group>"; };
 		92A6403F2925378E00A6F708 /* QueueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRequest.swift; sourceTree = "<group>"; };
 		92A640432925389900A6F708 /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
+		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -625,8 +627,8 @@
 		92A5DE75291E526A00094D3E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				92E74DE32925C78200B15D71 /* Map */,
 				92A5DE6F291DBFE900094D3E /* TabBarViewController.swift */,
-				92A5DE76291E529500094D3E /* HomeMapViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -722,6 +724,15 @@
 				92A6403A292532D800A6F708 /* SearchResponse.swift */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		92E74DE32925C78200B15D71 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				92A5DE76291E529500094D3E /* HomeMapViewController.swift */,
+				92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -855,6 +866,7 @@
 				923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */,
 				92A5DE77291E529500094D3E /* HomeMapViewController.swift in Sources */,
 				92A5DE6B291DB66A00094D3E /* UserDefaults.swift in Sources */,
+				92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */,
 				923DDE21291A4FDD00A2FE75 /* NicknameViewModel.swift in Sources */,
 				9256076729194F3700A13FFB /* PhoneNumberViewController.swift in Sources */,
 				92A640162922435F00A6F708 /* GenderView.swift in Sources */,
