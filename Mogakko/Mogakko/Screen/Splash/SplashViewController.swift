@@ -119,8 +119,8 @@ final class SplashViewController: UIViewController {
             case .success(let data):
                 UserData.nickName = data.nick
                 Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
-            case .failure(let error):
-                print("재발급 이후 에러 \(error)")
+            case .failure(_):
+                self.showToast(message: "토큰 갱신 오류입니다. 잠시 후 다시 시도해주세요.")
             }
         }
     }

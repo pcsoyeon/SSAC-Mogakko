@@ -107,16 +107,15 @@ final class InfoManagementViewModel {
                 case .takenUser, .invalidNickname:
                     return
                 case .invalidAuthorization:
-                    Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-                        
-                        if let error = error {
-                            print(error)
+                    UserAPI.shared.refreshIdToken { result in
+                        switch result {
+                        case .success(let idtoken):
+                            print("갱신 - ", UserData.idtoken)
+                            self.refreshToken(idtoken)
+                            
+                        case .failure(let error):
+                            print(error.localizedDescription)
                             return
-                        }
-                        
-                        if let idToken = idToken {
-                            UserData.idtoken = idToken
-                            print("✨ 새로 발급 받은 토큰 - \(idToken)")
                         }
                     }
                 case .unsubscribedUser:
@@ -131,7 +130,14 @@ final class InfoManagementViewModel {
         }
     }
     
-    private func updateMypage() {
-        
+    private func refreshToken(_ idtoken: String) {
+        GenericAPI.shared.requestDecodableData(type: Login.self, router: UserRouter.refresh(idToken: idtoken)) { response in
+            switch response {
+            case .success(let data):
+                UserData.nickName = data.nick
+            case .failure(_):
+                print("업데이트")
+            }
+        }
     }
 }

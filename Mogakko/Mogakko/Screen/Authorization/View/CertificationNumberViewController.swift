@@ -193,12 +193,12 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                 case .invalidNickname:
                     return
                 case .invalidAuthorization:
-                    print("💨 토큰 만료 !!! -> 다시 로그인 or 토근 새로 발급")
                     UserAPI.shared.refreshIdToken { result in
                         switch result {
-                        case .success:
-                            print(UserData.idtoken)
-                            self.requestLogin()
+                        case .success(let idtoken):
+                            print("갱신 - ", UserData.idtoken)
+                            self.refreshToken(idtoken)
+                            
                         case .failure(let error):
                             print(error.localizedDescription)
                             return
@@ -214,7 +214,17 @@ extension CertificationNumberViewController: BaseViewControllerAttribute {
                 
             }
         }
-        
-        
+    }
+    
+    private func refreshToken(_ idtoken: String) {
+        GenericAPI.shared.requestDecodableData(type: Login.self, router: UserRouter.refresh(idToken: idtoken)) { response in
+            switch response {
+            case .success(let data):
+                UserData.nickName = data.nick
+                Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
+            case .failure(_):
+                self.showToast(message: "토큰 갱신 오류입니다. 잠시 후 다시 시도해주세요.")
+            }
+        }
     }
 }

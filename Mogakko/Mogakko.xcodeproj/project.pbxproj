@@ -111,6 +111,10 @@
 		92A640442925389900A6F708 /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A640432925389900A6F708 /* SearchRequest.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
+		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
+		92E74DEE292637C900B15D71 /* StudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DED292637C900B15D71 /* StudyCollectionViewCell.swift */; };
+		92E74DF02926394300B15D71 /* StudyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEF2926394300B15D71 /* StudyHeaderView.swift */; };
+		92E74DF22926481300B15D71 /* StudyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DF12926481300B15D71 /* StudyViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -213,6 +217,10 @@
 		92A640432925389900A6F708 /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
+		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
+		92E74DED292637C900B15D71 /* StudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyCollectionViewCell.swift; sourceTree = "<group>"; };
+		92E74DEF2926394300B15D71 /* StudyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyHeaderView.swift; sourceTree = "<group>"; };
+		92E74DF12926481300B15D71 /* StudyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -622,6 +630,7 @@
 			isa = PBXGroup;
 			children = (
 				92A6400829221EA100A6F708 /* HomeMapViewModel.swift */,
+				92E74DF12926481300B15D71 /* StudyViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -629,6 +638,7 @@
 		92A5DE75291E526A00094D3E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				92E74DEA2926338900B15D71 /* Study */,
 				92E74DE32925C78200B15D71 /* Map */,
 				92A5DE6F291DBFE900094D3E /* TabBarViewController.swift */,
 			);
@@ -738,6 +748,16 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		92E74DEA2926338900B15D71 /* Study */ = {
+			isa = PBXGroup;
+			children = (
+				92E74DEB292633AB00B15D71 /* StudyViewController.swift */,
+				92E74DED292637C900B15D71 /* StudyCollectionViewCell.swift */,
+				92E74DEF2926394300B15D71 /* StudyHeaderView.swift */,
+			);
+			path = Study;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -837,6 +857,7 @@
 				925607282918E67700A13FFB /* Constant.swift in Sources */,
 				920B6713291F64BF000191F1 /* UILabel+Extension.swift in Sources */,
 				9256072A2918E68A00A13FFB /* Image.swift in Sources */,
+				92E74DEE292637C900B15D71 /* StudyCollectionViewCell.swift in Sources */,
 				923DDE1B291A4C2000A2FE75 /* EmailViewModel.swift in Sources */,
 				92A640442925389900A6F708 /* SearchRequest.swift in Sources */,
 				920B6715291F7D5D000191F1 /* Helper.swift in Sources */,
@@ -866,10 +887,12 @@
 				92A5DE64291CFC5600094D3E /* Login.swift in Sources */,
 				92A6400929221EA100A6F708 /* HomeMapViewModel.swift in Sources */,
 				9256073B2918F14D00A13FFB /* UIView+Extension.swift in Sources */,
+				92E74DF22926481300B15D71 /* StudyViewModel.swift in Sources */,
 				920B67312920A3B5000191F1 /* InfoManagementViewController.swift in Sources */,
 				923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */,
 				92A5DE77291E529500094D3E /* HomeMapViewController.swift in Sources */,
 				92A5DE6B291DB66A00094D3E /* UserDefaults.swift in Sources */,
+				92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */,
 				92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */,
 				923DDE21291A4FDD00A2FE75 /* NicknameViewModel.swift in Sources */,
 				9256076729194F3700A13FFB /* PhoneNumberViewController.swift in Sources */,
@@ -885,6 +908,7 @@
 				92A6403329237B5900A6F708 /* TitleCollectionViewCell.swift in Sources */,
 				9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */,
 				923DDE25291A671100A2FE75 /* UIViewController+Extension.swift in Sources */,
+				92E74DF02926394300B15D71 /* StudyHeaderView.swift in Sources */,
 				92A5DE5A291BC10A00094D3E /* BaseViewModelAttribute.swift in Sources */,
 				92A64014292237B800A6F708 /* MDSMoreButton.swift in Sources */,
 				92A5DE58291B956B00094D3E /* CertificationNumberViewModel.swift in Sources */,
