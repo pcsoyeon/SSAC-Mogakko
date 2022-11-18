@@ -15,7 +15,7 @@ enum APIConstant {
 
 extension APIConstant {
     struct BaseURL {
-        static let test = "http://api.sesac.co.kr:1207"
+        static let test = "http://api.sesac.co.kr:1210"
         static let real = ""
     }
 }
