@@ -25,6 +25,12 @@ final class HomeMapViewModel {
     var manQueue = BehaviorRelay<[FromQueue]>(value: [])
     var womanQueue = BehaviorRelay<[FromQueue]>(value: [])
     
+    var isTotalButtonPressed = BehaviorRelay<Bool>(value: true)
+    var isManButtonPressed = BehaviorRelay<Bool>(value: false)
+    var isWomanButtonPressed = BehaviorRelay<Bool>(value: false)
+    
+    var pressedButtonType = BehaviorRelay<MDSFilterType>(value: .total)
+    
     // MARK: - Property
     
     private var manList: [FromQueue] = []

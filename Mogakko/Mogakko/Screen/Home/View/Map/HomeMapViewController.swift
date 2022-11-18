@@ -13,6 +13,7 @@ import RxSwift
 import SnapKit
 import Then
 
+
 final class HomeMapViewController: UIViewController {
     
     // MARK: - UI Property
@@ -145,14 +146,14 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                         case .takenUser, .invalidNickname:
                             return
                         case .invalidAuthorization:
-                            vc.showToast(message: "만료된 토큰입니다. 잠시 후 다시 시도해주세요.")
+                            vc.showToast(message: "\(String(describing: error.errorDescription))")
                         case .unsubscribedUser:
-                            vc.showToast(message: "미가입 회원입니다.")
+                            vc.showToast(message: "\(String(describing: error.errorDescription))")
                             // TODO: - 회원가입 화면으로 이동
                         case .serverError:
-                            vc.showToast(message: "서버 오류입니다. 잠시 후 다시 시도해주세요.")
+                            vc.showToast(message: "\(String(describing: error.errorDescription))")
                         case .emptyParameters:
-                            vc.showToast(message: "요청 값이 부족합니다.")
+                            vc.showToast(message: "\(String(describing: error.errorDescription))")
                         }
                     }
                 }
@@ -164,7 +165,15 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             .bind { vc, fromQueue in
                 print("============ 🌱 주변 새싹 🌱 ============")
                 dump(fromQueue)
-                vc.setFromQueueAnnotation(fromQueue)
+                
+                if vc.viewModel.pressedButtonType.value == .total {
+                    vc.setFromQueueAnnotation(fromQueue)
+                } else if vc.viewModel.pressedButtonType.value == .man {
+                    vc.setFromQueueAnnotationByGender(1, fromQueue)
+                } else {
+                    vc.setFromQueueAnnotationByGender(0, fromQueue)
+                }
+                
             }
             .disposed(by: disposeBag)
         
@@ -176,31 +185,37 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
         
-        totalButton.rx.tap
+        Observable
+            .merge(
+                    totalButton.rx.tap.map { _ in MDSFilterType.total }.startWith(MDSFilterType.total),
+                    manButton.rx.tap.map { _ in MDSFilterType.man },
+                    womanButton.rx.tap.map { _ in MDSFilterType.woman }
+                )
             .withUnretained(self)
-            .bind { vc, _ in
-                vc.totalButton.isActive = true
-                [vc.manButton, vc.womanButton].forEach { $0.isActive = false }
-                vc.setFromQueueAnnotation(vc.viewModel.fromQueue.value)
-            }
-            .disposed(by: disposeBag)
-        
-        manButton.rx.tap
-            .withUnretained(self)
-            .bind { vc, _ in
-                vc.manButton.isActive = true
-                [vc.totalButton, vc.womanButton].forEach { $0.isActive = false }
-                vc.setFromQueueAnnotation(vc.viewModel.manQueue.value)
-            }
-            .disposed(by: disposeBag)
-        
-        womanButton.rx.tap
-            .withUnretained(self)
-            .bind { vc, _ in
-                vc.womanButton.isActive = true
-                [vc.totalButton, vc.manButton].forEach { $0.isActive = false }
-                vc.setFromQueueAnnotation(vc.viewModel.womanQueue.value)
-            }
+            .subscribe(onNext: { vc, type in
+                    switch type {
+                    case .total:
+                        print("전체 버튼 탭")
+                        vc.totalButton.isActive = true
+                        [vc.manButton, vc.womanButton].forEach { $0.isActive = false }
+                        vc.setFromQueueAnnotation(vc.viewModel.fromQueue.value)
+                        vc.viewModel.pressedButtonType.accept(MDSFilterType.total)
+                        
+                    case .man:
+                        print("남자 버튼 탭")
+                        vc.manButton.isActive = true
+                        [vc.totalButton, vc.womanButton].forEach { $0.isActive = false }
+                        vc.setFromQueueAnnotationByGender(1, vc.viewModel.fromQueue.value)
+                        vc.viewModel.pressedButtonType.accept(MDSFilterType.man)
+
+                    case .woman:
+                        print("여자 버튼 탭")
+                        vc.womanButton.isActive = true
+                        [vc.totalButton, vc.manButton].forEach { $0.isActive = false }
+                        vc.setFromQueueAnnotationByGender(0, vc.viewModel.fromQueue.value)
+                        vc.viewModel.pressedButtonType.accept(MDSFilterType.woman)
+                    }
+                })
             .disposed(by: disposeBag)
         
         gpsButton.rx.tap
@@ -297,6 +312,19 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             let queueCoordinate = CLLocationCoordinate2D(latitude: queue.lat, longitude: queue.long)
             let queueAnnotation = CustomAnnotation(sesac_image: queue.sesac, coordinate: queueCoordinate)
             mapView.addAnnotation(queueAnnotation)
+        }
+    }
+    
+    private func setFromQueueAnnotationByGender(_ gender: Int, _ queueList: [FromQueue]) {
+        let annotations = mapView.annotations
+        mapView.removeAnnotations(annotations)
+        
+        for location in queueList {
+            if location.gender == gender {
+                let friendsCoordinate = CLLocationCoordinate2D(latitude: location.lat, longitude: location.long)
+                let friendsAnnotation = CustomAnnotation(sesac_image: location.sesac, coordinate: friendsCoordinate)
+                mapView.addAnnotation(friendsAnnotation)
+            }
         }
     }
 }
