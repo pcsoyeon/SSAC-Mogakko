@@ -13,7 +13,6 @@ import RxSwift
 import SnapKit
 import Then
 
-
 final class HomeMapViewController: UIViewController {
     
     // MARK: - UI Property
@@ -149,7 +148,6 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                             vc.showToast(message: "\(String(describing: error.errorDescription))")
                         case .unsubscribedUser:
                             vc.showToast(message: "\(String(describing: error.errorDescription))")
-                            // TODO: - 회원가입 화면으로 이동
                         case .serverError:
                             vc.showToast(message: "\(String(describing: error.errorDescription))")
                         case .emptyParameters:
@@ -167,11 +165,11 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                 dump(fromQueue)
                 
                 if vc.viewModel.pressedButtonType.value == .total {
-                    vc.setFromQueueAnnotation(fromQueue)
+                    vc.setFromQueueAnnotationByGender(MDSFilterType.total.gender, fromQueue)
                 } else if vc.viewModel.pressedButtonType.value == .man {
-                    vc.setFromQueueAnnotationByGender(1, fromQueue)
+                    vc.setFromQueueAnnotationByGender(MDSFilterType.man.gender, fromQueue)
                 } else {
-                    vc.setFromQueueAnnotationByGender(0, fromQueue)
+                    vc.setFromQueueAnnotationByGender(MDSFilterType.woman.gender, fromQueue)
                 }
                 
             }
@@ -180,7 +178,7 @@ extension HomeMapViewController: BaseViewControllerAttribute {
         viewModel.fromRequestedQueue
             .withUnretained(self)
             .bind { vc, fromRequestQueue in
-                print("============ 🍀 나에게 요청한 새싹 🍀 ============")
+                print("============ 🌱 나에게 요청한 새싹 🌱 ============")
                 dump(fromRequestQueue)
             }
             .disposed(by: disposeBag)
@@ -195,24 +193,24 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             .subscribe(onNext: { vc, type in
                     switch type {
                     case .total:
-                        print("전체 버튼 탭")
+                        print("✅ - 전체 버튼 탭")
                         vc.totalButton.isActive = true
                         [vc.manButton, vc.womanButton].forEach { $0.isActive = false }
-                        vc.setFromQueueAnnotation(vc.viewModel.fromQueue.value)
+                        vc.setFromQueueAnnotationByGender(MDSFilterType.total.gender, vc.viewModel.fromQueue.value)
                         vc.viewModel.pressedButtonType.accept(MDSFilterType.total)
                         
                     case .man:
-                        print("남자 버튼 탭")
+                        print("✅ - 남자 버튼 탭")
                         vc.manButton.isActive = true
                         [vc.totalButton, vc.womanButton].forEach { $0.isActive = false }
-                        vc.setFromQueueAnnotationByGender(1, vc.viewModel.fromQueue.value)
+                        vc.setFromQueueAnnotationByGender(MDSFilterType.man.gender, vc.viewModel.fromQueue.value)
                         vc.viewModel.pressedButtonType.accept(MDSFilterType.man)
 
                     case .woman:
-                        print("여자 버튼 탭")
+                        print("✅ - 여자 버튼 탭")
                         vc.womanButton.isActive = true
                         [vc.totalButton, vc.manButton].forEach { $0.isActive = false }
-                        vc.setFromQueueAnnotationByGender(0, vc.viewModel.fromQueue.value)
+                        vc.setFromQueueAnnotationByGender(MDSFilterType.woman.gender, vc.viewModel.fromQueue.value)
                         vc.viewModel.pressedButtonType.accept(MDSFilterType.woman)
                     }
                 })
@@ -236,94 +234,57 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                         case .takenUser, .invalidNickname:
                             return
                         case .invalidAuthorization:
-                            vc.showToast(message: "만료된 토큰입니다. 잠시 후 다시 시도해주세요.")
+                            vc.showToast(message: error.errorDescription ?? "")
                         case .unsubscribedUser:
-                            vc.showToast(message: "미가입 회원입니다.")
+                            vc.showToast(message: error.errorDescription ?? "")
                         case .serverError:
-                            vc.showToast(message: "서버 오류입니다. 잠시 후 다시 시도해주세요.")
+                            vc.showToast(message: error.errorDescription ?? "")
                         case .emptyParameters:
-                            vc.showToast(message: "요청 값이 부족합니다.")
+                            vc.showToast(message: error.errorDescription ?? "")
                         }
                     }
                 }
             }
             .disposed(by: disposeBag)
         
-        viewModel.requestMyState { [weak self] response, error in
-            guard let self = self else { return }
-            
-            // 201 등의 에러
-            if let error = error {
-                switch error {
-                case .takenUser:
-                    // 일반 상태
-                    self.floatingButton.type = .plain
-                case .invalidNickname:
-                    return
-                case .invalidAuthorization:
-                    print("갱신해라")
-                case .unsubscribedUser:
-                    return
-                case .serverError:
-                    self.showToast(message: "서버 에러입니다.")
-                case .emptyParameters:
-                    self.showToast(message: "요청 값이 부족합니다.")
-                }
-            }
-            
-            // 200일 때
-            if let response = response {
-                if response.matched == 0 {
-                    // 매칭 대기중
-                    self.floatingButton.type = .matching
-                } else {
-                    // 매칭된
-                    self.floatingButton.type = .matched
-                }
-            }
-        }
-        
         floatingButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                
                 if vc.floatingButton.type == .plain {
                     let viewController = StudyViewController()
                     viewController.viewModel.recommend.accept(vc.recommend)
                     print(vc.recommend)
                     vc.navigationController?.pushViewController(viewController, animated: true)
                 } else if vc.floatingButton.type == .matching {
-                    
+                    // 매칭중
                 } else {
-                    
+                    // 매칭된
                 }
-                
             }
             .disposed(by: disposeBag)
-        
-        
-    }
-    
-    private func setFromQueueAnnotation(_ queueList: [FromQueue]) {
-        let annotations = mapView.annotations
-        mapView.removeAnnotations(annotations)
-        
-        for queue in queueList {
-            let queueCoordinate = CLLocationCoordinate2D(latitude: queue.lat, longitude: queue.long)
-            let queueAnnotation = CustomAnnotation(sesac_image: queue.sesac, coordinate: queueCoordinate)
-            mapView.addAnnotation(queueAnnotation)
-        }
     }
     
     private func setFromQueueAnnotationByGender(_ gender: Int, _ queueList: [FromQueue]) {
         let annotations = mapView.annotations
         mapView.removeAnnotations(annotations)
         
-        for location in queueList {
-            if location.gender == gender {
-                let friendsCoordinate = CLLocationCoordinate2D(latitude: location.lat, longitude: location.long)
-                let friendsAnnotation = CustomAnnotation(sesac_image: location.sesac, coordinate: friendsCoordinate)
-                mapView.addAnnotation(friendsAnnotation)
+        if gender == 2 {
+            for queue in queueList {
+                print("✨ - \(queue)")
+                let queueCoordinate = CLLocationCoordinate2D(latitude: queue.lat, longitude: queue.long)
+                let queueAnnotation = CustomAnnotation(sesac_image: queue.sesac, coordinate: queueCoordinate)
+                mapView.addAnnotation(queueAnnotation)
+            }
+            
+            return
+        }
+        
+        for queue in queueList {
+            if queue.gender == gender {
+                print("✨ - \(queue)")
+                let queueCoordinate = CLLocationCoordinate2D(latitude: queue.lat, longitude: queue.long)
+                let queueAnnotation = CustomAnnotation(sesac_image: queue.sesac, coordinate: queueCoordinate)
+                mapView.addAnnotation(queueAnnotation)
             }
         }
     }
@@ -349,6 +310,8 @@ extension HomeMapViewController {
             .disposed(by: disposeBag)
     }
 }
+
+// MARK: - Location Service Authoriztaion
 
 extension HomeMapViewController {
     

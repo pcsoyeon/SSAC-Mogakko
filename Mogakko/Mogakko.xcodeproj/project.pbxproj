@@ -109,6 +109,8 @@
 		92A6403E292533ED00A6F708 /* QueueRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6403D292533ED00A6F708 /* QueueRouter.swift */; };
 		92A640402925378E00A6F708 /* QueueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6403F2925378E00A6F708 /* QueueRequest.swift */; };
 		92A640442925389900A6F708 /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A640432925389900A6F708 /* SearchRequest.swift */; };
+		92D08386292723FA0072FC0C /* BehaviorRelayProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D08385292723FA0072FC0C /* BehaviorRelayProperty.swift */; };
+		92D083882927A1670072FC0C /* RxCoreLocationDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083872927A1670072FC0C /* RxCoreLocationDelegateProxy.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
@@ -215,6 +217,8 @@
 		92A6403D292533ED00A6F708 /* QueueRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRouter.swift; sourceTree = "<group>"; };
 		92A6403F2925378E00A6F708 /* QueueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRequest.swift; sourceTree = "<group>"; };
 		92A640432925389900A6F708 /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
+		92D08385292723FA0072FC0C /* BehaviorRelayProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorRelayProperty.swift; sourceTree = "<group>"; };
+		92D083872927A1670072FC0C /* RxCoreLocationDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCoreLocationDelegateProxy.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -390,6 +394,7 @@
 		9256070A2918D54F00A13FFB /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				92D08384292723500072FC0C /* PropertyWrapper */,
 				92A6400A292221BA00A6F708 /* DelegateProxy */,
 				9256075E291946BC00A13FFB /* Base */,
 				925607262918E66200A13FFB /* Constant */,
@@ -524,7 +529,6 @@
 				925607272918E67700A13FFB /* Constant.swift */,
 				925607292918E68A00A13FFB /* Image.swift */,
 				9256072B2918EDC100A13FFB /* Metric.swift */,
-				92A5DE6A291DB66A00094D3E /* UserDefaults.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -649,6 +653,7 @@
 			isa = PBXGroup;
 			children = (
 				92A6400B292221DD00A6F708 /* RxMKMapViewDelegateProxy.swift */,
+				92D083872927A1670072FC0C /* RxCoreLocationDelegateProxy.swift */,
 			);
 			path = DelegateProxy;
 			sourceTree = "<group>";
@@ -737,6 +742,15 @@
 				92E74DE629260FA400B15D71 /* MyStateResponse.swift */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		92D08384292723500072FC0C /* PropertyWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				92A5DE6A291DB66A00094D3E /* UserDefaults.swift */,
+				92D08385292723FA0072FC0C /* BehaviorRelayProperty.swift */,
+			);
+			path = PropertyWrapper;
 			sourceTree = "<group>";
 		};
 		92E74DE32925C78200B15D71 /* Map */ = {
@@ -870,6 +884,7 @@
 				92A5DE61291CFBF800094D3E /* UserAPI.swift in Sources */,
 				92A640402925378E00A6F708 /* QueueRequest.swift in Sources */,
 				923DDE1D291A4CE000A2FE75 /* GenderViewController.swift in Sources */,
+				92D08386292723FA0072FC0C /* BehaviorRelayProperty.swift in Sources */,
 				920B672A29200B38000191F1 /* MyInfoViewModel.swift in Sources */,
 				920B672D29200B78000191F1 /* MyInfo.swift in Sources */,
 				925607362918F0B400A13FFB /* MDSNavigationBar.swift in Sources */,
@@ -901,6 +916,7 @@
 				92A640072921DFE100A6F708 /* MDSSlider.swift in Sources */,
 				920B6711291F5138000191F1 /* APIError.swift in Sources */,
 				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,
+				92D083882927A1670072FC0C /* RxCoreLocationDelegateProxy.swift in Sources */,
 				92A6401C2922497700A6F708 /* AllowSearchView.swift in Sources */,
 				92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */,
 				92A5DE5F291CF53100094D3E /* UserRouter.swift in Sources */,
