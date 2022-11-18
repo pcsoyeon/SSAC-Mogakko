@@ -40,13 +40,13 @@ extension UserRouter: URLRequestConvertible {
         switch self {
         case .login:
             return [APIConstant.ContentType.contentType : APIConstant.ContentType.json,
-                    APIConstant.idtoken : APIKey.idToken ]
+                    APIConstant.idtoken : UserData.idtoken ]
         case .refresh(let idToken):
             return [APIConstant.ContentType.contentType : APIConstant.ContentType.json,
                     APIConstant.idtoken : idToken]
         case .signup, .withdraw, .updateFcmToken, .mypage:
             return [APIConstant.ContentType.contentType : APIConstant.ContentType.formUrlEncoded,
-                    APIConstant.idtoken : APIKey.idToken]
+                    APIConstant.idtoken : UserData.idtoken]
         }
     }
     

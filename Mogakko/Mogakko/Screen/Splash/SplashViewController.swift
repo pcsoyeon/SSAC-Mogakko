@@ -120,7 +120,7 @@ final class SplashViewController: UIViewController {
                 UserData.nickName = data.nick
                 Helper.convertNavigationRootViewController(view: self.view, controller: TabBarViewController())
             case .failure(_):
-                self.showToast(message: "토큰 갱신 오류입니다. 잠시 후 다시 시도해주세요.")
+                self.showToast(message: "토큰 만료")
             }
         }
     }

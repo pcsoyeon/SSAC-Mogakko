@@ -98,14 +98,13 @@ final class UserAPI {
     func refreshIdToken(completion: @escaping (Result<String, Error>) -> Void) {
         Auth.auth().currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
             
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
             if let idToken = idToken {
                 UserData.idtoken = idToken
                 completion(.success(idToken))
+            }
+            
+            if let error = error {
+                completion(.failure(error))
             }
         }
     }

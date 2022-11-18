@@ -36,7 +36,7 @@ extension QueueRouter: URLRequestConvertible {
         switch self {
         case .queue, .deleteQueue, .search, .myQueueState:
             return [APIConstant.ContentType.contentType : APIConstant.ContentType.formUrlEncoded,
-                    APIConstant.idtoken : APIKey.idToken]
+                    APIConstant.idtoken : UserData.idtoken]
         }
     }
     
