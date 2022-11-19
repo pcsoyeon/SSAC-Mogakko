@@ -71,7 +71,7 @@ final class CardView: BaseView {
                     let labelHeight = reviewContentLabel.countCurrentLines() * 24
                     
                     snp.updateConstraints { make in
-                        make.height.equalTo(194 + 270 + 165 + labelHeight + 16 + 10)
+                        make.height.equalTo(194 + 270 + 400 + labelHeight + 16 + 10)
                     }
                 }
                 
