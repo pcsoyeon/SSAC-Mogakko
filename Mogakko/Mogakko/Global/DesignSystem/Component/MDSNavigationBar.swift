@@ -39,6 +39,12 @@ final class MDSNavigationBar: UIView {
         }
     }
     
+    var underLineIsHidden: Bool = false {
+        didSet {
+            lineView.isHidden = underLineIsHidden
+        }
+    }
+    
     // MARK: - Initializer
     
     init(_ viewController: UIViewController) {
