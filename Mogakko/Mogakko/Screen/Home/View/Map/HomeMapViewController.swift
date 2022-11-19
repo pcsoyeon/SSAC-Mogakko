@@ -76,7 +76,8 @@ final class HomeMapViewController: UIViewController {
     private var currentLatitude: Double?
     private var currentLongtitude: Double?
     
-    private var recommend: [String] = []
+    private var mapLatitude = 0.0
+    private var mapLongitude = 0.0
     
     // MARK: - Life Cycle
     
@@ -135,10 +136,10 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .subscribe(onNext: { vc, _ in
-                let mapLatitude = vc.mapView.centerCoordinate.latitude
-                let mapLongitude = vc.mapView.centerCoordinate.longitude
+                vc.mapLatitude = vc.mapView.centerCoordinate.latitude
+                vc.mapLongitude = vc.mapView.centerCoordinate.longitude
                 
-                vc.viewModel.requestSearch(request: SearchRequest(lat: mapLatitude, long: mapLongitude)) { error in
+                vc.viewModel.requestSearch(request: SearchRequest(lat: vc.mapLatitude, long: vc.mapLongitude)) { error in
                     
                     if let error = error {
                         switch error {
@@ -252,8 +253,8 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             .bind { vc, _ in
                 if vc.floatingButton.type == .plain {
                     let viewController = StudyViewController()
-                    viewController.viewModel.recommend.accept(vc.recommend)
-                    print(vc.recommend)
+                    viewController.mapLatitude = vc.mapLatitude
+                    viewController.mapLongitude = vc.mapLongitude
                     vc.navigationController?.pushViewController(viewController, animated: true)
                 } else if vc.floatingButton.type == .matching {
                     // 매칭중
