@@ -1,47 +1,27 @@
 //
-//  StudyCollectionViewCel.swift
+//  MyStudyCollectionViewCell.swift
 //  Mogakko
 //
-//  Created by 소연 on 2022/11/17.
+//  Created by 소연 on 2022/11/19.
 //
 
 import UIKit
 
-enum StudyType {
-    case recommend
-    case nearby
-    case wantToDo
-    
-    var borderColor: UIColor {
-        switch self {
-        case .recommend:
-            return .error
-        case .nearby:
-            return .gray4
-        case .wantToDo:
-            return .green
-        }
-    }
-    
-    var textColor: UIColor {
-        switch self {
-        case .recommend:
-            return .error
-        case .nearby:
-            return .black
-        case .wantToDo:
-            return .green
-        }
-    }
-}
+import SnapKit
+import Then
 
-final class StudyCollectionViewCell: BaseCollectionViewCell {
+final class MyStudyCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - UI Property
     
     private var titleLabel = UILabel().then {
         $0.textColor = .black
         $0.font = MDSFont.Title4_R14.font
+    }
+    
+    private var cancelButton = UIButton().then {
+        $0.setImage(Constant.Image.closeSmall.withRenderingMode(.alwaysTemplate), for: .normal)
+        $0.tintColor = .green
     }
     
     // MARK: - Property
@@ -52,7 +32,7 @@ final class StudyCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    var type: StudyType = .nearby {
+    var type: StudyType = .wantToDo {
         didSet {
             setStudyType(type: type)
         }
@@ -67,11 +47,17 @@ final class StudyCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureHierarchy() {
-        contentView.addSubview(titleLabel)
+        contentView.addSubviews(titleLabel, cancelButton)
         
         titleLabel.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(Metric.margin)
+            make.leading.equalToSuperview().inset(Metric.margin)
             make.verticalEdges.equalToSuperview().inset(8)
+        }
+        
+        cancelButton.snp.makeConstraints { make in
+            make.leading.equalTo(titleLabel.snp.trailing).offset(4)
+            make.trailing.equalToSuperview().inset(Metric.margin)
+            make.centerY.equalTo(titleLabel.snp.centerY)
         }
     }
     
