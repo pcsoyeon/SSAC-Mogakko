@@ -198,18 +198,18 @@ extension StudyViewController: BaseViewControllerAttribute {
             .bind(onNext: { vc, _ in
                 // TODO: - 키보드 내려가도록 
                 
-                guard let text = vc.searchBar.text else { return }
-                if text.count < 1 || text.count > 8 {
-                    vc.showToast(message: "최소 한 자 이상, 최대 8글자까지 작성 가능합니다")
-                } else {
-                    // 내가 하고 싶은 스터디에 추가
-                    if vc.viewModel.selectedList.contains(text) {
-                        // 만약 이미 추가된 요소라면?
-                        vc.showToast(message: "이미 등록된 스터디입니다")
-                    } else {
-                        vc.viewModel.appendSelectedList(text)
-                    }
-                }
+                // TODO: - 서버 통신
+                // 서버 통신 후 200이 왔을 때 > 화면 전환
+                let viewController = SearchSesacViewController()
+                viewController.mapLatitude = vc.mapLatitude
+                viewController.mapLongitude = vc.mapLongitude
+                vc.navigationController?.pushViewController(viewController, animated: true)
+                
+                // 201 - 신고하기 3번 이상 받은 유저 > Toast 메시지 + 화면 유지
+                // 203 - 스터디 취소 페널티 1단계 > Toast 메시지 (1분동안 찾기 금지) + 화면 유지
+                // 204 - 스터디 취소 페널티 2단계 > Toast 메시지 (2분동안 찾기 금지) + 화면 유지
+                // 205 - 스터디 취소 페널티 3단계 > Toast 메시지 (3분동안 찾기 금지) + 화면 유지
+                // 나머지 오류 ..
             })
             .disposed(by: disposeBag)
 
@@ -241,6 +241,7 @@ extension StudyViewController: BaseViewControllerAttribute {
                 let section = indexPath.0
                 let item = indexPath.1
                 
+                // TODO: - 0번째 선택하면 -> 1번째 섹션의 아이템에 추가 
                 if section == 0 {
                     print("=============== 💨 0번째 Section - ", item)
                     
