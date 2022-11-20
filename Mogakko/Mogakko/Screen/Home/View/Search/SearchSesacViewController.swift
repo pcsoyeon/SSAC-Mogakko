@@ -166,7 +166,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
         viewModel.fromQueue
             .withUnretained(self)
             .bind { vc, list in
-                print("============ 주변 새싹 ============")
+                print("============ 💗 주변 새싹 💗 ============")
                 dump(list)
                 vc.fromQueueView.list = list
             }
@@ -175,7 +175,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
         viewModel.fromRequestedQueue
             .withUnretained(self)
             .bind { vc, list in
-                print("============ 스터디를 요청한 새싹 ============")
+                print("============ 💗 스터디를 요청한 새싹 💗 ============")
                 dump(list)
                 vc.requestedView.list = list
             }
@@ -207,6 +207,42 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, _ in
                 vc.scrollView.setContentOffset(CGPoint(x: vc.scrollView.frame.width, y: 0), animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        [fromQueueView.emptyView.changeButton, requestedView.emptyView.changeButton].forEach {
+            $0.rx.tap
+                .withUnretained(self)
+                .bind { vc, _ in
+                    vc.navigationController?.popViewController(animated: true)
+                    
+                    // 1. 서버 통신 (delete)
+                    // 2. 사용자의 위치는 그대로 전달 (현위치가 아닌, 지도의 중간지점)
+                }
+                .disposed(by: disposeBag)
+        }
+        
+        [fromQueueView.emptyView.refreshButton, requestedView.emptyView.refreshButton].forEach {
+            $0.rx.tap
+                .withUnretained(self)
+                .bind { vc, _ in
+                    vc.viewModel.requestSearch(request: SearchRequest(lat: vc.mapLatitude, long: vc.mapLongitude)) { error in
+                        if let error = error {
+                            print("error - \(error.errorDescription ?? "")")
+                        }
+                    }
+                }
+                .disposed(by: disposeBag)
+        }
+         
+        stopButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                // 1. 서버 통신 (delete)
+                
+                // 2. 화면 전환 
+                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+                self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
             }
             .disposed(by: disposeBag)
     }

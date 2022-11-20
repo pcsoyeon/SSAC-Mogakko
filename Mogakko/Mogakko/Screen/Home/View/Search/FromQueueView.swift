@@ -18,7 +18,7 @@ final class FromQueueView: BaseView {
     
     private var tableView = UITableView()
     
-    private var emptyView = SearchSesacEmptyView()
+    var emptyView = SearchSesacEmptyView()
     
     // MARK: - Property
     

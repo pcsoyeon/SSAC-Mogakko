@@ -12,6 +12,8 @@ import Then
 
 final class SearchSesacEmptyView: BaseView {
     
+    // MARK: - Property
+    
     var title: String = "" {
         didSet {
             titleLabel.text = title
@@ -23,6 +25,8 @@ final class SearchSesacEmptyView: BaseView {
             subtitleLabel.text = subtitle
         }
     }
+    
+    // MARK: - UI Property
     
     private var imageView = UIImageView().then {
         $0.image = Constant.Image.img
@@ -38,15 +42,17 @@ final class SearchSesacEmptyView: BaseView {
         $0.textColor = .gray7
     }
     
-    private var changeButton = MDSButton().then {
+    var changeButton = MDSButton().then {
         $0.text = "스터디 변경하기"
         $0.type = .fill
         $0.heightType = .h48
     }
     
-    private var refreshButton = UIButton().then {
+    var refreshButton = UIButton().then {
         $0.setImage(Constant.Image.refresh, for: .normal)
     }
+    
+    // MARK: - UI Method
     
     override func configureAttribute() {
         backgroundColor = .white
