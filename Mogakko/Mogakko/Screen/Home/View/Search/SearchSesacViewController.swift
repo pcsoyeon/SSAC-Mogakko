@@ -179,7 +179,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             .bind { vc, list in
                 print("============ 스터디를 요청한 새싹 ============")
                 dump(list)
-                
+                vc.requestedView.list = list
             }
             .disposed(by: disposeBag)
         

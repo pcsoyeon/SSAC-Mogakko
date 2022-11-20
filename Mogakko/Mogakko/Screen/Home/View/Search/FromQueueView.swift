@@ -18,19 +18,23 @@ final class FromQueueView: BaseView {
     
     private var tableView = UITableView()
     
-    private var emptyView = UIView()
+    private var emptyView = SearchSesacEmptyView()
     
     // MARK: - Property
     
-    var isEmpty: Bool = false {
-        didSet {
-            
-        }
-    }
-    
     var list: [FromQueue] = [] {
         didSet {
-            tableView.reloadData()
+            if list.isEmpty {
+                emptyView.isHidden = false
+                tableView.isHidden = true
+                
+                emptyView.title = "아쉽게도 주변에 새싹이 없어요ㅠ"
+                emptyView.subtitle = "스터디를 변경하거나 조금만 더 기다려주세요!"
+            } else {
+                emptyView.isHidden = true
+                tableView.isHidden = false
+                tableView.reloadData()
+            }
         }
     }
     
@@ -39,10 +43,14 @@ final class FromQueueView: BaseView {
     // MARK: - UI Method
     
     override func configureHierarchy() {
-        addSubview(tableView)
+        addSubviews(emptyView, tableView)
         
         tableView.snp.makeConstraints { make in
             make.verticalEdges.horizontalEdges.equalToSuperview()
+        }
+        
+        emptyView.snp.makeConstraints { make in
+            make.horizontalEdges.verticalEdges.equalToSuperview()
         }
     }
     

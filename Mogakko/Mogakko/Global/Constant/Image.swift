@@ -38,6 +38,9 @@ extension Constant {
         static let woman = UIImage(named: "woman")!
         static let wirte = UIImage(named: "write")!
         
+        // button
+        static let refresh = UIImage(named: "bt_refresh")
+        
         // MARK: - Image
         
         static let badge = UIImage(named: "badge")!
