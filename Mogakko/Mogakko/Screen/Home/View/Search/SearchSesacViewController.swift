@@ -214,10 +214,20 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             $0.rx.tap
                 .withUnretained(self)
                 .bind { vc, _ in
-                    vc.navigationController?.popViewController(animated: true)
-                    
                     // 1. 서버 통신 (delete)
-                    // 2. 사용자의 위치는 그대로 전달 (현위치가 아닌, 지도의 중간지점)
+                    vc.viewModel.deleteQueue { statusCode in
+                        if statusCode == 200 {
+                            vc.navigationController?.popViewController(animated: true)
+                            // 2. 사용자의 위치는 그대로 전달 (현위치가 아닌, 지도의 중간지점)
+                        } else if statusCode == 201 {
+                            vc.showToast(message: "누군가와 스터디를 함께하기로 약속하셨어요!")
+                            let viewController = ChatViewController()
+                            vc.navigationController?.pushViewController(viewController, animated: true)
+                        } else {
+                            
+                        }
+                    }
+                    
                 }
                 .disposed(by: disposeBag)
         }
@@ -239,10 +249,21 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, _ in
                 // 1. 서버 통신 (delete)
+                vc.viewModel.deleteQueue { statusCode in
+                    if statusCode == 200 {
+                        // 2. 화면 전환
+                        Helper.convertNavigationRootViewController(view: vc.view, controller: TabBarViewController())
+                        // 2. 사용자의 위치는 그대로 전달 (현위치가 아닌, 지도의 중간지점)
+                    } else if statusCode == 201 {
+                        vc.showToast(message: "누군가와 스터디를 함께하기로 약속하셨어요!")
+                        let viewController = ChatViewController()
+                        vc.navigationController?.pushViewController(viewController, animated: true)
+                    } else {
+                        
+                    }
+                }
                 
-                // 2. 화면 전환 
-                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-                self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+                
             }
             .disposed(by: disposeBag)
     }

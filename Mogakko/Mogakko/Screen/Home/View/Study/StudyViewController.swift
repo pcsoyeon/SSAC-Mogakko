@@ -196,20 +196,35 @@ extension StudyViewController: BaseViewControllerAttribute {
         searchButton.rx.tap
             .withUnretained(self)
             .bind(onNext: { vc, _ in
-                // TODO: - 키보드 내려가도록 
-                
                 // TODO: - 서버 통신
-                // 서버 통신 후 200이 왔을 때 > 화면 전환
-                let viewController = SearchSesacViewController()
-                viewController.mapLatitude = vc.mapLatitude
-                viewController.mapLongitude = vc.mapLongitude
-                vc.navigationController?.pushViewController(viewController, animated: true)
                 
-                // 201 - 신고하기 3번 이상 받은 유저 > Toast 메시지 + 화면 유지
-                // 203 - 스터디 취소 페널티 1단계 > Toast 메시지 (1분동안 찾기 금지) + 화면 유지
-                // 204 - 스터디 취소 페널티 2단계 > Toast 메시지 (2분동안 찾기 금지) + 화면 유지
-                // 205 - 스터디 취소 페널티 3단계 > Toast 메시지 (3분동안 찾기 금지) + 화면 유지
-                // 나머지 오류 ..
+                vc.viewModel.requestQueue(request: QueueRequest(lat: vc.mapLatitude, long: vc.mapLongitude, studyList: vc.viewModel.selectedRelay.value)) { statusCode in
+                    print("==================== 스터디 찾기 \(statusCode) ====================")
+                    
+                    if statusCode == 200 {
+                        // 서버 통신 후 200이 왔을 때 > 화면 전환
+                        let viewController = SearchSesacViewController()
+                        viewController.mapLatitude = vc.mapLatitude
+                        viewController.mapLongitude = vc.mapLongitude
+                        vc.navigationController?.pushViewController(viewController, animated: true)
+                    } else if statusCode == 201 {
+                        vc.showToast(message: "신고가 누적되어 이용하실 수 없습니다.")
+                    } else if statusCode == 203 {
+                        vc.showToast(message: "스터디 취소 패널티로 1분동안 이용하실 수 없습니다.")
+                    } else if statusCode == 204 {
+                        vc.showToast(message: "스터디 취소 패널티로 2분동안 이용하실 수 없습니다.")
+                    } else if statusCode == 205 {
+                        vc.showToast(message: "스터디 취소 패널티로 3분동안 이용하실 수 없습니다.")
+                    } else if statusCode == 401 {
+                        vc.showToast(message: "토큰만료")
+                    } else if statusCode == 406 {
+                        vc.showToast(message: "미가입 회원")
+                    } else if statusCode == 500 {
+                        vc.showToast(message: "서버 내부 오류")
+                    } else {
+                        vc.showToast(message: "요청 값 부족")
+                    }
+                }
             })
             .disposed(by: disposeBag)
 

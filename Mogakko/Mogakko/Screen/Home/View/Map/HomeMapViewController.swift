@@ -248,6 +248,34 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
         
+        viewModel.requestMyState { [weak self] response, error in
+            guard let vc = self else { return }
+            
+            if let error = error {
+                switch error {
+                case .takenUser, .invalidNickname:
+                    vc.floatingButton.type = .plain
+                case .invalidAuthorization:
+                    vc.showToast(message: error.errorDescription ?? "")
+                case .unsubscribedUser:
+                    vc.showToast(message: error.errorDescription ?? "")
+                case .serverError:
+                    vc.showToast(message: error.errorDescription ?? "")
+                case .emptyParameters:
+                    vc.showToast(message: error.errorDescription ?? "")
+                }
+            }
+            
+            if let response = response {
+                if response.matched == 0 {
+                    // 매칭 대기중
+                    vc.floatingButton.type = .matching
+                } else {
+                    vc.floatingButton.type = .matched
+                }
+            }
+        }
+        
         floatingButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
@@ -258,8 +286,12 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                     vc.navigationController?.pushViewController(viewController, animated: true)
                 } else if vc.floatingButton.type == .matching {
                     // 매칭중
+                    let viewController = SearchSesacViewController()
+                    viewController.mapLatitude = vc.mapLatitude
+                    viewController.mapLongitude = vc.mapLongitude
+                    vc.navigationController?.pushViewController(viewController, animated: true)
                 } else {
-                    // 매칭된
+                    // 매칭된 > 채팅화면으로 이동
                 }
             }
             .disposed(by: disposeBag)

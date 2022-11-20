@@ -119,6 +119,8 @@
 		92D083952928C83B0072FC0C /* SearchSesacEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083942928C83B0072FC0C /* SearchSesacEmptyView.swift */; };
 		92D083992928FE080072FC0C /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083982928FE080072FC0C /* CardTableViewCell.swift */; };
 		92D0839B292A063C0072FC0C /* ReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D0839A292A063C0072FC0C /* ReviewCollectionViewCell.swift */; };
+		92D083A0292A7B940072FC0C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D0839F292A7B940072FC0C /* ChatViewController.swift */; };
+		92D083A2292A7D570072FC0C /* QueueAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083A1292A7D570072FC0C /* QueueAPI.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
@@ -235,6 +237,8 @@
 		92D083942928C83B0072FC0C /* SearchSesacEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSesacEmptyView.swift; sourceTree = "<group>"; };
 		92D083982928FE080072FC0C /* CardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
 		92D0839A292A063C0072FC0C /* ReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		92D0839F292A7B940072FC0C /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		92D083A1292A7D570072FC0C /* QueueAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueAPI.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -387,6 +391,7 @@
 		925607082918D54500A13FFB /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				92D0839E292A7B840072FC0C /* Chat */,
 				920B671F29200364000191F1 /* MyInfo */,
 				92A5DE6E291DBFBD00094D3E /* Home */,
 				923DDE09291A3CC500A2FE75 /* Signup */,
@@ -741,6 +746,7 @@
 			isa = PBXGroup;
 			children = (
 				92A6403D292533ED00A6F708 /* QueueRouter.swift */,
+				92D083A1292A7D570072FC0C /* QueueAPI.swift */,
 			);
 			path = Queue;
 			sourceTree = "<group>";
@@ -782,6 +788,14 @@
 				92D083942928C83B0072FC0C /* SearchSesacEmptyView.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		92D0839E292A7B840072FC0C /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				92D0839F292A7B940072FC0C /* ChatViewController.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		92E74DE32925C78200B15D71 /* Map */ = {
@@ -970,6 +984,8 @@
 				92D0838A2928AB810072FC0C /* MyStudyCollectionViewCell.swift in Sources */,
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
 				92A5DE6D291DB8EA00094D3E /* Date+Extension.swift in Sources */,
+				92D083A2292A7D570072FC0C /* QueueAPI.swift in Sources */,
+				92D083A0292A7B940072FC0C /* ChatViewController.swift in Sources */,
 				92A64010292230CB00A6F708 /* UIStackView+Extension.swift in Sources */,
 				92A6403B292532D800A6F708 /* SearchResponse.swift in Sources */,
 				920B6723292003EC000191F1 /* MyInfoViewController.swift in Sources */,

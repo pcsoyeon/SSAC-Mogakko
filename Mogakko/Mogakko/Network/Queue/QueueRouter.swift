@@ -56,7 +56,7 @@ extension QueueRouter: URLRequestConvertible {
         case .queue(let request):
             return ["long" : "\(request.long)",
                     "lat" : "\(request.lat)",
-                    "studyList" : "\(request.studyList)"]
+                    "studylist" : "\(request.studyList)"]
         case .deleteQueue:
             return ["" : ""]
         case .search(let request):
