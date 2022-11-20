@@ -7,31 +7,29 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
 import SnapKit
 import Then
+
+@frozen
+enum CardViewType {
+    case plain
+    case info
+}
 
 final class CardView: BaseView {
     
     // MARK: - Property
     
-    var isMyInfo: Bool = false
+    var cardViewType: CardViewType = .plain
     
     var isExpanded: Bool = false {
         didSet {
             if isExpanded {
-                if isMyInfo {
-                    titleView.isHidden = false
-                    reviewView.isHidden = false
-                    studyView.isHidden = true
-                } else {
-                    titleView.isHidden = false
-                    reviewView.isHidden = false
-                    studyView.isHidden = false
-                }
+                collectionView.isHidden = false
             } else {
-                titleView.isHidden = true
-                reviewView.isHidden = true
-                studyView.isHidden = true
+                collectionView.isHidden = true
             }
         }
     }
@@ -47,49 +45,14 @@ final class CardView: BaseView {
     var cardItem: InfoManagementItem? {
         didSet {
             guard let item = cardItem as? CardItem else { return }
-            nicknameLabel.text = item.nickname
-            
-            if item.comment.isEmpty {
-                reviewContentLabel.text = "첫 리뷰를 기다리는 중이에요!"
-                reviewContentLabel.textColor = .gray6
-            } else if item.comment.count == 1 {
-                reviewContentLabel.text = item.comment[0]
-                reviewContentLabel.textColor = .black
-            } else {
-                reviewContentLabel.text = item.comment[0]
-                reviewContentLabel.textColor = .black
-                moreButton.isHidden = false
-            }
-            
-            reviewView.snp.updateConstraints { make in
-                make.height.equalTo(24 + 18 + 16 + (reviewContentLabel.countCurrentLines() * 24) + 16)
-            }
-            
-            for i in 0...5 {
-                reputation.append(item.reputation[i])
-            }
-            if let studyList = item.studyList {
-                self.studyList = studyList
-            }
-            
-            studyCollectionView.snp.updateConstraints { make in
-                make.height.equalTo(studyList.count / 2 * 32)
-            }
+            self.item.accept(item)
         }
     }
     
     private var reputationTitle: [String] = ["좋은 매너", "정확한 시간 약속", "빠른 응답", "친절한 성격", "능숙한 실력", "유익한 시간"]
-    private var reputation: [Int] = Array(repeating: 0, count: 6) {
-        didSet {
-            titleCollectionView.reloadData()
-        }
-    }
+    private var reputation: [Int] = Array(repeating: 0, count: 6)
     
-    private var studyList: [String] = [] {
-        didSet {
-            studyCollectionView.reloadData()
-        }
-    }
+    private var item = BehaviorRelay<CardItem>(value: CardItem(nickname: "", reputation: [], comment: [], studyList: []))
     
     // MARK: - UI Property
     
@@ -112,7 +75,7 @@ final class CardView: BaseView {
         $0.makeRound()
         $0.layer.borderColor = UIColor.gray3.cgColor
         $0.layer.borderWidth = 1
-        $0.addArrangedSubviews(nicknameView, titleView, studyView, reviewView)
+        $0.addArrangedSubviews(nicknameView, collectionView)
         $0.axis = .vertical
         $0.distribution = .equalSpacing
         $0.alignment = .fill
@@ -126,73 +89,31 @@ final class CardView: BaseView {
         $0.font = MDSFont.Title1_M16.font
     }
     var expandButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        $0.backgroundColor = .clear
+    }
+    private var expandIconImageView = UIImageView().then {
+        $0.image = UIImage(systemName: "chevron.down")?.withRenderingMode(.alwaysTemplate)
         $0.tintColor = .black
     }
     
-    private var titleView = UIView()
-    private var titleLabel = UILabel().then {
-        $0.text = "새싹 타이틀"
-        $0.textColor = .black
-        $0.font = MDSFont.Title6_R12.font
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout()).then {
+        $0.backgroundColor = .white
+        $0.isScrollEnabled = false
     }
-    private lazy var titleCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-                
-        collectionView.backgroundColor = .white
-        collectionView.isScrollEnabled = false
-        
-        return collectionView
-    }()
     
-    private let studyView = UIView()
-    private var studyLabel = UILabel().then {
-        $0.text = "하고 싶은 스터디"
-        $0.textColor = .black
-        $0.font = MDSFont.Title6_R12.font
-    }
-    private lazy var studyCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.isScrollEnabled = false
-
-        return collectionView
-    }()
+    // MARK: - Property
     
-    private var reviewView = UIView()
-    private var reviewLabel = UILabel().then {
-        $0.text = "새싹 리뷰"
-        $0.textColor = .black
-        $0.font = MDSFont.Title6_R12.font
-    }
-    private var reviewContentLabel = UILabel().then {
-        $0.text = "첫 리뷰를 기다리는 중이에요!"
-        $0.textColor = .gray6
-        $0.font = MDSFont.Body3_R14.font
-        $0.numberOfLines = 0
-    }
-    private var moreButton = UIButton().then {
-        $0.setImage(Constant.Image.moreArrow, for: .normal)
-        $0.isHidden = true
-    }
+    private var dataSource: UICollectionViewDiffableDataSource<Int, String>!
+    static let sectionHeaderElementKind = "section-header-element-kind"
+    
+    private let disposeBag = DisposeBag()
     
     // MARK: - UI Method
     
     override func configureAttribute() {
         backgroundColor = .white
-        
-        titleCollectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.reuseIdentifier)
-        titleCollectionView.dataSource = self
-        titleCollectionView.delegate = self
-        
-        studyCollectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.reuseIdentifier)
-        studyCollectionView.dataSource = self
-        studyCollectionView.delegate = self
+        configureDataSource()
+        bind()
     }
     
     override func configureHierarchy() {
@@ -213,7 +134,7 @@ final class CardView: BaseView {
             make.centerX.equalToSuperview()
         }
         
-        nicknameView.addSubviews(nicknameLabel, expandButton)
+        nicknameView.addSubviews(nicknameLabel, expandButton, expandIconImageView)
         nicknameView.snp.makeConstraints { make in
             make.height.equalTo(58)
         }
@@ -222,94 +143,242 @@ final class CardView: BaseView {
             make.height.equalTo(26)
         }
         expandButton.snp.makeConstraints { make in
+            make.horizontalEdges.verticalEdges.equalToSuperview()
+        }
+        expandIconImageView.snp.makeConstraints { make in
             make.width.height.equalTo(16)
             make.trailing.equalToSuperview().inset(16)
             make.centerY.equalTo(nicknameLabel.snp.centerY)
         }
         
-        titleView.addSubviews(titleLabel, titleCollectionView)
-        titleView.snp.makeConstraints { make in
-            make.height.equalTo(170)
-        }
-        titleLabel.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().inset(16)
-            make.height.equalTo(18)
-        }
-        titleCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(16)
-            make.horizontalEdges.equalToSuperview().inset(16)
-            make.height.equalTo(112)
-        }
-        
-        studyView.addSubviews(studyLabel, studyCollectionView)
-        studyView.snp.makeConstraints { make in
-            make.height.equalTo(90)
-        }
-        studyLabel.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().inset(16)
-            make.height.equalTo(18)
-        }
-        studyCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(studyLabel.snp.bottom).offset(16)
-            make.horizontalEdges.equalToSuperview().inset(16)
-            make.height.equalTo(32)
-        }
-        
-        reviewView.addSubviews(reviewLabel, reviewContentLabel)
-        reviewView.snp.makeConstraints { make in
-            make.height.equalTo(24 + 18 + 16 + (reviewContentLabel.countCurrentLines() * 24) + 16)
-        }
-        reviewLabel.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().inset(16)
-        }
-        reviewContentLabel.snp.makeConstraints { make in
-            make.top.equalTo(reviewLabel.snp.bottom).offset(16)
-            make.horizontalEdges.equalToSuperview().inset(16)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(nicknameView.snp.bottom)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(310 - 58)
         }
     }
     
+    private func bind() {
+        item
+            .withUnretained(self)
+            .bind { view, item in
+                
+                view.nicknameLabel.text = item.nickname
+                
+                var commentList: [String] = []
+                if item.comment.isEmpty {
+                    commentList.append("")
+                } else {
+                    commentList.append(item.comment[0])
+                }
+                
+                switch view.cardViewType {
+                case .plain:
+                    var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+                    
+                    snapshot.appendSections([0, 1, 2])
+                    
+                    snapshot.appendItems(view.reputationTitle, toSection: 0)
+                    snapshot.appendItems(item.studyList ?? [" "], toSection: 1)
+                    snapshot.appendItems(commentList, toSection: 2)
+                    view.dataSource.apply(snapshot)
+                case .info:
+                    var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+                    
+                    snapshot.appendSections([0, 1])
+                    
+                    snapshot.appendItems(view.reputationTitle, toSection: 0)
+                    snapshot.appendItems(commentList, toSection: 1)
+                    view.dataSource.apply(snapshot)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+    }
     
 }
 
-// MARK: - UICollectionView
+// MARK: - CollectionView
 
-extension CardView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width - 8) / 2
-        let height = 32.0
-        return CGSize(width: width, height: height)
+extension CardView {
+    private func configureCollectionViewLayout() -> UICollectionViewLayout {
+        let configuration = UICollectionViewCompositionalLayoutConfiguration()
+        
+        return UICollectionViewCompositionalLayout.init(sectionProvider: { sectionIndex, environment in
+            
+            if self.cardViewType == .info {
+                if sectionIndex == 0 {
+                    let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(151), heightDimension: .absolute(32))
+                    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                    item.edgeSpacing = .init(leading: .fixed(8), top: .fixed(8), trailing: .fixed(0), bottom: .fixed(8))
+                    
+                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(128))
+                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                    
+                    let headerSize = NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(46))
+                    let header = NSCollectionLayoutBoundarySupplementaryItem(
+                        layoutSize: headerSize,
+                        elementKind: CardView.sectionHeaderElementKind,
+                        alignment: .top
+                    )
+                    
+                    let section = NSCollectionLayoutSection(group: group)
+                    section.boundarySupplementaryItems = [header]
+                    return section
+                } else {
+                    let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(128), heightDimension: .estimated(128))
+                    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                    
+                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                    
+                    let headerSize = NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(46))
+                    let header = NSCollectionLayoutBoundarySupplementaryItem(
+                        layoutSize: headerSize,
+                        elementKind: CardView.sectionHeaderElementKind,
+                        alignment: .top
+                    )
+                    
+                    let section = NSCollectionLayoutSection(group: group)
+                    section.boundarySupplementaryItems = [header]
+                    return section
+                }
+            } else {
+                if sectionIndex == 0 {
+                    let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(151), heightDimension: .absolute(32))
+                    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                    item.edgeSpacing = .init(leading: .fixed(8), top: .fixed(8), trailing: .fixed(0), bottom: .fixed(8))
+                    
+                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(128))
+                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                    
+                    let headerSize = NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(46))
+                    let header = NSCollectionLayoutBoundarySupplementaryItem(
+                        layoutSize: headerSize,
+                        elementKind: CardView.sectionHeaderElementKind,
+                        alignment: .top
+                    )
+                    
+                    let section = NSCollectionLayoutSection(group: group)
+                    section.boundarySupplementaryItems = [header]
+                    return section
+                } else if sectionIndex == 1 {
+                    let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(128), heightDimension: .estimated(128))
+                    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                    item.edgeSpacing = .init(leading: .fixed(8), top: .fixed(8), trailing: .fixed(0), bottom: .fixed(8))
+                    
+                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                    
+                    let headerSize = NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(46))
+                    let header = NSCollectionLayoutBoundarySupplementaryItem(
+                        layoutSize: headerSize,
+                        elementKind: CardView.sectionHeaderElementKind,
+                        alignment: .top
+                    )
+                    
+                    let section = NSCollectionLayoutSection(group: group)
+                    section.boundarySupplementaryItems = [header]
+                    return section
+                } else {
+                    let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(128), heightDimension: .estimated(128))
+                    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                    
+                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                    
+                    let headerSize = NSCollectionLayoutSize(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(46))
+                    let header = NSCollectionLayoutBoundarySupplementaryItem(
+                        layoutSize: headerSize,
+                        elementKind: CardView.sectionHeaderElementKind,
+                        alignment: .top
+                    )
+                    
+                    let section = NSCollectionLayoutSection(group: group)
+                    section.boundarySupplementaryItems = [header]
+                    return section
+                }
+            }
+            
+        }, configuration: configuration)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
-    }
-}
-
-extension CardView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == titleCollectionView {
-            return reputationTitle.count
-        } else {
-            return studyList.count
+    private func configureDataSource() {
+        let titleCellRegistration = UICollectionView.CellRegistration<TitleCollectionViewCell, String>.init { cell, indexPath, itemIdentifier in
+            cell.isSelected = self.reputation[indexPath.item] > 0 ? true : false
+            cell.title = itemIdentifier
         }
         
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == titleCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.reuseIdentifier, for: indexPath) as? TitleCollectionViewCell else { return UICollectionViewCell() }
-            cell.isSelected = reputation[indexPath.row] > 0 ? true : false
-            cell.title = reputationTitle[indexPath.row]
-            return cell
-        } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.reuseIdentifier, for: indexPath) as? TitleCollectionViewCell else { return UICollectionViewCell() }
-            cell.isSelected = false
-            cell.title = studyList[indexPath.row]
-            return cell
+        let studyCellRegistration = UICollectionView.CellRegistration<StudyCollectionViewCell, String>.init { cell, indexPath, itemIdentifier in
+            cell.type = .nearby
+            cell.title = itemIdentifier
+        }
+        
+        let reviewCellRegistration = UICollectionView.CellRegistration<ReviewCollectionViewCell, String>.init { cell, indexPath, itemIdentifier in
+            cell.comment = itemIdentifier
+        }
+        
+        let headerRegistration = UICollectionView.SupplementaryRegistration<StudyHeaderView>(elementKind: CardView.sectionHeaderElementKind) { (supplementaryView, string, indexPath) in
+            
+            switch self.cardViewType {
+                
+            case .plain:
+                if indexPath.section == 0 {
+                    supplementaryView.title = "새싹 타이틀"
+                } else if indexPath.section == 1 {
+                    supplementaryView.title = "하고 싶은 스터디"
+                } else {
+                    supplementaryView.title = "새싹 리뷰"
+                }
+            case .info:
+                if indexPath.section == 0 {
+                    supplementaryView.title = "새싹 타이틀"
+                } else {
+                    supplementaryView.title = "새싹 리뷰"
+                }
+            }
+            
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+            
+            switch self.cardViewType {
+                
+            case .plain:
+                if indexPath.section == 0 {
+                    let cell = collectionView.dequeueConfiguredReusableCell(using: titleCellRegistration, for: indexPath, item: itemIdentifier)
+                    return cell
+                } else if indexPath.section == 1 {
+                    let cell = collectionView.dequeueConfiguredReusableCell(using: studyCellRegistration, for: indexPath, item: itemIdentifier)
+                    return cell
+                } else {
+                    let cell = collectionView.dequeueConfiguredReusableCell(using: reviewCellRegistration, for: indexPath, item: itemIdentifier)
+                    return cell
+                }
+            case .info:
+                if indexPath.section == 0 {
+                    let cell = collectionView.dequeueConfiguredReusableCell(using: titleCellRegistration, for: indexPath, item: itemIdentifier)
+                    return cell
+                } else {
+                    let cell = collectionView.dequeueConfiguredReusableCell(using: reviewCellRegistration, for: indexPath, item: itemIdentifier)
+                    return cell
+                }
+            }
+            
+        })
+        
+        dataSource.supplementaryViewProvider = { (view, kind, index) in
+            return self.collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: index)
         }
     }
 }

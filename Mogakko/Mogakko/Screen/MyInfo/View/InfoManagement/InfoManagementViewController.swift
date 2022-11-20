@@ -43,7 +43,7 @@ final class InfoManagementViewController: UIViewController {
     
     private var cardView = CardView().then {
         $0.isExpanded = false
-        $0.isMyInfo = true
+        $0.cardViewType = .info
     }
     private var genderView = GenderView()
     private var studyView = StudyView()

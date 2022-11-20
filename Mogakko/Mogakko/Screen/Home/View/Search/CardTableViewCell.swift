@@ -28,12 +28,11 @@ final class CardTableViewCell: BaseTableViewCell {
         }
     }
     
-    
     // MARK: - UI Property
     
     private var cardView = CardView().then {
         $0.isExpanded = false
-        $0.isMyInfo = false
+        $0.cardViewType = .plain
     }
     
     override func configureAttribute() {

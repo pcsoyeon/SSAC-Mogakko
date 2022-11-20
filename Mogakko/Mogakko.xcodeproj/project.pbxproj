@@ -118,6 +118,7 @@
 		92D083932928C2680072FC0C /* RequestedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083922928C2680072FC0C /* RequestedView.swift */; };
 		92D083952928C83B0072FC0C /* SearchSesacEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083942928C83B0072FC0C /* SearchSesacEmptyView.swift */; };
 		92D083992928FE080072FC0C /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083982928FE080072FC0C /* CardTableViewCell.swift */; };
+		92D0839B292A063C0072FC0C /* ReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D0839A292A063C0072FC0C /* ReviewCollectionViewCell.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
@@ -233,6 +234,7 @@
 		92D083922928C2680072FC0C /* RequestedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestedView.swift; sourceTree = "<group>"; };
 		92D083942928C83B0072FC0C /* SearchSesacEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSesacEmptyView.swift; sourceTree = "<group>"; };
 		92D083982928FE080072FC0C /* CardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
+		92D0839A292A063C0072FC0C /* ReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -704,6 +706,7 @@
 				92A6401D29224AC000A6F708 /* AgeView.swift */,
 				92A6401F29224C7E00A6F708 /* WithdrawView.swift */,
 				92A6403229237B5900A6F708 /* TitleCollectionViewCell.swift */,
+				92D0839A292A063C0072FC0C /* ReviewCollectionViewCell.swift */,
 			);
 			path = ItemView;
 			sourceTree = "<group>";
@@ -898,6 +901,7 @@
 				920B67352920B5B9000191F1 /* MDSPopupView.swift in Sources */,
 				92D083952928C83B0072FC0C /* SearchSesacEmptyView.swift in Sources */,
 				923DDE11291A434700A2FE75 /* BirthViewModel.swift in Sources */,
+				92D0839B292A063C0072FC0C /* ReviewCollectionViewCell.swift in Sources */,
 				92A6402029224C7E00A6F708 /* WithdrawView.swift in Sources */,
 				925607282918E67700A13FFB /* Constant.swift in Sources */,
 				920B6713291F64BF000191F1 /* UILabel+Extension.swift in Sources */,
