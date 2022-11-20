@@ -42,10 +42,7 @@ final class StudyViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Int, String>!
     static let sectionHeaderElementKind = "section-header-element-kind"
     
-    var mapLatitude = 0.0
-    var mapLongitude = 0.0
-    
-    private var viewModel = StudyViewModel()
+    var viewModel = StudyViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: - Life Cycle
@@ -109,7 +106,7 @@ extension StudyViewController: BaseViewControllerAttribute {
     }
     
     func bind() {
-        viewModel.requestSearch(request: SearchRequest(lat: mapLatitude, long: mapLongitude)) { [weak self] error in
+        viewModel.requestSearch() { [weak self] error in
             guard let vc = self else { return }
             
             if let error = error {
@@ -169,6 +166,11 @@ extension StudyViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
         
+        collectionView.rx.didScroll
+            .asSignal()
+            .emit(to: searchBar.rx.endEditing)
+            .disposed(by: disposeBag)
+        
         searchBar.rx.searchButtonClicked
             .asSignal()
             .emit(to: searchBar.rx.endEditing)
@@ -196,12 +198,12 @@ extension StudyViewController: BaseViewControllerAttribute {
         searchButton.rx.tap
             .withUnretained(self)
             .bind(onNext: { vc, _ in
-                vc.viewModel.requestQueue(request: QueueRequest(lat: vc.mapLatitude, long: vc.mapLongitude, studyList: vc.viewModel.selectedRelay.value)) { statusCode in
+                vc.viewModel.requestQueue() { statusCode in
                     if statusCode == 200 {
                         // 서버 통신 후 200이 왔을 때 > 화면 전환
                         let viewController = SearchSesacViewController()
-                        viewController.mapLatitude = vc.mapLatitude
-                        viewController.mapLongitude = vc.mapLongitude
+                        viewController.mapLatitude = vc.viewModel.mapLatitude.value
+                        viewController.mapLongitude = vc.viewModel.mapLongitude.value
                         vc.navigationController?.pushViewController(viewController, animated: true)
                     } else if statusCode == 201 {
                         vc.showToast(message: "신고가 누적되어 이용하실 수 없습니다.")

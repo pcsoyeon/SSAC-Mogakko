@@ -23,9 +23,13 @@ final class StudyViewModel {
     
     var snapshotList = BehaviorRelay<[[String]]>(value: [])
     
+    var mapLatitude = BehaviorRelay<Double>(value: 0.0)
+    var mapLongitude = BehaviorRelay<Double>(value: 0.0)
+    
     // MARK: - Method
     
-    func requestSearch(request: SearchRequest, completionHandler: @escaping (APIError?) -> Void) {
+    func requestSearch(completionHandler: @escaping (APIError?) -> Void) {
+        let request = SearchRequest(lat: mapLatitude.value, long: mapLongitude.value)
         GenericAPI.shared.requestDecodableData(type: SearchResponse.self, router: QueueRouter.search(request: request)) { [weak self] response in
             guard let self = self else { return }
             
@@ -55,7 +59,15 @@ final class StudyViewModel {
         }
     }
     
-    func requestQueue(request: QueueRequest, completionHandler: @escaping (Int) -> Void) {
+    func requestQueue(completionHandler: @escaping (Int) -> Void) {
+        
+        var request = QueueRequest(lat: 0.0, long: 0.0, studyList: [])
+        if selectedRelay.value.isEmpty {
+            request = QueueRequest(lat: mapLatitude.value, long: mapLongitude.value, studyList: ["anything"])
+        } else {
+            request = QueueRequest(lat: mapLatitude.value, long: mapLongitude.value, studyList: selectedRelay.value)
+        }
+        
         QueueAPI.shared.requestQueue(request: request) { statusCode in
             completionHandler(statusCode)
         }

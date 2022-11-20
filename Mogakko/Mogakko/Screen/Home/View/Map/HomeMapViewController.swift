@@ -85,13 +85,13 @@ final class HomeMapViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
         networkMoniter()
+        bind()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAttribute()
         configureHierarchy()
-        bind()
         
         setLocation()
         setMapView()
@@ -281,8 +281,8 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             .bind { vc, _ in
                 if vc.floatingButton.type == .plain {
                     let viewController = StudyViewController()
-                    viewController.mapLatitude = vc.mapLatitude
-                    viewController.mapLongitude = vc.mapLongitude
+                    viewController.viewModel.mapLatitude.accept(vc.mapLatitude)
+                    viewController.viewModel.mapLongitude.accept(vc.mapLongitude)
                     vc.navigationController?.pushViewController(viewController, animated: true)
                 } else if vc.floatingButton.type == .matching {
                     // 매칭중
@@ -320,6 +320,10 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                 mapView.addAnnotation(queueAnnotation)
             }
         }
+    }
+    
+    private func requestMyState() {
+        
     }
 }
 
