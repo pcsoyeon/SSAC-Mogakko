@@ -42,21 +42,19 @@ final class SearchSesacViewController: UIViewController {
     }
     
     private lazy var indicatorView = UIView().then {
-        $0.addSubviews(fromTitleLabel, requestedTitleLabel, underLineView, indicatorLine)
+        $0.addSubviews(fromTitleButton, requestedTitleButton, underLineView, indicatorLine)
     }
     
-    private var fromTitleLabel = UILabel().then {
-        $0.text = "주변 새싹"
-        $0.textColor = .green
-        $0.textAlignment = .center
-        $0.font = MDSFont.Title3_M14.font
+    private var fromTitleButton = UIButton().then {
+        $0.setTitle("주변 새싹", for: .normal)
+        $0.setTitleColor(.green, for: .normal)
+        $0.titleLabel?.font = MDSFont.Title3_M14.font
     }
     
-    private var requestedTitleLabel = UILabel().then {
-        $0.text = "받은 요청"
-        $0.textColor = .gray6
-        $0.textAlignment = .center
-        $0.font = MDSFont.Title4_R14.font
+    private var requestedTitleButton = UIButton().then {
+        $0.setTitle("받은 요청", for: .normal)
+        $0.setTitleColor(.gray6, for: .normal)
+        $0.titleLabel?.font = MDSFont.Title4_R14.font
     }
     
     private var indicatorLine = UIView().then {
@@ -115,12 +113,12 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             make.height.equalTo(43)
         }
         
-        fromTitleLabel.snp.makeConstraints { make in
+        fromTitleButton.snp.makeConstraints { make in
             make.leading.centerY.equalToSuperview()
             make.width.equalTo(view.frame.width / 2)
         }
         
-        requestedTitleLabel.snp.makeConstraints { make in
+        requestedTitleButton.snp.makeConstraints { make in
             make.trailing.centerY.equalToSuperview()
             make.width.equalTo(view.frame.width / 2)
         }
@@ -191,25 +189,48 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             .bind { [weak self] index in
                 guard let self = self else { return }
                 if index == 0 {
-                    self.indicatorLine.snp.updateConstraints { make in
-                        make.leading.equalToSuperview()
-                    }
-                    
-                    self.fromTitleLabel.textColor = .green
-                    self.fromTitleLabel.font = MDSFont.Title3_M14.font
-                    self.requestedTitleLabel.textColor = .gray6
-                    self.requestedTitleLabel.font = MDSFont.Title4_R14.font
+                    self.highlightedFromTitle()
                 } else {
-                    self.indicatorLine.snp.updateConstraints { make in
-                        make.leading.equalToSuperview().inset(self.view.frame.width / 2)
-                    }
-                    
-                    self.fromTitleLabel.textColor = .gray6
-                    self.fromTitleLabel.font = MDSFont.Title4_R14.font
-                    self.requestedTitleLabel.textColor = .green
-                    self.requestedTitleLabel.font = MDSFont.Title3_M14.font
+                    self.highlightedRequestTitle()
                 }
             }
             .disposed(by: disposeBag)
+        
+        fromTitleButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        requestedTitleButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.scrollView.setContentOffset(CGPoint(x: vc.scrollView.frame.width, y: 0), animated: true)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func highlightedFromTitle() {
+        indicatorLine.snp.updateConstraints { make in
+            make.leading.equalToSuperview()
+        }
+        
+        fromTitleButton.setTitleColor(.green, for: .normal)
+        fromTitleButton.titleLabel?.font = MDSFont.Title3_M14.font
+
+        requestedTitleButton.setTitleColor(.gray6, for: .normal)
+        requestedTitleButton.titleLabel?.font = MDSFont.Title4_R14.font
+    }
+    
+    private func highlightedRequestTitle() {
+        indicatorLine.snp.updateConstraints { make in
+            make.leading.equalToSuperview().inset(self.view.frame.width / 2)
+        }
+        
+        fromTitleButton.setTitleColor(.gray6, for: .normal)
+        fromTitleButton.titleLabel?.font = MDSFont.Title4_R14.font
+        requestedTitleButton.setTitleColor(.green, for: .normal)
+        requestedTitleButton.titleLabel?.font = MDSFont.Title3_M14.font
     }
 }

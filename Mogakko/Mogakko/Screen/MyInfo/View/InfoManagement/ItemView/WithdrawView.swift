@@ -16,7 +16,7 @@ final class WithdrawView: BaseView {
     
     var item: InfoManagementItem? {
         didSet {
-            guard let item = item as? WithdrawView else { return }
+            guard let item = item as? WithdrawItem else { return }
         }
     }
     
