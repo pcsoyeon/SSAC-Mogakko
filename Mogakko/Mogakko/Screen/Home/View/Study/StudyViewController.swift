@@ -196,11 +196,7 @@ extension StudyViewController: BaseViewControllerAttribute {
         searchButton.rx.tap
             .withUnretained(self)
             .bind(onNext: { vc, _ in
-                // TODO: - 서버 통신
-                
                 vc.viewModel.requestQueue(request: QueueRequest(lat: vc.mapLatitude, long: vc.mapLongitude, studyList: vc.viewModel.selectedRelay.value)) { statusCode in
-                    print("==================== 스터디 찾기 \(statusCode) ====================")
-                    
                     if statusCode == 200 {
                         // 서버 통신 후 200이 왔을 때 > 화면 전환
                         let viewController = SearchSesacViewController()

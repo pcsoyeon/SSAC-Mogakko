@@ -7,7 +7,6 @@
 
 import Foundation
 
-import Alamofire
 import RxCocoa
 import RxSwift
 
@@ -57,20 +56,9 @@ final class StudyViewModel {
     }
     
     func requestQueue(request: QueueRequest, completionHandler: @escaping (Int) -> Void) {
-        AF.request(QueueRouter.queue(request: request))
-            .validate(statusCode: 200...500)
-            .responseData { response in
-                switch response.result {
-                    
-                case .success(_):
-                    guard let statusCode = response.response?.statusCode else { return }
-                    completionHandler(statusCode)
-                    
-                case .failure(_):
-                    guard let statusCode = response.response?.statusCode else { return }
-                    completionHandler(statusCode)
-                }
-            }
+        QueueAPI.shared.requestQueue(request: request) { statusCode in
+            completionHandler(statusCode)
+        }
     }
     
     func removeDuplicate (_ array: [String]) -> [String] {
