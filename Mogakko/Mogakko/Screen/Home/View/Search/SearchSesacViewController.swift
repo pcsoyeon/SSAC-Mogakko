@@ -170,7 +170,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             .bind { vc, list in
                 print("============ 주변 새싹 ============")
                 dump(list)
-                vc.fromQueueView.list.accept(list)
+                vc.fromQueueView.list = list
             }
             .disposed(by: disposeBag)
         

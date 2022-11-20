@@ -26,7 +26,11 @@ final class FromQueueView: BaseView {
         }
     }
     
-    var list = BehaviorRelay<[FromQueue]>(value: [])
+    var list: [FromQueue] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     private let disposeBag = DisposeBag()
     
@@ -46,51 +50,31 @@ final class FromQueueView: BaseView {
     }
     
     func bind() {
-        tableView.register(QueueTableViewCell.self, forCellReuseIdentifier: QueueTableViewCell.reuseIdentifier)
+        tableView.register(CardTableViewCell.self, forCellReuseIdentifier: CardTableViewCell.reuseIdentifier)
         
-        list.bind(to: tableView.rx.items) { (tableView: UITableView, index: Int, element: FromQueue) -> UITableViewCell in
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: QueueTableViewCell.reuseIdentifier) as? QueueTableViewCell else { return UITableViewCell() }
-            cell.queue = element
-            return cell
-        }
-        .disposed(by: disposeBag)
-        
-        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         
-        tableView.rx.itemSelected
-            .bind { indexPath in
-                guard let cell = self.tableView.dequeueReusableCell(withIdentifier: QueueTableViewCell.reuseIdentifier) as? QueueTableViewCell else { return }
-                cell.cardView.touchUpExpandButton.toggle()
-                self.tableView.reloadRows(at: [IndexPath(item: indexPath.item, section: 0)], with: .fade)
-            }
-            .disposed(by: disposeBag)
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 }
 
-final class QueueTableViewCell: BaseTableViewCell {
-    
-    var cardView = CardView().then {
-        $0.type = .plain
-        $0.touchUpExpandButton = false
+extension FromQueueView: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return list.count
     }
     
-    var queue: FromQueue = FromQueue(uid: "", nick: "", lat: 0, long: 0, reputation: [], studylist: [], reviews: [], gender: 0, type: 0, sesac: 0, background: 0) {
-        didSet {
-            cardView.imageItem = ImageItem(background: queue.background, sesac: queue.sesac)
-            cardView.cardItem = CardItem(nickname: queue.nick, reputation: queue.reputation, comment: queue.reviews)
-        }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier, for: indexPath) as? CardTableViewCell else { return UITableViewCell() }
+        cell.queue = list[indexPath.row]
+        cell.isExpanded = true
+        return cell
     }
     
-    override func configureAttribute() {
-        contentView.addSubview(cardView)
-        contentView.backgroundColor = .white
-    }
-    
-    override func configureHierarchy() {
-        contentView.addSubview(cardView)
-        cardView.snp.makeConstraints { make in
-            make.verticalEdges.horizontalEdges.equalToSuperview()
-        }
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        guard let cell = tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier, for: indexPath) as? CardTableViewCell else { return }
+//        cell.isExpanded.toggle()
+//        tableView.reloadRows(at: [IndexPath(row: indexPath.row, section: 0)], with: .automatic)
+//    }
 }

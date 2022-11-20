@@ -10,22 +10,28 @@ import UIKit
 import SnapKit
 import Then
 
-@frozen
-enum CardViewType {
-    case plain
-    case info
-}
-
 final class CardView: BaseView {
     
     // MARK: - Property
     
-    var type: CardViewType = .info {
+    var isMyInfo: Bool = false
+    
+    var isExpanded: Bool = false {
         didSet {
-            if type == .info {
-                setInfoLayout()
+            if isExpanded {
+                if isMyInfo {
+                    titleView.isHidden = false
+                    reviewView.isHidden = false
+                    studyView.isHidden = true
+                } else {
+                    titleView.isHidden = false
+                    reviewView.isHidden = false
+                    studyView.isHidden = false
+                }
             } else {
-                setPlainLayout()
+                titleView.isHidden = true
+                reviewView.isHidden = true
+                studyView.isHidden = true
             }
         }
     }
@@ -48,85 +54,89 @@ final class CardView: BaseView {
                 reviewContentLabel.textColor = .gray6
             } else if item.comment.count == 1 {
                 reviewContentLabel.text = item.comment[0]
+                reviewContentLabel.textColor = .black
             } else {
                 reviewContentLabel.text = item.comment[0]
+                reviewContentLabel.textColor = .black
                 moreButton.isHidden = false
             }
             
-            reputation = item.reputation
-        }
-    }
-    
-    var touchUpExpandButton: Bool = false {
-        didSet {
-            if touchUpExpandButton {
-                
-                if type == .info {
-                    let labelHeight = reviewContentLabel.countCurrentLines() * 24
-                    
-                    snp.updateConstraints { make in
-                        make.height.equalTo(194 + 270 + labelHeight + 16 + 10)
-                    }
-                } else {
-                    let labelHeight = reviewContentLabel.countCurrentLines() * 24
-                    
-                    snp.updateConstraints { make in
-                        make.height.equalTo(194 + 270 + 400 + labelHeight + 16 + 10)
-                    }
-                }
-                
-                expandButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-            } else {
-                snp.updateConstraints { make in
-                    make.height.equalTo(194 + 58 + 16)
-                }
-                
-                expandButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            reviewView.snp.updateConstraints { make in
+                make.height.equalTo(24 + 18 + 16 + (reviewContentLabel.countCurrentLines() * 24) + 16)
             }
-        }
-    }
-    
-    private var reputation: [Int] = Array(repeating: 0, count: 6) {
-        didSet {
-            collectionView.reloadData()
+            
+            for i in 0...5 {
+                reputation.append(item.reputation[i])
+            }
+            if let studyList = item.studyList {
+                self.studyList = studyList
+            }
+            
+            studyCollectionView.snp.updateConstraints { make in
+                make.height.equalTo(studyList.count / 2 * 32)
+            }
         }
     }
     
     private var reputationTitle: [String] = ["좋은 매너", "정확한 시간 약속", "빠른 응답", "친절한 성격", "능숙한 실력", "유익한 시간"]
+    private var reputation: [Int] = Array(repeating: 0, count: 6) {
+        didSet {
+            titleCollectionView.reloadData()
+        }
+    }
+    
+    private var studyList: [String] = [] {
+        didSet {
+            studyCollectionView.reloadData()
+        }
+    }
     
     // MARK: - UI Property
     
-    private let backgroundImageView = UIImageView().then {
-        $0.makeRound()
+    private lazy var stackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.distribution = .equalSpacing
+        $0.alignment = .fill
+        $0.spacing = 0
+        $0.addArrangedSubviews(backgroundImageView, infoStackView)
     }
     
+    private let backgroundImageView = UIImageView().then {
+        $0.clipsToBounds = true
+        $0.makeRound()
+    }
     private let sesacImageView = UIImageView()
     
+    private lazy var infoStackView = UIStackView().then {
+        $0.clipsToBounds = true
+        $0.makeRound()
+        $0.layer.borderColor = UIColor.gray3.cgColor
+        $0.layer.borderWidth = 1
+        $0.addArrangedSubviews(nicknameView, titleView, studyView, reviewView)
+        $0.axis = .vertical
+        $0.distribution = .equalSpacing
+        $0.alignment = .fill
+        $0.spacing = 0
+    }
+    
+    private let nicknameView = UIView()
     private let nicknameLabel = UILabel().then {
         $0.text = ""
         $0.textColor = .black
         $0.font = MDSFont.Title1_M16.font
     }
-    
     var expandButton = UIButton().then {
         $0.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         $0.tintColor = .black
     }
     
-    private lazy var backView = UIView().then {
-        $0.clipsToBounds = true
-        $0.makeRound()
-        $0.layer.borderColor = UIColor.gray3.cgColor
-        $0.layer.borderWidth = 1
-    }
-    
+    private var titleView = UIView()
     private var titleLabel = UILabel().then {
         $0.text = "새싹 타이틀"
         $0.textColor = .black
         $0.font = MDSFont.Title6_R12.font
     }
-    
-    private lazy var collectionView: UICollectionView = {
+    private lazy var titleCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
@@ -135,61 +145,65 @@ final class CardView: BaseView {
         collectionView.backgroundColor = .white
         collectionView.isScrollEnabled = false
         
-        collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.reuseIdentifier)
-        collectionView.dataSource = self
-        collectionView.delegate = self
         return collectionView
     }()
     
+    private let studyView = UIView()
+    private var studyLabel = UILabel().then {
+        $0.text = "하고 싶은 스터디"
+        $0.textColor = .black
+        $0.font = MDSFont.Title6_R12.font
+    }
+    private lazy var studyCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.isScrollEnabled = false
+
+        return collectionView
+    }()
+    
+    private var reviewView = UIView()
     private var reviewLabel = UILabel().then {
         $0.text = "새싹 리뷰"
         $0.textColor = .black
         $0.font = MDSFont.Title6_R12.font
     }
-    
     private var reviewContentLabel = UILabel().then {
         $0.text = "첫 리뷰를 기다리는 중이에요!"
         $0.textColor = .gray6
         $0.font = MDSFont.Body3_R14.font
         $0.numberOfLines = 0
     }
-    
     private var moreButton = UIButton().then {
         $0.setImage(Constant.Image.moreArrow, for: .normal)
         $0.isHidden = true
     }
     
-    private var studyLabel = UILabel().then {
-        $0.text = "하고 싶은 스터디"
-        $0.textColor = .black
-        $0.font = MDSFont.Title6_R12.font
-    }
-    
-    private lazy var studyCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-                
-        collectionView.backgroundColor = .green
-        collectionView.isScrollEnabled = false
-
-        return collectionView
-    }()
-    
     // MARK: - UI Method
     
     override func configureAttribute() {
         backgroundColor = .white
+        
+        titleCollectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.reuseIdentifier)
+        titleCollectionView.dataSource = self
+        titleCollectionView.delegate = self
+        
+        studyCollectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.reuseIdentifier)
+        studyCollectionView.dataSource = self
+        studyCollectionView.delegate = self
     }
     
     override func configureHierarchy() {
-        addSubviews(backgroundImageView, backView)
+        addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.horizontalEdges.verticalEdges.equalToSuperview().inset(Metric.margin)
+        }
+        
         backgroundImageView.addSubview(sesacImageView)
         
         backgroundImageView.snp.makeConstraints { make in
-            make.top.equalTo(Metric.margin)
-            make.horizontalEdges.equalToSuperview().inset(Metric.margin)
             make.height.equalTo(194)
         }
         
@@ -199,107 +213,62 @@ final class CardView: BaseView {
             make.centerX.equalToSuperview()
         }
         
-        backView.snp.makeConstraints { make in
-            make.top.equalTo(backgroundImageView.snp.bottom)
-            make.bottom.equalToSuperview()
+        nicknameView.addSubviews(nicknameLabel, expandButton)
+        nicknameView.snp.makeConstraints { make in
+            make.height.equalTo(58)
+        }
+        nicknameLabel.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().inset(16)
+            make.height.equalTo(26)
+        }
+        expandButton.snp.makeConstraints { make in
+            make.width.height.equalTo(16)
+            make.trailing.equalToSuperview().inset(16)
+            make.centerY.equalTo(nicknameLabel.snp.centerY)
+        }
+        
+        titleView.addSubviews(titleLabel, titleCollectionView)
+        titleView.snp.makeConstraints { make in
+            make.height.equalTo(170)
+        }
+        titleLabel.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().inset(16)
+            make.height.equalTo(18)
+        }
+        titleCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
+            make.horizontalEdges.equalToSuperview().inset(16)
+            make.height.equalTo(112)
+        }
+        
+        studyView.addSubviews(studyLabel, studyCollectionView)
+        studyView.snp.makeConstraints { make in
+            make.height.equalTo(90)
+        }
+        studyLabel.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().inset(16)
+            make.height.equalTo(18)
+        }
+        studyCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(studyLabel.snp.bottom).offset(16)
+            make.horizontalEdges.equalToSuperview().inset(16)
+            make.height.equalTo(32)
+        }
+        
+        reviewView.addSubviews(reviewLabel, reviewContentLabel)
+        reviewView.snp.makeConstraints { make in
+            make.height.equalTo(24 + 18 + 16 + (reviewContentLabel.countCurrentLines() * 24) + 16)
+        }
+        reviewLabel.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().inset(16)
+        }
+        reviewContentLabel.snp.makeConstraints { make in
+            make.top.equalTo(reviewLabel.snp.bottom).offset(16)
             make.horizontalEdges.equalToSuperview().inset(16)
         }
     }
     
-    private func setInfoLayout() {
-        backView.addSubviews(nicknameLabel, expandButton, titleLabel, collectionView, reviewLabel, moreButton, reviewContentLabel)
-        
-        nicknameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(16)
-            make.leading.equalToSuperview().inset(Metric.margin)
-            make.height.equalTo(26)
-        }
-        
-        expandButton.snp.makeConstraints { make in
-            make.width.height.equalTo(26)
-            make.centerY.equalTo(nicknameLabel.snp.centerY)
-            make.trailing.equalToSuperview().inset(26)
-        }
-        
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(nicknameLabel.snp.bottom).offset(24)
-            make.horizontalEdges.equalToSuperview().inset(Metric.margin)
-        }
-        
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(16)
-            make.horizontalEdges.equalToSuperview().inset(Metric.margin)
-            make.height.equalTo(112)
-        }
-        
-        reviewLabel.snp.makeConstraints { make in
-            make.top.equalTo(collectionView.snp.bottom).offset(24)
-            make.leading.equalToSuperview().inset(Metric.margin)
-        }
-        
-        moreButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(Metric.margin)
-            make.centerY.equalTo(reviewLabel.snp.centerY)
-        }
-        
-        reviewContentLabel.snp.makeConstraints { make in
-            make.top.equalTo(reviewLabel.snp.bottom).offset(16)
-            make.horizontalEdges.bottom.equalToSuperview().inset(Metric.margin)
-        }
-    }
     
-    private func setPlainLayout() {
-        backView.addSubviews(nicknameLabel, expandButton, titleLabel, collectionView, studyLabel, studyCollectionView, reviewLabel, moreButton, reviewContentLabel)
-        
-        nicknameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(16)
-            make.leading.equalToSuperview().inset(Metric.margin)
-            make.height.equalTo(26)
-        }
-        
-        expandButton.snp.makeConstraints { make in
-            make.width.height.equalTo(26)
-            make.centerY.equalTo(nicknameLabel.snp.centerY)
-            make.trailing.equalToSuperview().inset(26)
-        }
-        
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(nicknameLabel.snp.bottom).offset(24)
-            make.horizontalEdges.equalToSuperview().inset(Metric.margin)
-        }
-        
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(16)
-            make.horizontalEdges.equalToSuperview().inset(Metric.margin)
-            make.height.equalTo(112)
-        }
-        
-        studyLabel.snp.makeConstraints { make in
-            make.top.equalTo(collectionView.snp.bottom).offset(24)
-            make.leading.equalToSuperview().inset(Metric.margin)
-        }
-        
-        studyCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(studyLabel.snp.bottom).offset(16)
-            make.horizontalEdges.equalToSuperview().inset(Metric.margin)
-            make.height.equalTo(112)
-        }
-        
-        reviewLabel.snp.makeConstraints { make in
-            make.top.equalTo(studyCollectionView.snp.bottom).offset(24)
-            make.leading.equalToSuperview().inset(Metric.margin)
-        }
-        
-        moreButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(Metric.margin)
-            make.top.equalTo(studyCollectionView.snp.bottom).offset(24)
-        }
-        
-        reviewContentLabel.snp.makeConstraints { make in
-            make.top.equalTo(reviewLabel.snp.bottom).offset(16)
-            make.horizontalEdges.bottom.equalToSuperview().inset(Metric.margin)
-        }
-    }
 }
 
 // MARK: - UICollectionView
@@ -322,13 +291,25 @@ extension CardView: UICollectionViewDelegateFlowLayout {
 
 extension CardView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return reputationTitle.count
+        if collectionView == titleCollectionView {
+            return reputationTitle.count
+        } else {
+            return studyList.count
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.reuseIdentifier, for: indexPath) as? TitleCollectionViewCell else { return UICollectionViewCell() }
-        cell.isSelected = reputation[indexPath.row] > 0 ? true : false
-        cell.title = reputationTitle[indexPath.row]
-        return cell
+        if collectionView == titleCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.reuseIdentifier, for: indexPath) as? TitleCollectionViewCell else { return UICollectionViewCell() }
+            cell.isSelected = reputation[indexPath.row] > 0 ? true : false
+            cell.title = reputationTitle[indexPath.row]
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.reuseIdentifier, for: indexPath) as? TitleCollectionViewCell else { return UICollectionViewCell() }
+            cell.isSelected = false
+            cell.title = studyList[indexPath.row]
+            return cell
+        }
     }
 }

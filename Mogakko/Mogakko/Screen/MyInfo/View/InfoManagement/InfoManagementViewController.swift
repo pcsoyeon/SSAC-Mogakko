@@ -42,8 +42,8 @@ final class InfoManagementViewController: UIViewController {
     }
     
     private var cardView = CardView().then {
-        $0.type = .info
-        $0.touchUpExpandButton = false
+        $0.isExpanded = false
+        $0.isMyInfo = true
     }
     private var genderView = GenderView()
     private var studyView = StudyView()
@@ -145,7 +145,7 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
         output.expandButtonTap
             .drive { [weak self] _ in
                 guard let self = self else { return }
-                self.cardView.touchUpExpandButton.toggle()
+                self.cardView.isExpanded.toggle()
             }
             .disposed(by: disposeBag)
         

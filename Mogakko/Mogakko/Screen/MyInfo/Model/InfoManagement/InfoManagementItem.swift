@@ -50,11 +50,13 @@ class CardItem: InfoManagementItem {
     var nickname: String
     var reputation: [Int]
     var comment: [String]
+    var studyList: [String]?
     
-    init(nickname: String, reputation: [Int], comment: [String]) {
+    init(nickname: String, reputation: [Int], comment: [String], studyList: [String]? = nil) {
         self.nickname = nickname
         self.comment = comment
         self.reputation = reputation
+        self.studyList = studyList
     }
 }
 
