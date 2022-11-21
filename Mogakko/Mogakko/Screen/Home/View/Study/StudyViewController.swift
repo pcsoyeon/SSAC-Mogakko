@@ -39,7 +39,7 @@ final class StudyViewController: UIViewController {
     
     // MARK: - Property
     
-    private var dataSource: UICollectionViewDiffableDataSource<Int, String>!
+    private var dataSource: UICollectionViewDiffableDataSource<Int, Item>!
     static let sectionHeaderElementKind = "section-header-element-kind"
     
     var viewModel = StudyViewModel()
@@ -125,11 +125,11 @@ extension StudyViewController: BaseViewControllerAttribute {
             }
         }
         
-        viewModel.nearby
+        viewModel.nearbyRelay
             .withUnretained(self)
             .bind { vc, list in
                 print(list)
-                var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+                var snapshot = NSDiffableDataSourceSnapshot<Int, Item>()
                 
                 snapshot.appendSections([0, 1])
                 snapshot.appendItems(list, toSection: 0)
@@ -178,16 +178,14 @@ extension StudyViewController: BaseViewControllerAttribute {
                 if text.count < 1 || text.count > 8 {
                     vc.showToast(message: "최소 한 자 이상, 최대 8글자까지 작성 가능합니다")
                 } else {
-                    // 내가 하고 싶은 스터디에 추가
-                    // 공백 기준으로 구분
                     text.components(separatedBy: " ").forEach {
-                        if vc.viewModel.selectedList.contains($0) {
-                            // 만약 이미 추가된 요소라면?
-                            vc.showToast(message: "이미 등록된 스터디입니다")
-                        } else {
-                            vc.viewModel.appendSelectedList($0)
+                        vc.viewModel.appendWantToDoList($0) { isAppended in
+                            if !isAppended {
+                                vc.showToast(message: "이미 등록된 스터디입니다")
+                            }
                         }
                     }
+                    
                 }
             })
             .disposed(by: disposeBag)
@@ -225,14 +223,14 @@ extension StudyViewController: BaseViewControllerAttribute {
             })
             .disposed(by: disposeBag)
 
-        viewModel.selectedRelay
+        viewModel.wantToDoRelay
             .withUnretained(self)
             .bind { vc, selectedList in
                 if selectedList.count > 9 {
                     vc.showToast(message: "스터디를 더 이상 추가할 수 없습니다")
                 } else {
                     vc.viewModel.makeSnapshot { sectionList in
-                        var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+                        var snapshot = NSDiffableDataSourceSnapshot<Int, Item>()
                         
                         snapshot.appendSections([0, 1])
                         
@@ -253,12 +251,14 @@ extension StudyViewController: BaseViewControllerAttribute {
                 let section = indexPath.0
                 let item = indexPath.1
                 
-                // TODO: - 0번째 선택하면 -> 1번째 섹션의 아이템에 추가 
                 if section == 0 {
-                    print("=============== 💨 0번째 Section - ", item)
-                    
+                    let study = vc.viewModel.nearbyRelay.value[item].study
+                    vc.viewModel.appendWantToDoList(study) { isAppended in
+                        if !isAppended {
+                            vc.showToast(message: "이미 등록된 스터디입니다")
+                        }
+                    }
                 } else {
-                    print("=============== 💨 1번째 Section - ", item)
                     vc.viewModel.removeSelectedList(item)
                 }
             }
@@ -299,7 +299,7 @@ extension StudyViewController {
     }
     
     private func configureDataSource() {
-        let studyCellRegistration = UICollectionView.CellRegistration<StudyCollectionViewCell, String>.init { cell, indexPath, itemIdentifier in
+        let studyCellRegistration = UICollectionView.CellRegistration<StudyCollectionViewCell, Item>.init { cell, indexPath, itemIdentifier in
             
             if indexPath.row < 4 {
                 cell.type = .recommend
@@ -307,12 +307,12 @@ extension StudyViewController {
                 cell.type = .nearby
             }
             
-            cell.title = itemIdentifier
+            cell.title = itemIdentifier.study
         }
         
-        let myStudyCellRegistration = UICollectionView.CellRegistration<MyStudyCollectionViewCell, String>.init { cell, indexPath, itemIdentifier in
+        let myStudyCellRegistration = UICollectionView.CellRegistration<MyStudyCollectionViewCell, Item>.init { cell, indexPath, itemIdentifier in
             cell.type = .wantToDo
-            cell.title = itemIdentifier
+            cell.title = itemIdentifier.study
         }
         
         let headerRegistration = UICollectionView.SupplementaryRegistration<StudyHeaderView>(elementKind: StudyViewController.sectionHeaderElementKind) { (supplementaryView, string, indexPath) in
