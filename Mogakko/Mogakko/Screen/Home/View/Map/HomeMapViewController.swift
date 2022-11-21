@@ -85,13 +85,14 @@ final class HomeMapViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
         networkMoniter()
-        bind()
+        requestMyState()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAttribute()
         configureHierarchy()
+        bind()
         
         setLocation()
         setMapView()
@@ -248,34 +249,6 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
         
-        viewModel.requestMyState { [weak self] response, error in
-            guard let vc = self else { return }
-            
-            if let error = error {
-                switch error {
-                case .takenUser, .invalidNickname:
-                    vc.floatingButton.type = .plain
-                case .invalidAuthorization:
-                    vc.showToast(message: error.errorDescription ?? "")
-                case .unsubscribedUser:
-                    vc.showToast(message: error.errorDescription ?? "")
-                case .serverError:
-                    vc.showToast(message: error.errorDescription ?? "")
-                case .emptyParameters:
-                    vc.showToast(message: error.errorDescription ?? "")
-                }
-            }
-            
-            if let response = response {
-                if response.matched == 0 {
-                    // 매칭 대기중
-                    vc.floatingButton.type = .matching
-                } else {
-                    vc.floatingButton.type = .matched
-                }
-            }
-        }
-        
         floatingButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
@@ -323,7 +296,33 @@ extension HomeMapViewController: BaseViewControllerAttribute {
     }
     
     private func requestMyState() {
-        
+        viewModel.requestMyState { [weak self] response, error in
+            guard let vc = self else { return }
+            
+            if let error = error {
+                switch error {
+                case .takenUser, .invalidNickname:
+                    vc.floatingButton.type = .plain
+                case .invalidAuthorization:
+                    vc.showToast(message: error.errorDescription ?? "")
+                case .unsubscribedUser:
+                    vc.showToast(message: error.errorDescription ?? "")
+                case .serverError:
+                    vc.showToast(message: error.errorDescription ?? "")
+                case .emptyParameters:
+                    vc.showToast(message: error.errorDescription ?? "")
+                }
+            }
+            
+            if let response = response {
+                if response.matched == 0 {
+                    // 매칭 대기중
+                    vc.floatingButton.type = .matching
+                } else {
+                    vc.floatingButton.type = .matched
+                }
+            }
+        }
     }
 }
 

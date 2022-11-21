@@ -139,9 +139,6 @@ extension StudyViewController: BaseViewControllerAttribute {
         
         
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification)
-            .map { notification in
-                
-            }
             .withUnretained(self)
             .bind { vc, _ in
                 vc.searchButton.makeRound(radius: 0)
@@ -153,9 +150,6 @@ extension StudyViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification)
-            .map { notification in
-                
-            }
             .withUnretained(self)
             .bind { vc, _ in
                 vc.searchButton.makeRound(radius: 8)
@@ -185,17 +179,21 @@ extension StudyViewController: BaseViewControllerAttribute {
                     vc.showToast(message: "최소 한 자 이상, 최대 8글자까지 작성 가능합니다")
                 } else {
                     // 내가 하고 싶은 스터디에 추가
-                    if vc.viewModel.selectedList.contains(text) {
-                        // 만약 이미 추가된 요소라면?
-                        vc.showToast(message: "이미 등록된 스터디입니다")
-                    } else {
-                        vc.viewModel.appendSelectedList(text)
+                    // 공백 기준으로 구분
+                    text.components(separatedBy: " ").forEach {
+                        if vc.viewModel.selectedList.contains($0) {
+                            // 만약 이미 추가된 요소라면?
+                            vc.showToast(message: "이미 등록된 스터디입니다")
+                        } else {
+                            vc.viewModel.appendSelectedList($0)
+                        }
                     }
                 }
             })
             .disposed(by: disposeBag)
         
         searchButton.rx.tap
+            .throttle(.seconds(3), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .bind(onNext: { vc, _ in
                 vc.viewModel.requestQueue() { statusCode in
@@ -205,6 +203,7 @@ extension StudyViewController: BaseViewControllerAttribute {
                         viewController.mapLatitude = vc.viewModel.mapLatitude.value
                         viewController.mapLongitude = vc.viewModel.mapLongitude.value
                         vc.navigationController?.pushViewController(viewController, animated: true)
+                        
                     } else if statusCode == 201 {
                         vc.showToast(message: "신고가 누적되어 이용하실 수 없습니다.")
                     } else if statusCode == 203 {

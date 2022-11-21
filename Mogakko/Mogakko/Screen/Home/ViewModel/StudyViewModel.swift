@@ -85,7 +85,6 @@ final class StudyViewModel {
     
     func appendSelectedList(_ study: String) {
         selectedList.append(study)
-        
         selectedRelay.accept(selectedList)
     }
     
@@ -95,7 +94,6 @@ final class StudyViewModel {
     }
     
     func makeSnapshot(completionHandler: @escaping ([[String]]) -> Void) {
-        
         completionHandler([nearby.value, selectedList])
     }
 }
