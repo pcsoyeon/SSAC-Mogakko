@@ -22,6 +22,7 @@ final class HomeMapViewModel {
     var fromRequestedQueue = BehaviorRelay<[FromQueue]>(value: [])
     var recommend = BehaviorRelay<[String]>(value: [])
     
+    var totalQueue = BehaviorRelay<[FromQueue]>(value: [])
     var manQueue = BehaviorRelay<[FromQueue]>(value: [])
     var womanQueue = BehaviorRelay<[FromQueue]>(value: [])
     

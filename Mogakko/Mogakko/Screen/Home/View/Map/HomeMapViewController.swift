@@ -85,7 +85,9 @@ final class HomeMapViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
         networkMoniter()
+        
         requestMyState()
+        requestSearch()
     }
     
     override func viewDidLoad() {
@@ -93,9 +95,6 @@ final class HomeMapViewController: UIViewController {
         configureAttribute()
         configureHierarchy()
         bind()
-        
-        setLocation()
-        setMapView()
     }
 }
 
@@ -130,10 +129,31 @@ extension HomeMapViewController: BaseViewControllerAttribute {
     
     func configureAttribute() {
         view.backgroundColor = .white
+        
+        setLocation()
+        setMapView()
+    }
+    
+    private func setLocation() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        
+        locationManager.startUpdatingLocation()
+        locationManager.startMonitoringSignificantLocationChanges()
+        currentLocation = locationManager.location
+    }
+    
+    private func setMapView() {
+        mapView.setRegion(MKCoordinateRegion(center: defaultLocationCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
+        
+        mapView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     func bind() {
         mapView.rx.regionDidChangeAnimated
+            .skip(1)
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .subscribe(onNext: { vc, _ in
@@ -294,7 +314,11 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             }
         }
     }
-    
+}
+
+// MARK: - Network
+
+extension HomeMapViewController {
     private func requestMyState() {
         viewModel.requestMyState { [weak self] response, error in
             guard let vc = self else { return }
@@ -324,36 +348,63 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             }
         }
     }
+    
+    private func requestSearch() {
+        viewModel.requestSearch(request: SearchRequest(lat: mapLatitude, long: mapLongitude)) { [weak self] error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                switch error {
+                case .takenUser, .invalidNickname:
+                    return
+                case .invalidAuthorization:
+                    UserAPI.shared.refreshIdToken { result in
+                        switch result {
+                        case .success(let idtoken):
+                            print("갱신 - ", UserData.idtoken)
+                            GenericAPI.shared.requestDecodableData(type: Login.self, router: UserRouter.refresh(idToken: idtoken)) { response in
+                                switch response {
+                                case .success(let data):
+                                    UserData.nickName = data.nick
+                                    self.requestSearch()
+                                case .failure(_):
+                                    self.showToast(message: "토큰 만료")
+                                }
+                            }
+                            
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            return
+                        }
+                    }
+                    self.showToast(message: "\(String(describing: error.errorDescription))")
+                case .unsubscribedUser:
+                    self.showToast(message: "\(String(describing: error.errorDescription))")
+                case .serverError:
+                    self.showToast(message: "\(String(describing: error.errorDescription))")
+                case .emptyParameters:
+                    self.showToast(message: "\(String(describing: error.errorDescription))")
+                }
+            }
+        }
+    }
 }
 
-// MARK: - Location
+// MARK: - Location Protocol
 
-extension HomeMapViewController {
-    func setLocation() {
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        
-        locationManager.startUpdatingLocation()
-        locationManager.startMonitoringSignificantLocationChanges()
-        currentLocation = locationManager.location
+extension HomeMapViewController: CLLocationManagerDelegate {
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        checkUserLocationServiceAuthorization()
     }
     
-    func setMapView() {
-        mapView.setRegion(MKCoordinateRegion(center: defaultLocationCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
-        
-        mapView.rx
-            .setDelegate(self)
-            .disposed(by: disposeBag)
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkUserLocationServiceAuthorization()
     }
-}
-
-// MARK: - Location Service Authoriztaion
-
-extension HomeMapViewController {
-    func checkUserLocationServiceAuthoriztaion() {
-        let authorizationStatus : CLAuthorizationStatus
-        
-        if #available(iOS 14.0, *){
+    
+    func checkUserLocationServiceAuthorization() {
+        let authorizationStatus: CLAuthorizationStatus
+        if #available(iOS 14, *) {
             authorizationStatus = locationManager.authorizationStatus
         } else {
             authorizationStatus = CLLocationManager.authorizationStatus()
@@ -361,8 +412,6 @@ extension HomeMapViewController {
         
         if CLLocationManager.locationServicesEnabled() {
             checkCurrentLocationAuthorization(authorizationStatus)
-        } else {
-            showToast(message: "iOS 위치 서비스를 켜주세요")
         }
     }
     
@@ -382,30 +431,6 @@ extension HomeMapViewController {
             locationManager.startUpdatingLocation()
         @unknown default:
             print("unknown")
-        }
-    }
-}
-
-extension HomeMapViewController: CLLocationManagerDelegate {
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkUserLocationServicesAuthorization()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        checkUserLocationServicesAuthorization()
-    }
-    
-    func checkUserLocationServicesAuthorization() {
-        let authorizationStatus: CLAuthorizationStatus
-        if #available(iOS 14, *) {
-            authorizationStatus = locationManager.authorizationStatus
-        } else {
-            authorizationStatus = CLLocationManager.authorizationStatus()
-        }
-        
-        if CLLocationManager.locationServicesEnabled() {
-            checkCurrentLocationAuthorization(authorizationStatus)
         }
     }
     
