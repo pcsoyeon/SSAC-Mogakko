@@ -39,6 +39,16 @@ extension Reactive where Base: MKMapView {
         return RxMKMapViewDelegateProxy.proxy(for: self.base)
     }
     
+    private func methodInvokedWithParam1<T>(_ selector: Selector) -> Observable<T> {
+        return delegate
+            .methodInvoked(selector)
+            .map { a in return try castOrThrow(T.self, a[1]) }
+    }
+    
+    private func controlEventWithParam1<T>(_ selector: Selector) -> ControlEvent<T> {
+        return ControlEvent(events: methodInvokedWithParam1(selector))
+    }
+    
     var regionDidChangeAnimated: ControlEvent<Bool> {
         let source = delegate
             .methodInvoked(#selector(MKMapViewDelegate.mapView(_:regionDidChangeAnimated:)))
@@ -81,6 +91,12 @@ extension Reactive where Base: MKMapView {
                 return try castOrThrow([MKAnnotationView].self, a[1])
             }
         return ControlEvent(events: source)
+    }
+    
+    var centerToAnimate: AnyObserver<CLLocationCoordinate2D> {
+        return Binder(base) { control, centerCoordinate in
+            control.setCenter(centerCoordinate, animated: true)
+        }.asObserver()
     }
     
     func setDelegate(_ delegate: MKMapViewDelegate)

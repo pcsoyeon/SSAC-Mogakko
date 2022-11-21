@@ -129,7 +129,7 @@ extension HomeMapViewController: BaseViewControllerAttribute {
     }
     
     func configureAttribute() {
-        view.backgroundColor = .darkGray
+        view.backgroundColor = .white
     }
     
     func bind() {
@@ -350,7 +350,6 @@ extension HomeMapViewController {
 // MARK: - Location Service Authoriztaion
 
 extension HomeMapViewController {
-    
     func checkUserLocationServiceAuthoriztaion() {
         let authorizationStatus : CLAuthorizationStatus
         
@@ -432,14 +431,8 @@ extension HomeMapViewController: CLLocationManagerDelegate {
             
             currentLatitude = coordinate.latitude
             currentLongtitude = coordinate.longitude
-            
-            
         }
         locationManager.stopUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(#function, error)
     }
 }
 
