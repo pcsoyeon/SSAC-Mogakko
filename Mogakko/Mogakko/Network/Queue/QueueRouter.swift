@@ -51,12 +51,12 @@ extension QueueRouter: URLRequestConvertible {
         }
     }
     
-    var parameters: [String: String] {
+    var parameters: Parameters? {
         switch self {
         case .queue(let request):
             return ["long" : "\(request.long)",
                     "lat" : "\(request.lat)",
-                    "studylist" : "\(request.studyList)"]
+                    "studylist" : request.studyList ]
         case .deleteQueue:
             return ["" : ""]
         case .search(let request):
@@ -64,6 +64,15 @@ extension QueueRouter: URLRequestConvertible {
                     "long" : "\(request.long)"]
         case .myQueueState:
             return ["" : ""]
+        }
+    }
+    
+    var encoding: ParameterEncoding {
+        switch self {
+        case .queue:
+            return URLEncoding(arrayEncoding: .noBrackets)
+        case .deleteQueue, .search, .myQueueState:
+            return URLEncoding.default
         }
     }
     
@@ -76,9 +85,10 @@ extension QueueRouter: URLRequestConvertible {
         
         switch self {
         case .queue, .deleteQueue, .search, .myQueueState:
-            request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+            if let parameters = parameters {
+                request = try encoding.encode(request, with: parameters)
+            }
         }
-        
         return request
     }
 }
