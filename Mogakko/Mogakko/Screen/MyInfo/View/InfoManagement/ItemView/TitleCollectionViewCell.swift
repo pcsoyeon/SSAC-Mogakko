@@ -26,11 +26,11 @@ final class TitleCollectionViewCell: BaseCollectionViewCell {
         $0.font = MDSFont.Title4_R14.font
     }
     
-    override var isSelected: Bool {
+    var isActive: Bool = false {
         didSet {
-            contentView.backgroundColor = isSelected ? .green : .white
-            titleLabel.textColor = isSelected ? .white : .black
-            contentView.layer.borderColor = isSelected ? UIColor.green.cgColor : UIColor.gray4.cgColor
+            contentView.backgroundColor = isActive ? .green : .white
+            titleLabel.textColor = isActive ? .white : .black
+            contentView.layer.borderColor = isActive ? UIColor.green.cgColor : UIColor.gray4.cgColor
         }
     }
     

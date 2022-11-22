@@ -46,7 +46,8 @@ final class StudyHeaderView: UICollectionReusableView {
         addSubviews(titleLabel)
         
         titleLabel.snp.makeConstraints { make in
-            make.leading.bottom.equalToSuperview().inset(Metric.margin)
+            make.leading.equalToSuperview().inset(Metric.margin)
+            make.bottom.equalToSuperview().inset(8)
         }
     }
 }

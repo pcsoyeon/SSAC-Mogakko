@@ -28,6 +28,13 @@ final class CardView: BaseView {
         didSet {
             if isExpanded {
                 collectionView.isHidden = false
+                
+                if cardViewType == .plain {
+                    collectionView.snp.updateConstraints { make in
+                        make.height.equalTo(472)
+                    }
+                }
+                
             } else {
                 collectionView.isHidden = true
             }
@@ -45,6 +52,10 @@ final class CardView: BaseView {
     var cardItem: InfoManagementItem? {
         didSet {
             guard let item = cardItem as? CardItem else { return }
+            
+            for i in 0...5 {
+                reputation[i] = item.reputation[i]
+            }
             self.item.accept(item)
         }
     }
@@ -154,7 +165,7 @@ final class CardView: BaseView {
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(nicknameView.snp.bottom)
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(310 - 58)
+            make.height.equalTo(310 - 58 - 20)
         }
     }
     
@@ -210,14 +221,14 @@ extension CardView {
                 if sectionIndex == 0 {
                     let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(151), heightDimension: .absolute(32))
                     let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                    item.edgeSpacing = .init(leading: .fixed(8), top: .fixed(8), trailing: .fixed(0), bottom: .fixed(8))
+                    item.edgeSpacing = .init(leading: .fixed(16), top: .fixed(8), trailing: .fixed(0), bottom: .fixed(8))
                     
                     let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(128))
                     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                     
                     let headerSize = NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(46))
+                        heightDimension: .absolute(26))
                     let header = NSCollectionLayoutBoundarySupplementaryItem(
                         layoutSize: headerSize,
                         elementKind: CardView.sectionHeaderElementKind,
@@ -251,14 +262,14 @@ extension CardView {
                 if sectionIndex == 0 {
                     let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(151), heightDimension: .absolute(32))
                     let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                    item.edgeSpacing = .init(leading: .fixed(8), top: .fixed(8), trailing: .fixed(0), bottom: .fixed(8))
+                    item.edgeSpacing = .init(leading: .fixed(16), top: .fixed(8), trailing: .fixed(0), bottom: .fixed(8))
                     
                     let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(128))
                     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                     
                     let headerSize = NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(46))
+                        heightDimension: .absolute(26))
                     let header = NSCollectionLayoutBoundarySupplementaryItem(
                         layoutSize: headerSize,
                         elementKind: CardView.sectionHeaderElementKind,
@@ -271,7 +282,7 @@ extension CardView {
                 } else if sectionIndex == 1 {
                     let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(128), heightDimension: .estimated(128))
                     let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                    item.edgeSpacing = .init(leading: .fixed(8), top: .fixed(8), trailing: .fixed(0), bottom: .fixed(8))
+                    item.edgeSpacing = .init(leading: .fixed(16), top: .fixed(8), trailing: .fixed(0), bottom: .fixed(8))
                     
                     let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
                     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
@@ -315,7 +326,7 @@ extension CardView {
     
     private func configureDataSource() {
         let titleCellRegistration = UICollectionView.CellRegistration<TitleCollectionViewCell, String>.init { cell, indexPath, itemIdentifier in
-            cell.isSelected = self.reputation[indexPath.item] > 0 ? true : false
+            cell.isActive = self.reputation[indexPath.item] > 0 ? true : false
             cell.title = itemIdentifier
         }
         

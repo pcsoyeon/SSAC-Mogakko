@@ -78,13 +78,13 @@ extension FromQueueView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier, for: indexPath) as? CardTableViewCell else { return UITableViewCell() }
         cell.queue = list[indexPath.row]
-        cell.isExpanded = false
+        cell.isExpanded = true
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier, for: indexPath) as? CardTableViewCell else { return }
-        cell.isExpanded.toggle()
-        tableView.reloadRows(at: [IndexPath(row: indexPath.row, section: 0)], with: .automatic)
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        guard let cell = tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier, for: indexPath) as? CardTableViewCell else { return }
+//        cell.isExpanded.toggle()
+//        tableView.reloadRows(at: [IndexPath(row: indexPath.row, section: 0)], with: .automatic)
+//    }
 }
