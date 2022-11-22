@@ -24,6 +24,13 @@ final class CardView: BaseView {
     
     var cardViewType: CardViewType = .plain
     
+    var matchType: MDSMatchType = .propose {
+        didSet {
+            matchButton.type = matchType
+            matchButton.isHidden = matchType == .hidden ? true : false
+        }
+    }
+    
     var isExpanded: Bool = false {
         didSet {
             if isExpanded {
@@ -34,7 +41,6 @@ final class CardView: BaseView {
                         make.height.equalTo(472)
                     }
                 }
-                
             } else {
                 collectionView.isHidden = true
             }
@@ -80,6 +86,9 @@ final class CardView: BaseView {
         $0.makeRound()
     }
     private let sesacImageView = UIImageView()
+    private var matchButton = MDSMatchButton().then {
+        $0.type = .hidden
+    }
     
     private lazy var infoStackView = UIStackView().then {
         $0.clipsToBounds = true
@@ -133,16 +142,17 @@ final class CardView: BaseView {
             make.horizontalEdges.verticalEdges.equalToSuperview().inset(Metric.margin)
         }
         
-        backgroundImageView.addSubview(sesacImageView)
-        
+        backgroundImageView.addSubviews(sesacImageView, matchButton)
         backgroundImageView.snp.makeConstraints { make in
             make.height.equalTo(194)
         }
-        
         sesacImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(19)
             make.width.height.equalTo(184)
             make.centerX.equalToSuperview()
+        }
+        matchButton.snp.makeConstraints { make in
+            make.top.trailing.equalToSuperview().inset(12)
         }
         
         nicknameView.addSubviews(nicknameLabel, expandButton, expandIconImageView)
@@ -173,7 +183,6 @@ final class CardView: BaseView {
         item
             .withUnretained(self)
             .bind { view, item in
-                
                 view.nicknameLabel.text = item.nickname
                 
                 var commentList: [String] = []
@@ -204,7 +213,6 @@ final class CardView: BaseView {
                 }
             }
             .disposed(by: disposeBag)
-        
     }
     
 }
@@ -357,8 +365,7 @@ extension CardView {
                 } else {
                     supplementaryView.title = "새싹 리뷰"
                 }
-            }
-            
+            }            
         }
         
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in

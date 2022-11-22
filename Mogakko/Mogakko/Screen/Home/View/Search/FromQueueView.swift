@@ -79,6 +79,7 @@ extension FromQueueView: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier, for: indexPath) as? CardTableViewCell else { return UITableViewCell() }
         cell.queue = list[indexPath.row]
         cell.isExpanded = true
+        cell.matchButtonType = .propose
         return cell
     }
     

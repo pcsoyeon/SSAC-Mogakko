@@ -63,3 +63,17 @@ final class RequestedView: BaseView {
     }
 }
 
+extension RequestedView: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return list.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier, for: indexPath) as? CardTableViewCell else { return UITableViewCell() }
+        cell.queue = list[indexPath.row]
+        cell.isExpanded = true
+        cell.matchButtonType = .propose
+        return cell
+    }
+}
+

@@ -28,6 +28,12 @@ final class CardTableViewCell: BaseTableViewCell {
         }
     }
     
+    var matchButtonType: MDSMatchType = .hidden {
+        didSet {
+            cardView.matchType = .accept
+        }
+    }
+    
     // MARK: - UI Property
     
     private var cardView = CardView().then {

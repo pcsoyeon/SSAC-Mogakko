@@ -224,7 +224,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                             let viewController = ChatViewController()
                             vc.navigationController?.pushViewController(viewController, animated: true)
                         } else {
-                            
+                            // 나머지 오류 
                         }
                     }
                     
@@ -262,8 +262,6 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                         
                     }
                 }
-                
-                
             }
             .disposed(by: disposeBag)
     }
