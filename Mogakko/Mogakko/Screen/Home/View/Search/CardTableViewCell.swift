@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
 import SnapKit
 import Then
 
@@ -14,31 +16,39 @@ final class CardTableViewCell: BaseTableViewCell {
     
     // MARK: - Property
     
-    var queue: FromQueue = FromQueue(uid: "", nick: "", lat: 0, long: 0, reputation: [], studylist: [], reviews: [], gender: 0, type: 0, sesac: 0, background: 0) {
-        didSet {
-            cardView.imageItem = ImageItem(background: queue.background, sesac: queue.sesac)
-            
-            cardView.cardItem = CardItem(nickname: queue.nick, reputation: queue.reputation, comment: queue.reviews, studyList: queue.studylist)
-        }
-    }
-    
     var isExpanded: Bool = false {
         didSet {
             cardView.isExpanded = isExpanded
         }
     }
     
-    var matchButtonType: MDSMatchType = .hidden {
+    var matchButtonType: MDSMatchType = .propose {
         didSet {
-            cardView.matchType = .accept
+            matchButton.type = matchButtonType
+            matchButton.isHidden = matchButtonType == .hidden ? true : false
         }
     }
     
+//    var tapMatchButton = BehaviorRelay<String>(value: "")
+    var tapMatchButton : PublishSubject<String> = PublishSubject()
+    var disposeBag = DisposeBag()
+    
     // MARK: - UI Property
     
-    private var cardView = CardView().then {
+    var cardView = CardView().then {
         $0.isExpanded = false
         $0.cardViewType = .plain
+    }
+    
+    var matchButton = MDSMatchButton().then {
+        $0.type = .hidden
+    }
+    
+    // MARK: - Life Cycle
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
     
     override func configureAttribute() {
@@ -46,9 +56,14 @@ final class CardTableViewCell: BaseTableViewCell {
     }
     
     override func configureHierarchy() {
-        addSubview(cardView)
+        contentView.addSubviews(cardView, matchButton)
         cardView.snp.makeConstraints { make in
             make.verticalEdges.horizontalEdges.equalToSuperview()
+        }
+        
+        matchButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(12 + 16)
+                make.trailing.equalToSuperview().inset(12 + 14)
         }
     }
 }

@@ -16,7 +16,7 @@ final class FromQueueView: BaseView {
     
     // MARK: - UI Property
     
-    private var tableView = UITableView()
+    var tableView = UITableView()
     
     var emptyView = SearchSesacEmptyView()
     
@@ -37,6 +37,10 @@ final class FromQueueView: BaseView {
             }
         }
     }
+    var fromQueueRelay = BehaviorRelay<[FromQueue]>(value: [FromQueue(uid: "", nick: "", lat: 0.0, long: 0.0, reputation: [], studylist: [], reviews: [], gender: 0, type: 0, sesac: 0, background: 0)])
+    
+    
+    var tapMatchButton = BehaviorRelay(value: "")
     
     private let disposeBag = DisposeBag()
     
@@ -67,6 +71,40 @@ final class FromQueueView: BaseView {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+//        fromQueueRelay
+//            .bind(to: tableView.rx.items(cellIdentifier: CardTableViewCell.reuseIdentifier, cellType: CardTableViewCell.self)) { [weak self] (row, element, cell) in
+//                guard let self = self else {
+//                    print("문제인가?")
+//                    return
+//
+//                }
+//                guard let cell = self.tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier) as? CardTableViewCell else {
+//                    print("이것이 문제인가??")
+//                    return
+//                }
+//                cell.isExpanded = true
+//                cell.matchButtonType = .propose
+//                print("========= 데이터는 잘 들어오나 ??? ", element)
+////                cell.queue = element
+//                cell.cardView.imageItem = ImageItem(background: element.background, sesac: element.sesac)
+//                cell.cardView.cardItem = CardItem(nickname: element.nick, reputation: element.reputation, comment: element.reviews)
+//            }
+//            .disposed(by: disposeBag)
+//
+//        Observable.zip(tableView.rx.modelSelected(FromQueue.self),
+//                       tableView.rx.itemSelected)
+//        .bind { [weak self] (item, indexPath) in
+//            guard let self = self else { return }
+//            guard let cell = self.tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier, for: indexPath) as? CardTableViewCell else { return }
+//            cell.isExpanded.toggle() // toggle은 되는데 UI 업데이트가 되지 않는 이슈 ...
+//            cell.cardView.matchButtonTap
+//                .bind { uid in
+//                    print("💍 \(uid)")
+//                }
+//                .disposed(by: cell.disposeBag)
+//        }
+//        .disposed(by: disposeBag)
     }
 }
 
@@ -77,15 +115,19 @@ extension FromQueueView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier, for: indexPath) as? CardTableViewCell else { return UITableViewCell() }
-        cell.queue = list[indexPath.row]
+        let data = list[indexPath.row]
+        cell.cardView.cardItem = CardItem(nickname: data.nick, reputation: data.reputation, comment: data.reviews)
+        cell.cardView.imageItem = ImageItem(background: data.background, sesac: data.sesac)
+        
         cell.isExpanded = true
         cell.matchButtonType = .propose
+        
+        cell.matchButton.rx.controlEvent(.touchUpInside)
+            .subscribe(onNext: { [weak self] in
+                self?.tapMatchButton.accept(data.uid)
+            })
+            .disposed(by: cell.disposeBag)
+        
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier, for: indexPath) as? CardTableViewCell else { return }
-//        cell.isExpanded.toggle()
-//        tableView.reloadRows(at: [IndexPath(row: indexPath.row, section: 0)], with: .automatic)
-//    }
 }

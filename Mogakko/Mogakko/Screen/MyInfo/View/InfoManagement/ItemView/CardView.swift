@@ -24,13 +24,6 @@ final class CardView: BaseView {
     
     var cardViewType: CardViewType = .plain
     
-    var matchType: MDSMatchType = .propose {
-        didSet {
-            matchButton.type = matchType
-            matchButton.isHidden = matchType == .hidden ? true : false
-        }
-    }
-    
     var isExpanded: Bool = false {
         didSet {
             if isExpanded {
@@ -86,9 +79,6 @@ final class CardView: BaseView {
         $0.makeRound()
     }
     private let sesacImageView = UIImageView()
-    private var matchButton = MDSMatchButton().then {
-        $0.type = .hidden
-    }
     
     private lazy var infoStackView = UIStackView().then {
         $0.clipsToBounds = true
@@ -142,7 +132,7 @@ final class CardView: BaseView {
             make.horizontalEdges.verticalEdges.equalToSuperview().inset(Metric.margin)
         }
         
-        backgroundImageView.addSubviews(sesacImageView, matchButton)
+        backgroundImageView.addSubview(sesacImageView)
         backgroundImageView.snp.makeConstraints { make in
             make.height.equalTo(194)
         }
@@ -150,9 +140,6 @@ final class CardView: BaseView {
             make.top.equalToSuperview().inset(19)
             make.width.height.equalTo(184)
             make.centerX.equalToSuperview()
-        }
-        matchButton.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().inset(12)
         }
         
         nicknameView.addSubviews(nicknameLabel, expandButton, expandIconImageView)

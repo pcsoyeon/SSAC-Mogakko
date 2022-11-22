@@ -70,7 +70,10 @@ extension RequestedView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier, for: indexPath) as? CardTableViewCell else { return UITableViewCell() }
-        cell.queue = list[indexPath.row]
+        let data = list[indexPath.row]
+        cell.cardView.cardItem = CardItem(nickname: data.nick, reputation: data.reputation, comment: data.reviews)
+        cell.cardView.imageItem = ImageItem(background: data.background, sesac: data.sesac)
+        
         cell.isExpanded = true
         cell.matchButtonType = .propose
         return cell
