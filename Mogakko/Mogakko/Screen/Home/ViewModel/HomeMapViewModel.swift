@@ -42,14 +42,11 @@ final class HomeMapViewModel {
             switch response {
             case .success(let data):
                 
-                print("============ ✨ 주변 새싹 정보 POST ✨ ============")
-                
                 self.fromQueue.accept(data.fromQueueDB)
                 self.fromRequestedQueue.accept(data.fromQueueDBRequested)
                 self.recommend.accept(data.fromRecommend)
                 
                 self.filterQueueByGender(data.fromQueueDB, data.fromQueueDBRequested)
-                
                 
                 completionHandler(nil)
                 
@@ -96,15 +93,5 @@ final class HomeMapViewModel {
                 completionHandler(nil, error)
             }
         }
-    }
-    
-    // MARK: - Input/Output
-    
-    struct Input {
-        
-    }
-    
-    struct Output {
-        
     }
 }
