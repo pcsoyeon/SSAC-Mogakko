@@ -27,9 +27,13 @@ extension Endpoint {
 
 extension Endpoint {
     struct Queue {
-        static let queue = "/v1/queue"
+        static let queue = "/v1/queue" // 새싹 찾기 요청
         
-        static let search = "/v1/queue/search"
-        static let myQueueState = "/v1/queue/myQueueState"
+        static let search = "/v1/queue/search" // 주변 새싹 탐색
+        static let myQueueState = "/v1/queue/myQueueState" // 내 상태
+        
+        static let studyRequest = "/v1/queue/studyrequest"
+        static let studyAccept = "/v1/queue/studyaccept"
+        static let dodge = "/v1/queue/dodge"
     }
 }

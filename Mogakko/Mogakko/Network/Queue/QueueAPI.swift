@@ -49,5 +49,20 @@ final class QueueAPI {
             }
     }
     
-    
+    func requestStudy(uid: String, completionHandler: @escaping (Int) -> Void) {
+        AF.request(QueueRouter.studyRequest(uid: uid))
+            .validate(statusCode: 200...500)
+            .responseData { response in
+                switch response.result {
+                    
+                case .success(_):
+                    guard let statusCode = response.response?.statusCode else { return }
+                    completionHandler(statusCode)
+                    
+                case .failure(_):
+                    guard let statusCode = response.response?.statusCode else { return }
+                    completionHandler(statusCode)
+                }
+            }
+    }
 }

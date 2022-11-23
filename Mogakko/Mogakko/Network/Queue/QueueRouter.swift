@@ -14,6 +14,9 @@ enum QueueRouter {
     case deleteQueue
     case search(request: SearchRequest)
     case myQueueState
+    case studyRequest(uid: String)
+    case studyAccept(uid: String)
+    case dodge(uid: String)
 }
 
 extension QueueRouter: URLRequestConvertible {
@@ -29,12 +32,18 @@ extension QueueRouter: URLRequestConvertible {
             return Endpoint.Queue.search
         case .myQueueState:
             return Endpoint.Queue.myQueueState
+        case .studyRequest:
+            return Endpoint.Queue.studyRequest
+        case .studyAccept:
+            return Endpoint.Queue.studyAccept
+        case .dodge:
+            return Endpoint.Queue.dodge
         }
     }
     
     var headers: [String : String] {
         switch self {
-        case .queue, .deleteQueue, .search, .myQueueState:
+        case .queue, .deleteQueue, .search, .myQueueState, .studyRequest, .studyAccept, .dodge:
             return [APIConstant.ContentType.contentType : APIConstant.ContentType.formUrlEncoded,
                     APIConstant.idtoken : UserData.idtoken]
         }
@@ -42,7 +51,7 @@ extension QueueRouter: URLRequestConvertible {
     
     var method: HTTPMethod {
         switch self {
-        case .queue, .search:
+        case .queue, .search, .studyRequest, .studyAccept, .dodge:
             return .post
         case .deleteQueue:
             return .delete
@@ -64,6 +73,8 @@ extension QueueRouter: URLRequestConvertible {
                     "long" : "\(request.long)"]
         case .myQueueState:
             return ["" : ""]
+        case .studyRequest(let uid), .studyAccept(let uid), .dodge(let uid):
+            return ["otheruid" : "\(uid)"]
         }
     }
     
@@ -71,7 +82,7 @@ extension QueueRouter: URLRequestConvertible {
         switch self {
         case .queue:
             return URLEncoding(arrayEncoding: .noBrackets)
-        case .deleteQueue, .search, .myQueueState:
+        case .deleteQueue, .search, .myQueueState, .studyRequest, .studyAccept, .dodge:
             return URLEncoding.default
         }
     }
@@ -84,7 +95,7 @@ extension QueueRouter: URLRequestConvertible {
         request.headers = HTTPHeaders(headers)
         
         switch self {
-        case .queue, .deleteQueue, .search, .myQueueState:
+        case .queue, .deleteQueue, .search, .myQueueState, .studyRequest, .studyAccept, .dodge:
             if let parameters = parameters {
                 request = try encoding.encode(request, with: parameters)
             }
