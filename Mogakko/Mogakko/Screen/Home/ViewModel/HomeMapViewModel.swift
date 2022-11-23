@@ -18,8 +18,6 @@ final class HomeMapViewModel {
     
     var isLocationEnable = BehaviorRelay<Bool>(value: false)
     
-    var fromQueue = BehaviorRelay<[FromQueue]>(value: [])
-    var fromRequestedQueue = BehaviorRelay<[FromQueue]>(value: [])
     var recommend = BehaviorRelay<[String]>(value: [])
     
     var totalQueue = BehaviorRelay<[FromQueue]>(value: [])
@@ -42,11 +40,9 @@ final class HomeMapViewModel {
             switch response {
             case .success(let data):
                 
-                self.fromQueue.accept(data.fromQueueDB + data.fromQueueDBRequested)
-//                self.fromRequestedQueue.accept(data.fromQueueDBRequested)
+                self.totalQueue.accept(data.fromQueueDB + data.fromQueueDBRequested)
                 self.recommend.accept(data.fromRecommend)
-                
-                self.filterQueueByGender(data.fromQueueDB, data.fromQueueDBRequested)
+                self.filterQueueByGender(data.fromQueueDB + data.fromQueueDBRequested)
                 
                 completionHandler(nil)
                 
@@ -56,19 +52,8 @@ final class HomeMapViewModel {
         }
     }
     
-    private func filterQueueByGender(_ queue: [FromQueue], _ requestedQueue: [FromQueue]) {
+    private func filterQueueByGender(_ queue: [FromQueue]) {
         for item in queue {
-            switch item.gender {
-            case 0:
-                self.womanList.append(item)
-            case 1:
-                self.manList.append(item)
-            default:
-                return
-            }
-        }
-        
-        for item in requestedQueue {
             switch item.gender {
             case 0:
                 self.womanList.append(item)
@@ -87,7 +72,6 @@ final class HomeMapViewModel {
         GenericAPI.shared.requestDecodableData(type: MyStateResponse.self, router: QueueRouter.myQueueState) { response in
             switch response {
             case .success(let data):
-                print("============ ✨ 내 상태 GET ✨ ============")
                 completionHandler(data, nil)
             case .failure(let error):
                 completionHandler(nil, error)

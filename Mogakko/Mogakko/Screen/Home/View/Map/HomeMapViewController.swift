@@ -180,30 +180,14 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             })
             .disposed(by: disposeBag)
         
-        viewModel.fromQueue
+        viewModel.totalQueue
             .withUnretained(self)
-            .bind { vc, fromQueue in
+            .bind { vc, totalQueue in
                 print("============ 🌱 주변 새싹 🌱 ============")
-                dump(fromQueue)
-                
-                if vc.viewModel.pressedButtonType.value == .total {
-                    vc.setFromQueueAnnotationByGender(MDSFilterType.total.gender, fromQueue)
-                } else if vc.viewModel.pressedButtonType.value == .man {
-                    vc.setFromQueueAnnotationByGender(MDSFilterType.man.gender, fromQueue)
-                } else {
-                    vc.setFromQueueAnnotationByGender(MDSFilterType.woman.gender, fromQueue)
-                }
-                
+                dump(totalQueue)
+                vc.setFromQueueAnnotationByGender(vc.viewModel.pressedButtonType.value.gender, totalQueue)
             }
             .disposed(by: disposeBag)
-        
-//        viewModel.fromRequestedQueue
-//            .withUnretained(self)
-//            .bind { vc, fromRequestQueue in
-//                print("============ 🌱 나에게 요청한 새싹 🌱 ============")
-//                dump(fromRequestQueue)
-//            }
-//            .disposed(by: disposeBag)
         
         Observable
             .merge(
@@ -218,21 +202,21 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                         print("✅ - 전체 버튼 탭")
                         vc.totalButton.isActive = true
                         [vc.manButton, vc.womanButton].forEach { $0.isActive = false }
-                        vc.setFromQueueAnnotationByGender(MDSFilterType.total.gender, vc.viewModel.fromQueue.value)
+                        vc.setFromQueueAnnotationByGender(MDSFilterType.total.gender, vc.viewModel.totalQueue.value)
                         vc.viewModel.pressedButtonType.accept(MDSFilterType.total)
                         
                     case .man:
                         print("✅ - 남자 버튼 탭")
                         vc.manButton.isActive = true
                         [vc.totalButton, vc.womanButton].forEach { $0.isActive = false }
-                        vc.setFromQueueAnnotationByGender(MDSFilterType.man.gender, vc.viewModel.fromQueue.value)
+                        vc.setFromQueueAnnotationByGender(MDSFilterType.man.gender, vc.viewModel.manQueue.value)
                         vc.viewModel.pressedButtonType.accept(MDSFilterType.man)
 
                     case .woman:
                         print("✅ - 여자 버튼 탭")
                         vc.womanButton.isActive = true
                         [vc.totalButton, vc.manButton].forEach { $0.isActive = false }
-                        vc.setFromQueueAnnotationByGender(MDSFilterType.woman.gender, vc.viewModel.fromQueue.value)
+                        vc.setFromQueueAnnotationByGender(MDSFilterType.woman.gender, vc.viewModel.womanQueue.value)
                         vc.viewModel.pressedButtonType.accept(MDSFilterType.woman)
                     }
                 })
@@ -294,24 +278,11 @@ extension HomeMapViewController: BaseViewControllerAttribute {
         let annotations = mapView.annotations
         mapView.removeAnnotations(annotations)
         
-        if gender == 2 {
-            for queue in queueList {
-                print("✨ - \(queue)")
-                let queueCoordinate = CLLocationCoordinate2D(latitude: queue.lat, longitude: queue.long)
-                let queueAnnotation = CustomAnnotation(sesac_image: queue.sesac, coordinate: queueCoordinate)
-                mapView.addAnnotation(queueAnnotation)
-            }
-            
-            return
-        }
-        
         for queue in queueList {
-            if queue.gender == gender {
-                print("✨ - \(queue)")
-                let queueCoordinate = CLLocationCoordinate2D(latitude: queue.lat, longitude: queue.long)
-                let queueAnnotation = CustomAnnotation(sesac_image: queue.sesac, coordinate: queueCoordinate)
-                mapView.addAnnotation(queueAnnotation)
-            }
+            print("✨ Gender \(gender) - Queue : \(queue)")
+            let queueCoordinate = CLLocationCoordinate2D(latitude: queue.lat, longitude: queue.long)
+            let queueAnnotation = CustomAnnotation(sesac_image: queue.sesac, coordinate: queueCoordinate)
+            mapView.addAnnotation(queueAnnotation)
         }
     }
 }
@@ -321,6 +292,7 @@ extension HomeMapViewController: BaseViewControllerAttribute {
 extension HomeMapViewController {
     private func requestMyState() {
         viewModel.requestMyState { [weak self] response, error in
+            print("============ 🌱 내 상태 GET 🌱 ============")
             guard let vc = self else { return }
             
             if let error = error {
@@ -340,7 +312,6 @@ extension HomeMapViewController {
             
             if let response = response {
                 if response.matched == 0 {
-                    // 매칭 대기중
                     vc.floatingButton.type = .matching
                 } else {
                     vc.floatingButton.type = .matched
