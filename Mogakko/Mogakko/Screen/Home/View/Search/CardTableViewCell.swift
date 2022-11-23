@@ -29,7 +29,7 @@ final class CardTableViewCell: BaseTableViewCell {
         }
     }
     
-    var tapMatchButton : PublishSubject<String> = PublishSubject()
+    var tapMatchButton : PublishSubject<Bool> = PublishSubject()
     var disposeBag = DisposeBag()
     
     // MARK: - UI Property
@@ -52,6 +52,13 @@ final class CardTableViewCell: BaseTableViewCell {
     
     override func configureAttribute() {
         backgroundColor = .white
+        
+        matchButton.rx.tap
+            .bind { [weak self] _ in
+                guard let self = self else { return }
+                self.tapMatchButton.onNext(true)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureHierarchy() {
