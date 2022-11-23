@@ -114,15 +114,16 @@
 		92D0838A2928AB810072FC0C /* MyStudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083892928AB810072FC0C /* MyStudyCollectionViewCell.swift */; };
 		92D0838D2928B6CE0072FC0C /* SearchSesacViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D0838C2928B6CE0072FC0C /* SearchSesacViewController.swift */; };
 		92D0838F2928B92B0072FC0C /* SearchSesacViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D0838E2928B92B0072FC0C /* SearchSesacViewModel.swift */; };
-		92D083912928C20F0072FC0C /* FromQueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083902928C20F0072FC0C /* FromQueueView.swift */; };
-		92D083932928C2680072FC0C /* RequestedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083922928C2680072FC0C /* RequestedView.swift */; };
+		92D083912928C20F0072FC0C /* NearbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083902928C20F0072FC0C /* NearbyView.swift */; };
+		92D083932928C2680072FC0C /* AcceptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083922928C2680072FC0C /* AcceptView.swift */; };
 		92D083952928C83B0072FC0C /* SearchSesacEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083942928C83B0072FC0C /* SearchSesacEmptyView.swift */; };
 		92D083992928FE080072FC0C /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083982928FE080072FC0C /* CardTableViewCell.swift */; };
 		92D0839B292A063C0072FC0C /* ReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D0839A292A063C0072FC0C /* ReviewCollectionViewCell.swift */; };
 		92D083A0292A7B940072FC0C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D0839F292A7B940072FC0C /* ChatViewController.swift */; };
 		92D083A2292A7D570072FC0C /* QueueAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083A1292A7D570072FC0C /* QueueAPI.swift */; };
 		92E28996292C92C900224B3B /* MDSMatchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E28995292C92C900224B3B /* MDSMatchButton.swift */; };
-		92E2899C292DFE4200224B3B /* RequestStudyPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2899B292DFE4200224B3B /* RequestStudyPopupViewController.swift */; };
+		92E2899C292DFE4200224B3B /* NearbyPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2899B292DFE4200224B3B /* NearbyPopupViewController.swift */; };
+		92E2899E292E1EAD00224B3B /* AcceptPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2899D292E1EAD00224B3B /* AcceptPopupViewController.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
@@ -234,15 +235,16 @@
 		92D083892928AB810072FC0C /* MyStudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyCollectionViewCell.swift; sourceTree = "<group>"; };
 		92D0838C2928B6CE0072FC0C /* SearchSesacViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSesacViewController.swift; sourceTree = "<group>"; };
 		92D0838E2928B92B0072FC0C /* SearchSesacViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSesacViewModel.swift; sourceTree = "<group>"; };
-		92D083902928C20F0072FC0C /* FromQueueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromQueueView.swift; sourceTree = "<group>"; };
-		92D083922928C2680072FC0C /* RequestedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestedView.swift; sourceTree = "<group>"; };
+		92D083902928C20F0072FC0C /* NearbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyView.swift; sourceTree = "<group>"; };
+		92D083922928C2680072FC0C /* AcceptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptView.swift; sourceTree = "<group>"; };
 		92D083942928C83B0072FC0C /* SearchSesacEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSesacEmptyView.swift; sourceTree = "<group>"; };
 		92D083982928FE080072FC0C /* CardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
 		92D0839A292A063C0072FC0C /* ReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		92D0839F292A7B940072FC0C /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		92D083A1292A7D570072FC0C /* QueueAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueAPI.swift; sourceTree = "<group>"; };
 		92E28995292C92C900224B3B /* MDSMatchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSMatchButton.swift; sourceTree = "<group>"; };
-		92E2899B292DFE4200224B3B /* RequestStudyPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStudyPopupViewController.swift; sourceTree = "<group>"; };
+		92E2899B292DFE4200224B3B /* NearbyPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPopupViewController.swift; sourceTree = "<group>"; };
+		92E2899D292E1EAD00224B3B /* AcceptPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptPopupViewController.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -787,11 +789,12 @@
 			isa = PBXGroup;
 			children = (
 				92D0838C2928B6CE0072FC0C /* SearchSesacViewController.swift */,
-				92D083902928C20F0072FC0C /* FromQueueView.swift */,
+				92D083902928C20F0072FC0C /* NearbyView.swift */,
 				92D083982928FE080072FC0C /* CardTableViewCell.swift */,
-				92D083922928C2680072FC0C /* RequestedView.swift */,
+				92D083922928C2680072FC0C /* AcceptView.swift */,
 				92D083942928C83B0072FC0C /* SearchSesacEmptyView.swift */,
-				92E2899B292DFE4200224B3B /* RequestStudyPopupViewController.swift */,
+				92E2899B292DFE4200224B3B /* NearbyPopupViewController.swift */,
+				92E2899D292E1EAD00224B3B /* AcceptPopupViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -942,7 +945,7 @@
 				923DDE1D291A4CE000A2FE75 /* GenderViewController.swift in Sources */,
 				92D08386292723FA0072FC0C /* BehaviorRelayProperty.swift in Sources */,
 				920B672A29200B38000191F1 /* MyInfoViewModel.swift in Sources */,
-				92D083912928C20F0072FC0C /* FromQueueView.swift in Sources */,
+				92D083912928C20F0072FC0C /* NearbyView.swift in Sources */,
 				92D083992928FE080072FC0C /* CardTableViewCell.swift in Sources */,
 				920B672D29200B78000191F1 /* MyInfo.swift in Sources */,
 				925607362918F0B400A13FFB /* MDSNavigationBar.swift in Sources */,
@@ -955,7 +958,7 @@
 				9256075D2919468400A13FFB /* OnboardingCollectionViewCell.swift in Sources */,
 				920B6717291F8F3D000191F1 /* MDSFloatingButton.swift in Sources */,
 				92560760291946C600A13FFB /* BaseCollectionViewCell.swift in Sources */,
-				92D083932928C2680072FC0C /* RequestedView.swift in Sources */,
+				92D083932928C2680072FC0C /* AcceptView.swift in Sources */,
 				925607542919266600A13FFB /* UIFont+Extension.swift in Sources */,
 				9256073F2918F2E700A13FFB /* MDSInputTextField.swift in Sources */,
 				92A640382924B45800A6F708 /* Reactive+Extension.swift in Sources */,
@@ -965,7 +968,7 @@
 				92E74DF22926481300B15D71 /* StudyViewModel.swift in Sources */,
 				920B67312920A3B5000191F1 /* InfoManagementViewController.swift in Sources */,
 				923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */,
-				92E2899C292DFE4200224B3B /* RequestStudyPopupViewController.swift in Sources */,
+				92E2899C292DFE4200224B3B /* NearbyPopupViewController.swift in Sources */,
 				92A5DE77291E529500094D3E /* HomeMapViewController.swift in Sources */,
 				92A5DE6B291DB66A00094D3E /* UserDefaults.swift in Sources */,
 				92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */,
@@ -973,6 +976,7 @@
 				923DDE21291A4FDD00A2FE75 /* NicknameViewModel.swift in Sources */,
 				9256076729194F3700A13FFB /* PhoneNumberViewController.swift in Sources */,
 				92A640162922435F00A6F708 /* GenderView.swift in Sources */,
+				92E2899E292E1EAD00224B3B /* AcceptPopupViewController.swift in Sources */,
 				923DDE2A291AB90500A2FE75 /* APIKey.swift in Sources */,
 				92A640072921DFE100A6F708 /* MDSSlider.swift in Sources */,
 				920B6711291F5138000191F1 /* APIError.swift in Sources */,

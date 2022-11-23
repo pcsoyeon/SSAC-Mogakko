@@ -12,7 +12,7 @@ import RxSwift
 import SnapKit
 import Then
 
-final class RequestStudyPopupViewController: UIViewController {
+final class NearbyPopupViewController: UIViewController {
     
     // MARK: - Property
     
@@ -39,7 +39,7 @@ final class RequestStudyPopupViewController: UIViewController {
     }
 }
 
-extension RequestStudyPopupViewController: BaseViewControllerAttribute {
+extension NearbyPopupViewController: BaseViewControllerAttribute {
     func configureHierarchy() {
         view.addSubview(popupView)
         
@@ -58,14 +58,14 @@ extension RequestStudyPopupViewController: BaseViewControllerAttribute {
             self.dismiss(animated: true)
         } comfirmCompletion: { [weak self] in
             guard let self = self else { return }
-            self.requestStudy()
+            self.requestAccept()
         }
     }
 }
 
 // MARK: - Network
 
-extension RequestStudyPopupViewController {
+extension NearbyPopupViewController {
     private func requestStudy() {
         QueueAPI.shared.requestStudy(uid: uid) { [weak self] statusCode in
             print(statusCode)
@@ -88,7 +88,7 @@ extension RequestStudyPopupViewController {
     }
     
     private func requestAccept() {
-        QueueAPI.shared.requestStudy(uid: uid) { [weak self] statusCode in
+        QueueAPI.shared.requestAccept(uid: uid) { [weak self] statusCode in
             guard let self = self else { return }
             
             if statusCode == 200 {

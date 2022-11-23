@@ -65,8 +65,8 @@ final class SearchSesacViewController: UIViewController {
         $0.backgroundColor = .gray2
     }
     
-    private let fromQueueView = FromQueueView()
-    private let requestedView = RequestedView()
+    private let fromQueueView = NearbyView()
+    private let requestedView = AcceptView()
     
     // MARK: - Property
     
@@ -178,7 +178,21 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             .bind { vc, uid in
                 if uid != "" {
                     print("💍 uid - \(uid)")
-                    let viewController = RequestStudyPopupViewController()
+                    let viewController = NearbyPopupViewController()
+                    viewController.uid = uid
+                    viewController.modalTransitionStyle = .crossDissolve
+                    viewController.modalPresentationStyle = .overFullScreen
+                    self.present(viewController, animated: true)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        requestedView.tapMatchButton
+            .withUnretained(self)
+            .bind { vc, uid in
+                if uid != "" {
+                    print("💍 uid - \(uid)")
+                    let viewController = AcceptPopupViewController()
                     viewController.uid = uid
                     viewController.modalTransitionStyle = .crossDissolve
                     viewController.modalPresentationStyle = .overFullScreen
