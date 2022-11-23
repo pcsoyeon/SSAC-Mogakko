@@ -122,6 +122,7 @@
 		92D083A0292A7B940072FC0C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D0839F292A7B940072FC0C /* ChatViewController.swift */; };
 		92D083A2292A7D570072FC0C /* QueueAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D083A1292A7D570072FC0C /* QueueAPI.swift */; };
 		92E28996292C92C900224B3B /* MDSMatchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E28995292C92C900224B3B /* MDSMatchButton.swift */; };
+		92E2899C292DFE4200224B3B /* RequestStudyPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2899B292DFE4200224B3B /* RequestStudyPopupViewController.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
@@ -241,6 +242,7 @@
 		92D0839F292A7B940072FC0C /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		92D083A1292A7D570072FC0C /* QueueAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueAPI.swift; sourceTree = "<group>"; };
 		92E28995292C92C900224B3B /* MDSMatchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSMatchButton.swift; sourceTree = "<group>"; };
+		92E2899B292DFE4200224B3B /* RequestStudyPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStudyPopupViewController.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -789,6 +791,7 @@
 				92D083982928FE080072FC0C /* CardTableViewCell.swift */,
 				92D083922928C2680072FC0C /* RequestedView.swift */,
 				92D083942928C83B0072FC0C /* SearchSesacEmptyView.swift */,
+				92E2899B292DFE4200224B3B /* RequestStudyPopupViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -962,6 +965,7 @@
 				92E74DF22926481300B15D71 /* StudyViewModel.swift in Sources */,
 				920B67312920A3B5000191F1 /* InfoManagementViewController.swift in Sources */,
 				923DDE0D291A3CF500A2FE75 /* NicknameViewController.swift in Sources */,
+				92E2899C292DFE4200224B3B /* RequestStudyPopupViewController.swift in Sources */,
 				92A5DE77291E529500094D3E /* HomeMapViewController.swift in Sources */,
 				92A5DE6B291DB66A00094D3E /* UserDefaults.swift in Sources */,
 				92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */,

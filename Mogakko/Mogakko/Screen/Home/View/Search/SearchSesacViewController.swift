@@ -175,9 +175,15 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
         
         fromQueueView.tapMatchButton
             .withUnretained(self)
-            .bind { uid in
-                print("💍 uid - \(uid)")
-                // TODO: - 요청하기 서버 통신 
+            .bind { vc, uid in
+                if uid != "" {
+                    print("💍 uid - \(uid)")
+                    let viewController = RequestStudyPopupViewController()
+                    viewController.uid = uid
+                    viewController.modalTransitionStyle = .crossDissolve
+                    viewController.modalPresentationStyle = .overFullScreen
+                    self.present(viewController, animated: true)
+                }
             }
             .disposed(by: disposeBag)
         
