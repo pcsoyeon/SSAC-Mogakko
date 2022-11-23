@@ -267,7 +267,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                 .bind { vc, _ in
                     vc.viewModel.requestSearch(request: SearchRequest(lat: vc.mapLatitude, long: vc.mapLongitude)) { error in
                         if let error = error {
-                            print("error - \(error.errorDescription ?? "")")
+                            vc.showToast(message: error.errorDescription ?? "")
                         }
                     }
                 }
