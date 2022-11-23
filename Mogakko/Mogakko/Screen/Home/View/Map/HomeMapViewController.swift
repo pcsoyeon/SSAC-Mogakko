@@ -269,6 +269,8 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                     vc.navigationController?.pushViewController(viewController, animated: true)
                 } else {
                     // 매칭된 > 채팅화면으로 이동
+                    let viewController = ChatViewController()
+                    vc.navigationController?.pushViewController(viewController, animated: true)
                 }
             }
             .disposed(by: disposeBag)
@@ -311,10 +313,12 @@ extension HomeMapViewController {
             }
             
             if let response = response {
+                dump(response)
                 if response.matched == 0 {
                     vc.floatingButton.type = .matching
                 } else {
                     vc.floatingButton.type = .matched
+                    print("💚 매칭된 SeSAC - nick: \(response.matchedNick), uid: \(response.matchedUid)")
                 }
             }
         }
