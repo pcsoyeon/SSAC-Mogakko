@@ -27,6 +27,8 @@ final class MDSPopupView: UIView {
     private var subTitleLabel = UILabel().then {
         $0.textColor = .gray7
         $0.font = MDSFont.Title4_R14.font
+        $0.numberOfLines = 0
+        $0.textAlignment = .center
     }
     
     private var buttonStackView = UIStackView().then {
@@ -62,6 +64,18 @@ final class MDSPopupView: UIView {
     var subtitle: String = "" {
         didSet {
             subTitleLabel.text = subtitle
+        }
+    }
+    
+    var numberOfLines: Int = 1 {
+        didSet {
+            if numberOfLines == 1 {
+                
+            } else {
+                backView.snp.updateConstraints { make in
+                    make.height.equalTo(178)
+                }
+            }
         }
     }
     
