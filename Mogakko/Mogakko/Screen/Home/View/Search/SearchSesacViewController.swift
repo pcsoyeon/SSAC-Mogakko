@@ -281,7 +281,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
         requestedView.emptyView.changeButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                navigationController?.popViewController(animated: true)
+                vc.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
         
