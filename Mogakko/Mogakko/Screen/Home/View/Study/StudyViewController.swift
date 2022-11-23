@@ -200,6 +200,7 @@ extension StudyViewController: BaseViewControllerAttribute {
                         let viewController = SearchSesacViewController()
                         viewController.mapLatitude = vc.viewModel.mapLatitude.value
                         viewController.mapLongitude = vc.viewModel.mapLongitude.value
+                        viewController.stateType = .matching
                         vc.navigationController?.pushViewController(viewController, animated: true)
                         
                     } else if statusCode == 201 {

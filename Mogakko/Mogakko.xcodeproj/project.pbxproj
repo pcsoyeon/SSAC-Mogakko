@@ -125,6 +125,7 @@
 		92E2899C292DFE4200224B3B /* NearbyPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2899B292DFE4200224B3B /* NearbyPopupViewController.swift */; };
 		92E2899E292E1EAD00224B3B /* AcceptPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2899D292E1EAD00224B3B /* AcceptPopupViewController.swift */; };
 		92E289A0292E321800224B3B /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2899F292E321800224B3B /* ReviewViewController.swift */; };
+		92E289A2292E745C00224B3B /* UINavigationViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289A1292E745C00224B3B /* UINavigationViewController+Extension.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
@@ -247,6 +248,7 @@
 		92E2899B292DFE4200224B3B /* NearbyPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPopupViewController.swift; sourceTree = "<group>"; };
 		92E2899D292E1EAD00224B3B /* AcceptPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptPopupViewController.swift; sourceTree = "<group>"; };
 		92E2899F292E321800224B3B /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		92E289A1292E745C00224B3B /* UINavigationViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Extension.swift"; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 				92A6400F292230CB00A6F708 /* UIStackView+Extension.swift */,
 				92A64011292233E900A6F708 /* CALayer+Extension.swift */,
 				92A640372924B45800A6F708 /* Reactive+Extension.swift */,
+				92E289A1292E745C00224B3B /* UINavigationViewController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1016,6 +1019,7 @@
 				92A5DE70291DBFE900094D3E /* TabBarViewController.swift in Sources */,
 				9256076B2919C21600A13FFB /* CertificationNumberViewController.swift in Sources */,
 				92A5DE4F291B784200094D3E /* APIConstant.swift in Sources */,
+				92E289A2292E745C00224B3B /* UINavigationViewController+Extension.swift in Sources */,
 				920B67332920A692000191F1 /* InfoManagementViewModel.swift in Sources */,
 				92E289A0292E321800224B3B /* ReviewViewController.swift in Sources */,
 				9256074C2918F95500A13FFB /* OnboardingViewController.swift in Sources */,

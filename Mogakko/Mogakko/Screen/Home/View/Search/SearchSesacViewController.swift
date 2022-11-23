@@ -19,7 +19,12 @@ final class SearchSesacViewController: UIViewController {
     private lazy var navigationBar = MDSNavigationBar(self).then {
         $0.backButtonIsHidden = false
         $0.title = "새싹 찾기"
-        $0.addSubview(stopButton)
+        $0.addSubviews(backButton, stopButton)
+    }
+    
+    private var backButton = UIButton().then {
+        $0.setImage(Constant.Image.arrow, for: .normal)
+        $0.isHidden = true
     }
     
     private var stopButton = UIButton().then {
@@ -76,6 +81,13 @@ final class SearchSesacViewController: UIViewController {
     var mapLatitude = 0.0
     var mapLongitude = 0.0
     
+    var stateType: MDSFloatingButtonType = .plain {
+        didSet {
+            navigationBar.backButtonIsHidden = (stateType == .matching) ? true : false
+            backButton.isHidden = (stateType == .matching) ? false : true
+        }
+    }
+    
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -99,6 +111,11 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
         // 네비게이션
         navigationBar.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        backButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(Metric.margin)
         }
         
         stopButton.snp.makeConstraints { make in
@@ -239,7 +256,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
         
-        [fromQueueView.emptyView.changeButton, requestedView.emptyView.changeButton].forEach {
+        [fromQueueView.emptyView.changeButton].forEach {
             $0.rx.tap
                 .withUnretained(self)
                 .bind { vc, _ in
@@ -261,6 +278,13 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                 .disposed(by: disposeBag)
         }
         
+        requestedView.emptyView.changeButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         [fromQueueView.emptyView.refreshButton, requestedView.emptyView.refreshButton].forEach {
             $0.rx.tap
                 .withUnretained(self)
@@ -273,16 +297,22 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                 }
                 .disposed(by: disposeBag)
         }
+        
+        backButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+                self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+            }
+            .disposed(by: disposeBag)
          
         stopButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                // 1. 서버 통신 (delete)
                 vc.viewModel.deleteQueue { statusCode in
                     if statusCode == 200 {
-                        // 2. 화면 전환
-                        Helper.convertNavigationRootViewController(view: vc.view, controller: TabBarViewController())
-                        // 2. 사용자의 위치는 그대로 전달 (현위치가 아닌, 지도의 중간지점)
+                        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+                        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
                     } else if statusCode == 201 {
                         vc.showToast(message: "누군가와 스터디를 함께하기로 약속하셨어요!")
                         let viewController = ChatViewController()

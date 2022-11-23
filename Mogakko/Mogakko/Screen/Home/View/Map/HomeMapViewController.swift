@@ -195,6 +195,7 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                     manButton.rx.tap.map { _ in MDSFilterType.man },
                     womanButton.rx.tap.map { _ in MDSFilterType.woman }
                 )
+            .skip(1)
             .withUnretained(self)
             .subscribe(onNext: { vc, type in
                     switch type {
@@ -263,10 +264,12 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                     vc.navigationController?.pushViewController(viewController, animated: true)
                 } else if vc.floatingButton.type == .matching {
                     // 매칭중
-                    let viewController = SearchSesacViewController()
-                    viewController.mapLatitude = vc.mapLatitude
-                    viewController.mapLongitude = vc.mapLongitude
-                    vc.navigationController?.pushViewController(viewController, animated: true)
+                    let studyViewController = StudyViewController()
+                    let searchViewController = SearchSesacViewController()
+                    searchViewController.mapLatitude = vc.mapLatitude
+                    searchViewController.mapLongitude = vc.mapLongitude
+                    searchViewController.stateType = .matching
+                    vc.navigationController?.pushViewControllers([studyViewController, searchViewController], animated: false)
                 } else {
                     // 매칭된 > 채팅화면으로 이동
                     let viewController = ChatViewController()
@@ -318,7 +321,7 @@ extension HomeMapViewController {
                     vc.floatingButton.type = .matching
                 } else {
                     vc.floatingButton.type = .matched
-                    print("💚 매칭된 SeSAC - nick: \(response.matchedNick), uid: \(response.matchedUid)")
+                    print("💚 매칭된 SeSAC - nick: \(String(describing: response.matchedNick)), uid: \(String(describing: response.matchedUid))")
                 }
             }
         }
