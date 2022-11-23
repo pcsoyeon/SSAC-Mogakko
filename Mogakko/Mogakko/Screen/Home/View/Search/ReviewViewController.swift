@@ -1,8 +1,8 @@
 //
-//  ChatViewController.swift
+//  ReviewViewController.swift
 //  Mogakko
 //
-//  Created by 소연 on 2022/11/21.
+//  Created by 소연 on 2022/11/23.
 //
 
 import UIKit
@@ -12,29 +12,26 @@ import RxSwift
 import SnapKit
 import Then
 
-final class ChatViewController: UIViewController {
-    
-    // MARK: - UI Property
-    
-    var uid: String = ""
+final class ReviewViewController: UIViewController {
 
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureHierarchy()
+        
         configureAttribute()
+        configureHierarchy()
         bind()
     }
 }
 
-extension ChatViewController: BaseViewControllerAttribute {
+extension ReviewViewController: BaseViewControllerAttribute {
     func configureHierarchy() {
         
     }
     
     func configureAttribute() {
-        view.backgroundColor = .white
+        
     }
     
     func bind() {

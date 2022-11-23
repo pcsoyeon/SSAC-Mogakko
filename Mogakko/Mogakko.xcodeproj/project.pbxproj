@@ -124,6 +124,7 @@
 		92E28996292C92C900224B3B /* MDSMatchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E28995292C92C900224B3B /* MDSMatchButton.swift */; };
 		92E2899C292DFE4200224B3B /* NearbyPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2899B292DFE4200224B3B /* NearbyPopupViewController.swift */; };
 		92E2899E292E1EAD00224B3B /* AcceptPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2899D292E1EAD00224B3B /* AcceptPopupViewController.swift */; };
+		92E289A0292E321800224B3B /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2899F292E321800224B3B /* ReviewViewController.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
@@ -245,6 +246,7 @@
 		92E28995292C92C900224B3B /* MDSMatchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDSMatchButton.swift; sourceTree = "<group>"; };
 		92E2899B292DFE4200224B3B /* NearbyPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPopupViewController.swift; sourceTree = "<group>"; };
 		92E2899D292E1EAD00224B3B /* AcceptPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptPopupViewController.swift; sourceTree = "<group>"; };
+		92E2899F292E321800224B3B /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -795,6 +797,7 @@
 				92D083942928C83B0072FC0C /* SearchSesacEmptyView.swift */,
 				92E2899B292DFE4200224B3B /* NearbyPopupViewController.swift */,
 				92E2899D292E1EAD00224B3B /* AcceptPopupViewController.swift */,
+				92E2899F292E321800224B3B /* ReviewViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -1014,6 +1017,7 @@
 				9256076B2919C21600A13FFB /* CertificationNumberViewController.swift in Sources */,
 				92A5DE4F291B784200094D3E /* APIConstant.swift in Sources */,
 				920B67332920A692000191F1 /* InfoManagementViewModel.swift in Sources */,
+				92E289A0292E321800224B3B /* ReviewViewController.swift in Sources */,
 				9256074C2918F95500A13FFB /* OnboardingViewController.swift in Sources */,
 				9256072C2918EDC100A13FFB /* Metric.swift in Sources */,
 				923DDE19291A4B9200A2FE75 /* EmailViewController.swift in Sources */,

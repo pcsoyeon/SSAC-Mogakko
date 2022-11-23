@@ -288,7 +288,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                         let viewController = ChatViewController()
                         vc.navigationController?.pushViewController(viewController, animated: true)
                     } else {
-                        
+                        // 나머지 상태코드에 대한 error handling 
                     }
                 }
             }
