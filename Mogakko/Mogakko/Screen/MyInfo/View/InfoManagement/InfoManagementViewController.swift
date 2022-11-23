@@ -124,8 +124,8 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
         output.info
             .withUnretained(self)
             .bind { vc, data in
-                vc.cardView.imageItem = ImageItem(background: data.background, sesac: data.sesac)
-                vc.cardView.cardItem = CardItem(nickname: data.nick, reputation: data.reputation, comment: data.comment)
+                vc.cardView.imageItem.accept(ImageItem(background: data.background, sesac: data.sesac))
+                vc.cardView.cardItem.accept(CardItem(nickname: data.nick, reputation: data.reputation, comment: data.comment, studyList: [""]))
                 vc.genderView.item = GenderItem(gender: data.gender)
                 vc.studyView.item = StudyItem(study: data.study)
                 vc.allowSearchView.item = AllowSearchItem(searchable: data.searchable)

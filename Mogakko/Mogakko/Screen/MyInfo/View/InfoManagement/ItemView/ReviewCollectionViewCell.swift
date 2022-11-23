@@ -23,11 +23,7 @@ final class ReviewCollectionViewCell: BaseCollectionViewCell {
                 textLabel.text = comment
                 textLabel.textColor = .black
                 
-                if comment.count < 2 {
-                    
-                } else {
-                    
-                }
+                // TODO: - 2개 이상일 때 버튼 유무 분기처리
             }
         }
     }
@@ -42,7 +38,7 @@ final class ReviewCollectionViewCell: BaseCollectionViewCell {
     // MARK: - UI Method
     
     override func configureAttribute() {
-        
+        contentView.backgroundColor = .white
     }
     
     override func configureHierarchy() {

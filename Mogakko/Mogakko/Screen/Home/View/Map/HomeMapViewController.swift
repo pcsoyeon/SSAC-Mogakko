@@ -197,13 +197,13 @@ extension HomeMapViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
         
-        viewModel.fromRequestedQueue
-            .withUnretained(self)
-            .bind { vc, fromRequestQueue in
-                print("============ 🌱 나에게 요청한 새싹 🌱 ============")
-                dump(fromRequestQueue)
-            }
-            .disposed(by: disposeBag)
+//        viewModel.fromRequestedQueue
+//            .withUnretained(self)
+//            .bind { vc, fromRequestQueue in
+//                print("============ 🌱 나에게 요청한 새싹 🌱 ============")
+//                dump(fromRequestQueue)
+//            }
+//            .disposed(by: disposeBag)
         
         Observable
             .merge(

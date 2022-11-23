@@ -28,10 +28,10 @@ final class CardView: BaseView {
         didSet {
             if isExpanded {
                 collectionView.isHidden = false
-                
+                let height = collectionView.collectionViewLayout.collectionViewContentSize.height
                 if cardViewType == .plain {
                     collectionView.snp.updateConstraints { make in
-                        make.height.equalTo(472)
+                        make.height.equalTo(height)
                     }
                 }
             } else {
@@ -40,29 +40,11 @@ final class CardView: BaseView {
         }
     }
     
-    var imageItem: InfoManagementItem? {
-        didSet {
-            guard let item = imageItem as? ImageItem else { return }
-            backgroundImageView.image = UIImage(named: "sesac_background_\(item.background+1)")
-            sesacImageView.image = UIImage(named: "sesac_face_\(item.sesac+1)")
-        }
-    }
-    
-    var cardItem: InfoManagementItem? {
-        didSet {
-            guard let item = cardItem as? CardItem else { return }
-            
-            for i in 0...5 {
-                reputation[i] = item.reputation[i]
-            }
-            self.item.accept(item)
-        }
-    }
-    
     private var reputationTitle: [String] = ["좋은 매너", "정확한 시간 약속", "빠른 응답", "친절한 성격", "능숙한 실력", "유익한 시간"]
     private var reputation: [Int] = Array(repeating: 0, count: 6)
     
-    private var item = BehaviorRelay<CardItem>(value: CardItem(nickname: "", reputation: [], comment: [], studyList: []))
+    var imageItem = BehaviorRelay<ImageItem>(value: ImageItem(background: 0, sesac: 0))
+    var cardItem = BehaviorRelay<CardItem>(value: CardItem(nickname: "", reputation: [], comment: [], studyList: []))
     
     // MARK: - UI Property
     
@@ -167,7 +149,17 @@ final class CardView: BaseView {
     }
     
     private func bind() {
-        item
+        imageItem
+            .skip(1)
+            .withUnretained(self)
+            .bind { view, item in
+                view.backgroundImageView.image = UIImage(named: "sesac_background_\(item.background+1)")
+                view.sesacImageView.image = UIImage(named: "sesac_face_\(item.sesac+1)")
+            }
+            .disposed(by: disposeBag)
+        
+        cardItem
+            .skip(1)
             .withUnretained(self)
             .bind { view, item in
                 view.nicknameLabel.text = item.nickname
@@ -179,6 +171,10 @@ final class CardView: BaseView {
                     commentList.append(item.comment[0])
                 }
                 
+                for i in 0...5 {
+                    view.reputation[i] = item.reputation[i]
+                }
+                
                 switch view.cardViewType {
                 case .plain:
                     var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
@@ -186,7 +182,7 @@ final class CardView: BaseView {
                     snapshot.appendSections([0, 1, 2])
                     
                     snapshot.appendItems(view.reputationTitle, toSection: 0)
-                    snapshot.appendItems(item.studyList ?? [" "], toSection: 1)
+                    snapshot.appendItems(item.studyList, toSection: 1)
                     snapshot.appendItems(commentList, toSection: 2)
                     view.dataSource.apply(snapshot)
                 case .info:

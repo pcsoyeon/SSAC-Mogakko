@@ -29,7 +29,6 @@ final class CardTableViewCell: BaseTableViewCell {
         }
     }
     
-//    var tapMatchButton = BehaviorRelay<String>(value: "")
     var tapMatchButton : PublishSubject<String> = PublishSubject()
     var disposeBag = DisposeBag()
     

@@ -42,8 +42,8 @@ final class HomeMapViewModel {
             switch response {
             case .success(let data):
                 
-                self.fromQueue.accept(data.fromQueueDB)
-                self.fromRequestedQueue.accept(data.fromQueueDBRequested)
+                self.fromQueue.accept(data.fromQueueDB + data.fromQueueDBRequested)
+//                self.fromRequestedQueue.accept(data.fromQueueDBRequested)
                 self.recommend.accept(data.fromRecommend)
                 
                 self.filterQueueByGender(data.fromQueueDB, data.fromQueueDBRequested)

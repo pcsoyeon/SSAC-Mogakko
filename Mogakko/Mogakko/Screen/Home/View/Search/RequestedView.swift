@@ -60,6 +60,9 @@ final class RequestedView: BaseView {
         
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
+        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 }
 
@@ -71,11 +74,9 @@ extension RequestedView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CardTableViewCell.reuseIdentifier, for: indexPath) as? CardTableViewCell else { return UITableViewCell() }
         let data = list[indexPath.row]
-        cell.cardView.cardItem = CardItem(nickname: data.nick, reputation: data.reputation, comment: data.reviews)
-        cell.cardView.imageItem = ImageItem(background: data.background, sesac: data.sesac)
-        
         cell.isExpanded = true
-        cell.matchButtonType = .propose
+        cell.cardView.imageItem.accept(ImageItem(background: data.background, sesac: data.sesac))
+        cell.cardView.cardItem.accept(CardItem(nickname: data.nick, reputation: data.reputation, comment: data.reviews, studyList: data.studylist))
         return cell
     }
 }
