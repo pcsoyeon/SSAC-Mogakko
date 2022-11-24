@@ -88,6 +88,8 @@ final class SearchSesacViewController: UIViewController {
         }
     }
     
+    var timer : Timer?
+    
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -95,6 +97,14 @@ final class SearchSesacViewController: UIViewController {
         configureAttribute()
         configureHierarchy()
         bind()
+        
+        //5초마다
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(requestMyQueueState), userInfo: nil, repeats: true)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        timer?.invalidate()
     }
 }
 
@@ -342,5 +352,40 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
         fromTitleButton.titleLabel?.font = MDSFont.Title4_R14.font
         requestedTitleButton.setTitleColor(.green, for: .normal)
         requestedTitleButton.titleLabel?.font = MDSFont.Title3_M14.font
+    }
+    
+    @objc func requestMyQueueState() {
+        QueueAPI.shared.requestMyQueue { [weak self] response, statusCode in
+            guard let self = self else { return }
+            
+            if let statusCode = statusCode {
+                switch statusCode {
+                case 201:
+                    return
+                case 401:
+                    return
+                case 406:
+                    return
+                case 500:
+                    return
+                case 501:
+                    return
+                default:
+                    return
+                }
+            }
+            
+            if let response = response {
+                if response.matched == 0 {
+                    return
+                } else {
+                    self.showToast(message: "\(String(describing: response.matchedNick))님과 매칭되셨습니다. 잠시 후 채팅방으로 이동합니다")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        let viewController = ChatViewController()
+                        self.navigationController?.pushViewController(viewController, animated: true)
+                    }
+                }
+            }
+        }
     }
 }
