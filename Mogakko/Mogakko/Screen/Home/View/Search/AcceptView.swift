@@ -89,6 +89,8 @@ extension AcceptView: UITableViewDelegate, UITableViewDataSource {
         cell.cardView.imageItem.accept(ImageItem(background: data.background, sesac: data.sesac))
         cell.cardView.cardItem.accept(CardItem(nickname: data.nick, reputation: data.reputation, comment: data.reviews, studyList: data.studylist))
         
+        cell.delegate = self
+        
 //        cell.tapMatchButton
 //            .withUnretained(self)
 //            .bind { view, isTapped in
@@ -101,6 +103,12 @@ extension AcceptView: UITableViewDelegate, UITableViewDataSource {
         
         
         return cell
+    }
+}
+
+extension AcceptView: CardTableViewCellDelegate {
+    func touchUpMatchButton(_ indexPathRow: Int) {
+        tapMatchButton.accept(list[indexPathRow])
     }
 }
 

@@ -76,6 +76,13 @@ extension ChatViewController: BaseViewControllerAttribute {
             }
             .disposed(by: disposeBag)
         
+        viewModel.nick
+            .withUnretained(self)
+            .bind { vc, nick in
+                vc.navigationBar.title = nick
+            }
+            .disposed(by: disposeBag)
+        
         backButton.rx.tap
             .withUnretained(self)
             .bind { _ in

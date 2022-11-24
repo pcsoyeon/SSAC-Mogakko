@@ -22,7 +22,7 @@ enum MDSFloatingButtonType {
         case .matching:
             return Constant.Image.antenna
         case .matched:
-            return Constant.Image.search
+            return Constant.Image.message
         }
     }
 }

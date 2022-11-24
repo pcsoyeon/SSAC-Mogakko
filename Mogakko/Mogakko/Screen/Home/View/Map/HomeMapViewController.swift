@@ -79,6 +79,9 @@ final class HomeMapViewController: UIViewController {
     private var mapLatitude = 0.0
     private var mapLongitude = 0.0
     
+    private var matchedUid = ""
+    private var matchedNick = ""
+    
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -274,6 +277,8 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                 } else {
                     // 매칭된 > 채팅화면으로 이동
                     let viewController = ChatViewController()
+                    viewController.viewModel.nick.accept(vc.matchedNick)
+                    viewController.viewModel.uid.accept(vc.matchedUid)
                     vc.navigationController?.pushViewController(viewController, animated: true)
                 }
             }
@@ -299,31 +304,34 @@ extension HomeMapViewController {
     private func requestMyState() {
         viewModel.requestMyState { [weak self] response, error in
             print("============ 🌱 내 상태 GET 🌱 ============")
-            guard let vc = self else { return }
+            guard let self = self else { return }
             
             if let error = error {
                 switch error {
                 case .takenUser, .invalidNickname:
-                    vc.floatingButton.type = .plain
+                    self.floatingButton.type = .plain
                 case .invalidAuthorization:
-                    vc.showToast(message: error.errorDescription ?? "")
+                    self.showToast(message: error.errorDescription ?? "")
                 case .unsubscribedUser:
-                    vc.showToast(message: error.errorDescription ?? "")
-                    Helper.convertNavigationRootViewController(view: vc.view, controller: NicknameViewController())
+                    self.showToast(message: error.errorDescription ?? "")
+                    Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
                 case .serverError:
-                    vc.showToast(message: error.errorDescription ?? "")
+                    self.showToast(message: error.errorDescription ?? "")
                 case .emptyParameters:
-                    vc.showToast(message: error.errorDescription ?? "")
+                    self.showToast(message: error.errorDescription ?? "")
                 }
             }
             
             if let response = response {
                 dump(response)
                 if response.matched == 0 {
-                    vc.floatingButton.type = .matching
+                    self.floatingButton.type = .matching
                 } else {
-                    vc.floatingButton.type = .matched
-                    print("💚 매칭된 SeSAC - nick: \(String(describing: response.matchedNick)), uid: \(String(describing: response.matchedUid))")
+                    self.floatingButton.type = .matched
+                    guard let matchedNick = response.matchedNick else { return }
+                    guard let matchedUid = response.matchedUid else { return }
+                    self.matchedNick = matchedNick
+                    self.matchedUid = matchedUid
                 }
             }
         }
