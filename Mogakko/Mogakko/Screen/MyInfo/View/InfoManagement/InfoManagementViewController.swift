@@ -246,7 +246,7 @@ extension InfoManagementViewController {
                 case .invalidAuthorization:
                     print("Firebase Token Error")
                 case .unsubscribedUser:
-                    print("미가입 회원/탈퇴 성공")
+                    Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
                 case .serverError:
                     print("서버 내부 에러")
                 case .emptyParameters:

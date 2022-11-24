@@ -170,6 +170,7 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                             vc.showToast(message: "\(String(describing: error.errorDescription))")
                         case .unsubscribedUser:
                             vc.showToast(message: "\(String(describing: error.errorDescription))")
+                            Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
                         case .serverError:
                             vc.showToast(message: "\(String(describing: error.errorDescription))")
                         case .emptyParameters:
@@ -243,6 +244,7 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                             vc.showToast(message: error.errorDescription ?? "")
                         case .unsubscribedUser:
                             vc.showToast(message: error.errorDescription ?? "")
+                            Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
                         case .serverError:
                             vc.showToast(message: error.errorDescription ?? "")
                         case .emptyParameters:
@@ -307,6 +309,7 @@ extension HomeMapViewController {
                     vc.showToast(message: error.errorDescription ?? "")
                 case .unsubscribedUser:
                     vc.showToast(message: error.errorDescription ?? "")
+                    Helper.convertNavigationRootViewController(view: vc.view, controller: NicknameViewController())
                 case .serverError:
                     vc.showToast(message: error.errorDescription ?? "")
                 case .emptyParameters:
@@ -357,6 +360,7 @@ extension HomeMapViewController {
                     self.showToast(message: "\(String(describing: error.errorDescription))")
                 case .unsubscribedUser:
                     self.showToast(message: "\(String(describing: error.errorDescription))")
+                    Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
                 case .serverError:
                     self.showToast(message: "\(String(describing: error.errorDescription))")
                 case .emptyParameters:

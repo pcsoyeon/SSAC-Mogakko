@@ -107,20 +107,21 @@ extension StudyViewController: BaseViewControllerAttribute {
     
     func bind() {
         viewModel.requestSearch() { [weak self] error in
-            guard let vc = self else { return }
+            guard let self = self else { return }
             
             if let error = error {
                 switch error {
                 case .takenUser, .invalidNickname:
                     return
                 case .invalidAuthorization:
-                    vc.showToast(message: "\(String(describing: error.errorDescription))")
+                    self.showToast(message: "\(String(describing: error.errorDescription))")
                 case .unsubscribedUser:
-                    vc.showToast(message: "\(String(describing: error.errorDescription))")
+                    self.showToast(message: "\(String(describing: error.errorDescription))")
+                    Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
                 case .serverError:
-                    vc.showToast(message: "\(String(describing: error.errorDescription))")
+                    self.showToast(message: "\(String(describing: error.errorDescription))")
                 case .emptyParameters:
-                    vc.showToast(message: "\(String(describing: error.errorDescription))")
+                    self.showToast(message: "\(String(describing: error.errorDescription))")
                 }
             }
         }
