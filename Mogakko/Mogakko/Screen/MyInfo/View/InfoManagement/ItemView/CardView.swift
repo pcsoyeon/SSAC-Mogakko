@@ -18,6 +18,11 @@ enum CardViewType {
     case info
 }
 
+struct CardCollectionItem: Hashable {
+    var id: UUID
+    var text: String
+}
+
 final class CardView: BaseView {
     
     // MARK: - Property
@@ -28,10 +33,10 @@ final class CardView: BaseView {
         didSet {
             if isExpanded {
                 collectionView.isHidden = false
-                let height = collectionView.collectionViewLayout.collectionViewContentSize.height
+//                let height = collectionView.collectionViewLayout.collectionViewContentSize.height
                 if cardViewType == .plain {
                     collectionView.snp.updateConstraints { make in
-                        make.height.equalTo(height)
+                        make.height.equalTo(400)
                     }
                 }
             } else {
@@ -95,7 +100,7 @@ final class CardView: BaseView {
     
     // MARK: - Property
     
-    private var dataSource: UICollectionViewDiffableDataSource<Int, String>!
+    private var dataSource: UICollectionViewDiffableDataSource<Int, CardCollectionItem>!
     static let sectionHeaderElementKind = "section-header-element-kind"
     
     private let disposeBag = DisposeBag()
@@ -164,11 +169,26 @@ final class CardView: BaseView {
             .bind { view, item in
                 view.nicknameLabel.text = item.nickname
                 
+                var titleItemList: [CardCollectionItem] = []
+                for title in view.reputationTitle {
+                    titleItemList.append(CardCollectionItem(id: UUID(), text: title))
+                }
+                
+                var studyItemList: [CardCollectionItem] = []
+                for study in item.studyList {
+                    studyItemList.append(CardCollectionItem(id: UUID(), text: study))
+                }
+                
                 var commentList: [String] = []
                 if item.comment.isEmpty {
                     commentList.append("")
                 } else {
                     commentList.append(item.comment[0])
+                }
+                
+                var commentItemList: [CardCollectionItem] = []
+                for comment in commentList {
+                    commentItemList.append(CardCollectionItem(id: UUID(), text: comment))
                 }
                 
                 for i in 0...5 {
@@ -177,21 +197,21 @@ final class CardView: BaseView {
                 
                 switch view.cardViewType {
                 case .plain:
-                    var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+                    var snapshot = NSDiffableDataSourceSnapshot<Int, CardCollectionItem>()
                     
                     snapshot.appendSections([0, 1, 2])
                     
-                    snapshot.appendItems(view.reputationTitle, toSection: 0)
-                    snapshot.appendItems(item.studyList, toSection: 1)
-                    snapshot.appendItems(commentList, toSection: 2)
+                    snapshot.appendItems(titleItemList, toSection: 0)
+                    snapshot.appendItems(studyItemList, toSection: 1)
+                    snapshot.appendItems(commentItemList, toSection: 2)
                     view.dataSource.apply(snapshot)
                 case .info:
-                    var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+                    var snapshot = NSDiffableDataSourceSnapshot<Int, CardCollectionItem>()
                     
                     snapshot.appendSections([0, 1])
                     
-                    snapshot.appendItems(view.reputationTitle, toSection: 0)
-                    snapshot.appendItems(commentList, toSection: 1)
+                    snapshot.appendItems(titleItemList, toSection: 0)
+                    snapshot.appendItems(commentItemList, toSection: 1)
                     view.dataSource.apply(snapshot)
                 }
             }
@@ -271,7 +291,7 @@ extension CardView {
                     section.boundarySupplementaryItems = [header]
                     return section
                 } else if sectionIndex == 1 {
-                    let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(128), heightDimension: .estimated(128))
+                    let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(128), heightDimension: .absolute(32))
                     let item = NSCollectionLayoutItem(layoutSize: itemSize)
                     item.edgeSpacing = .init(leading: .fixed(16), top: .fixed(8), trailing: .fixed(0), bottom: .fixed(8))
                     
@@ -316,18 +336,18 @@ extension CardView {
     }
     
     private func configureDataSource() {
-        let titleCellRegistration = UICollectionView.CellRegistration<TitleCollectionViewCell, String>.init { cell, indexPath, itemIdentifier in
+        let titleCellRegistration = UICollectionView.CellRegistration<TitleCollectionViewCell, CardCollectionItem>.init { cell, indexPath, itemIdentifier in
             cell.isActive = self.reputation[indexPath.item] > 0 ? true : false
-            cell.title = itemIdentifier
+            cell.title = itemIdentifier.text
         }
         
-        let studyCellRegistration = UICollectionView.CellRegistration<StudyCollectionViewCell, String>.init { cell, indexPath, itemIdentifier in
+        let studyCellRegistration = UICollectionView.CellRegistration<StudyCollectionViewCell, CardCollectionItem>.init { cell, indexPath, itemIdentifier in
             cell.type = .nearby
-            cell.title = itemIdentifier
+            cell.title = itemIdentifier.text
         }
         
-        let reviewCellRegistration = UICollectionView.CellRegistration<ReviewCollectionViewCell, String>.init { cell, indexPath, itemIdentifier in
-            cell.comment = itemIdentifier
+        let reviewCellRegistration = UICollectionView.CellRegistration<ReviewCollectionViewCell, CardCollectionItem>.init { cell, indexPath, itemIdentifier in
+            cell.comment = itemIdentifier.text
         }
         
         let headerRegistration = UICollectionView.SupplementaryRegistration<StudyHeaderView>(elementKind: CardView.sectionHeaderElementKind) { (supplementaryView, string, indexPath) in
@@ -375,7 +395,6 @@ extension CardView {
                     return cell
                 }
             }
-            
         })
         
         dataSource.supplementaryViewProvider = { (view, kind, index) in
