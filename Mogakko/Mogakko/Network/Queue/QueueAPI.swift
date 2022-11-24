@@ -15,6 +15,21 @@ final class QueueAPI {
     
     private init() { }
     
+    func requestMyQueue(completionHandler: @escaping (MyStateResponse?, Int?) -> Void) {
+        AF.request(QueueRouter.myQueueState)
+            .validate(statusCode: 200...500)
+            .responseDecodable(of: MyStateResponse.self) { response in
+                switch response.result {
+                case .success(let data):
+                    completionHandler(data, nil)
+                    
+                case .failure(_):
+                    guard let statusCode = response.response?.statusCode else { return }
+                    completionHandler(nil, statusCode)
+                }
+            }
+    }
+    
     func requestQueue(request: QueueRequest, completionHandler: @escaping (Int) -> Void) {
         AF.request(QueueRouter.queue(request: request))
             .validate(statusCode: 200...500)
