@@ -46,12 +46,6 @@ final class StudyCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - Property
     
-    var title: String = "" {
-        didSet {
-            titleLabel.text = title
-        }
-    }
-    
     var type: StudyType = .nearby {
         didSet {
             setStudyType(type: type)
@@ -81,5 +75,11 @@ final class StudyCollectionViewCell: BaseCollectionViewCell {
         titleLabel.textColor = type.textColor
         
         contentView.layer.borderColor = type.borderColor.cgColor
+    }
+    
+    // MARK: - Data
+    
+    func setData(_ title: String) {
+        titleLabel.text = title
     }
 }

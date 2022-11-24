@@ -12,22 +12,6 @@ import Then
 
 final class ReviewCollectionViewCell: BaseCollectionViewCell {
     
-    // MARK: - Property
-    
-    var comment: String = "" {
-        didSet {
-            if comment == "" {
-                textLabel.text = "첫 리뷰를 기다리는 중이에요"
-                textLabel.textColor = .gray6
-            } else {
-                textLabel.text = comment
-                textLabel.textColor = .black
-                
-                // TODO: - 2개 이상일 때 버튼 유무 분기처리
-            }
-        }
-    }
-    
     // MARK: - UI Property
     
     private var textLabel = UILabel().then {
@@ -47,6 +31,18 @@ final class ReviewCollectionViewCell: BaseCollectionViewCell {
         textLabel.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(16)
+        }
+    }
+    
+    // MARK: - Data
+    
+    func setData(_ comment: String) {
+        if comment == "" {
+            textLabel.text = "첫 리뷰를 기다리는 중이에요"
+            textLabel.textColor = .gray6
+        } else {
+            textLabel.text = comment
+            textLabel.textColor = .black
         }
     }
 }

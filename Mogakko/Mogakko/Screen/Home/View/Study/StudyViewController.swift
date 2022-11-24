@@ -309,19 +309,19 @@ extension StudyViewController {
                 cell.type = .nearby
             }
             
-            cell.title = itemIdentifier.study
+            cell.setData(itemIdentifier.study)
         }
         
         let myStudyCellRegistration = UICollectionView.CellRegistration<MyStudyCollectionViewCell, Item>.init { cell, indexPath, itemIdentifier in
             cell.type = .wantToDo
-            cell.title = itemIdentifier.study
+            cell.setData(itemIdentifier.study)
         }
         
         let headerRegistration = UICollectionView.SupplementaryRegistration<StudyHeaderView>(elementKind: StudyViewController.sectionHeaderElementKind) { (supplementaryView, string, indexPath) in
             if indexPath.section == 0 {
-                supplementaryView.title = "지금 주변에는"
+                supplementaryView.setData("지금 주변에는")
             } else {
-                supplementaryView.title = "내가 하고 싶은"
+                supplementaryView.setData("내가 하고 싶은")
             }
         }
         

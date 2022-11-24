@@ -338,16 +338,16 @@ extension CardView {
     private func configureDataSource() {
         let titleCellRegistration = UICollectionView.CellRegistration<TitleCollectionViewCell, CardCollectionItem>.init { cell, indexPath, itemIdentifier in
             cell.isActive = self.reputation[indexPath.item] > 0 ? true : false
-            cell.title = itemIdentifier.text
+            cell.setData(itemIdentifier.text)
         }
         
         let studyCellRegistration = UICollectionView.CellRegistration<StudyCollectionViewCell, CardCollectionItem>.init { cell, indexPath, itemIdentifier in
             cell.type = .nearby
-            cell.title = itemIdentifier.text
+            cell.setData(itemIdentifier.text)
         }
         
         let reviewCellRegistration = UICollectionView.CellRegistration<ReviewCollectionViewCell, CardCollectionItem>.init { cell, indexPath, itemIdentifier in
-            cell.comment = itemIdentifier.text
+            cell.setData(itemIdentifier.text)
         }
         
         let headerRegistration = UICollectionView.SupplementaryRegistration<StudyHeaderView>(elementKind: CardView.sectionHeaderElementKind) { (supplementaryView, string, indexPath) in
@@ -356,17 +356,17 @@ extension CardView {
                 
             case .plain:
                 if indexPath.section == 0 {
-                    supplementaryView.title = "새싹 타이틀"
+                    supplementaryView.setData("새싹 타이틀")
                 } else if indexPath.section == 1 {
-                    supplementaryView.title = "하고 싶은 스터디"
+                    supplementaryView.setData("하고 싶은 스터디")
                 } else {
-                    supplementaryView.title = "새싹 리뷰"
+                    supplementaryView.setData("새싹 리뷰")
                 }
             case .info:
                 if indexPath.section == 0 {
-                    supplementaryView.title = "새싹 타이틀"
+                    supplementaryView.setData("새싹 타이틀")
                 } else {
-                    supplementaryView.title = "새싹 리뷰"
+                    supplementaryView.setData("새싹 리뷰")
                 }
             }            
         }

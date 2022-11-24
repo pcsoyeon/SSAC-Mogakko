@@ -16,14 +16,6 @@ final class StudyHeaderView: UICollectionReusableView {
         $0.font = MDSFont.Title6_R12.font
     }
     
-    // MARK: - Property
-    
-    var title: String = "" {
-        didSet {
-            titleLabel.text = title
-        }
-    }
-    
     // MARK: - Initializer
     
     override init(frame: CGRect) {
@@ -49,5 +41,11 @@ final class StudyHeaderView: UICollectionReusableView {
             make.leading.equalToSuperview().inset(Metric.margin)
             make.bottom.equalToSuperview().inset(8)
         }
+    }
+    
+    // MARK: - Data
+    
+    func setData(_ title: String) {
+        titleLabel.text = title
     }
 }

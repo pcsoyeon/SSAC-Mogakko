@@ -12,14 +12,6 @@ import Then
 
 final class TitleCollectionViewCell: BaseCollectionViewCell {
     
-    // MARK: - Title
-    
-    var title: String = "" {
-        didSet {
-            titleLabel.text = title
-        }
-    }
-    
     // MARK: - UI Property
     
     private var titleLabel = UILabel().then {
@@ -47,5 +39,11 @@ final class TitleCollectionViewCell: BaseCollectionViewCell {
         titleLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
+    }
+    
+    // MARK: Data
+    
+    func setData(_ title: String) {
+        titleLabel.text = title
     }
 }

@@ -26,12 +26,6 @@ final class MyStudyCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - Property
     
-    var title: String = "" {
-        didSet {
-            titleLabel.text = title
-        }
-    }
-    
     var type: StudyType = .wantToDo {
         didSet {
             setStudyType(type: type)
@@ -67,5 +61,11 @@ final class MyStudyCollectionViewCell: BaseCollectionViewCell {
         titleLabel.textColor = type.textColor
         
         contentView.layer.borderColor = type.borderColor.cgColor
+    }
+    
+    // MARK: - Data
+    
+    func setData(_ title: String) {
+        titleLabel.text = title
     }
 }
