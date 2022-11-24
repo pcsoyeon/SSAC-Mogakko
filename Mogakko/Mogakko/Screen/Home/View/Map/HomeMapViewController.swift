@@ -235,7 +235,6 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                 let mapLongitude = vc.mapView.centerCoordinate.longitude
                 
                 vc.viewModel.requestSearch(request: SearchRequest(lat: mapLatitude, long: mapLongitude)) { error in
-                    
                     if let error = error {
                         switch error {
                         case .takenUser, .invalidNickname:

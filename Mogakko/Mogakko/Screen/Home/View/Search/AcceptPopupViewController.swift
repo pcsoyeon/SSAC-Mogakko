@@ -11,7 +11,7 @@ class AcceptPopupViewController: UIViewController {
 
     // MARK: - Property
     
-    var uid: String = ""
+    var queue: FromQueue = FromQueue(uid: "", nick: "", lat: 0.0, long: 0.0, reputation: [], studylist: [], reviews: [], gender: 0, type: 0, sesac: 0, background: 0)
     
     // MARK: - UI Property
     
@@ -58,20 +58,46 @@ extension AcceptPopupViewController: BaseViewControllerAttribute {
 
 extension AcceptPopupViewController {
     private func requestAccept() {
-        QueueAPI.shared.requestAccept(uid: uid) { [weak self] statusCode in
+        QueueAPI.shared.requestAccept(uid: queue.uid) { [weak self] statusCode in
             guard let self = self else { return }
             
             if statusCode == 200 {
-                self.dismiss(animated: true)
+                guard let presentingViewController = self.presentingViewController else { return }
+                let navigationController = presentingViewController is UINavigationController ? presentingViewController as? UINavigationController : presentingViewController.navigationController
+                self.dismiss(animated: true) {
+                    let viewController = ChatViewController()
+                    viewController.viewModel.queue.accept(self.queue)
+                    navigationController?.pushViewController(viewController, animated: true)
+                }
             } else if statusCode == 201 {
                 self.showToast(message: "상대방이 이미 다른 새싹과 스터디를 함께 하는 중입니다")
+                self.dismiss(animated: true)
             } else if statusCode == 202 {
                 self.showToast(message: "상대방이 스터디 찾기를 그만두었습니다")
+                self.dismiss(animated: true)
             } else if statusCode == 203 {
                 self.showToast(message: "앗! 누군가가 나의 스터디를 수락하였어요!")
-                // TODO: - Toast 메시지 후 (get, /v1/queue/myQueueState) 호출
+                self.dismiss(animated: true)
             } else {
                 // extra error handling
+            }
+        }
+    }
+    
+    private func requestMyState() {
+        GenericAPI.shared.requestDecodableData(type: MyStateResponse.self, router: QueueRouter.myQueueState) { [weak self] response in
+            guard let self = self else { return }
+            
+            switch response {
+            case .success(let data):
+                if data.matched == 0 {
+                    // 매칭 되지 않은 경우
+                } else {
+                    // 매칭 된 경우
+                    // 채팅화면으로 이동 ???
+                }
+            case .failure(let error):
+                print(error)
             }
         }
     }

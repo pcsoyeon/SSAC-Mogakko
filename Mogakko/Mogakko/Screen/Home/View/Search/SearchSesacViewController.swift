@@ -191,30 +191,26 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
         
         fromQueueView.tapMatchButton
+            .skip(1)
             .withUnretained(self)
-            .bind { vc, uid in
-                if uid != "" {
-                    print("💍 uid - \(uid)")
-                    let viewController = NearbyPopupViewController()
-                    viewController.uid = uid
-                    viewController.modalTransitionStyle = .crossDissolve
-                    viewController.modalPresentationStyle = .overFullScreen
-                    self.present(viewController, animated: true)
-                }
+            .bind { vc, queue in
+                let viewController = NearbyPopupViewController()
+                viewController.queue = queue
+                viewController.modalTransitionStyle = .crossDissolve
+                viewController.modalPresentationStyle = .overFullScreen
+                self.present(viewController, animated: true)
             }
             .disposed(by: disposeBag)
         
         requestedView.tapMatchButton
+            .skip(1)
             .withUnretained(self)
-            .bind { vc, uid in
-                if uid != "" {
-                    print("💍 uid - \(uid)")
-                    let viewController = AcceptPopupViewController()
-                    viewController.uid = uid
-                    viewController.modalTransitionStyle = .crossDissolve
-                    viewController.modalPresentationStyle = .overFullScreen
-                    self.present(viewController, animated: true)
-                }
+            .bind { vc, queue in
+                let viewController = AcceptPopupViewController()
+                viewController.queue = queue
+                viewController.modalTransitionStyle = .crossDissolve
+                viewController.modalPresentationStyle = .overFullScreen
+                self.present(viewController, animated: true)
             }
             .disposed(by: disposeBag)
         

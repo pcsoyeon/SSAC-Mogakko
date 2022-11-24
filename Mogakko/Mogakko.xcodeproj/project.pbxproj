@@ -126,6 +126,8 @@
 		92E2899E292E1EAD00224B3B /* AcceptPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2899D292E1EAD00224B3B /* AcceptPopupViewController.swift */; };
 		92E289A0292E321800224B3B /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E2899F292E321800224B3B /* ReviewViewController.swift */; };
 		92E289A2292E745C00224B3B /* UINavigationViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289A1292E745C00224B3B /* UINavigationViewController+Extension.swift */; };
+		92E289A6292F4BB300224B3B /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289A5292F4BB300224B3B /* ChatViewModel.swift */; };
+		92E289A8292F4DB000224B3B /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289A7292F4DB000224B3B /* BaseViewModel.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
@@ -249,6 +251,8 @@
 		92E2899D292E1EAD00224B3B /* AcceptPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptPopupViewController.swift; sourceTree = "<group>"; };
 		92E2899F292E321800224B3B /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
 		92E289A1292E745C00224B3B /* UINavigationViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Extension.swift"; sourceTree = "<group>"; };
+		92E289A5292F4BB300224B3B /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		92E289A7292F4DB000224B3B /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -596,6 +600,7 @@
 				9256075F291946C600A13FFB /* BaseCollectionViewCell.swift */,
 				92560761291946FF00A13FFB /* BaseTableViewCell.swift */,
 				92A64030292358D300A6F708 /* BaseView.swift */,
+				92E289A7292F4DB000224B3B /* BaseViewModel.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -808,9 +813,26 @@
 		92D0839E292A7B840072FC0C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				92D0839F292A7B940072FC0C /* ChatViewController.swift */,
+				92E289A3292F4A3900224B3B /* View */,
+				92E289A4292F4A4100224B3B /* ViewModel */,
 			);
 			path = Chat;
+			sourceTree = "<group>";
+		};
+		92E289A3292F4A3900224B3B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				92D0839F292A7B940072FC0C /* ChatViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		92E289A4292F4A4100224B3B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				92E289A5292F4BB300224B3B /* ChatViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		92E74DE32925C78200B15D71 /* Map */ = {
@@ -1016,6 +1038,7 @@
 				92A6401E29224AC000A6F708 /* AgeView.swift in Sources */,
 				9256076F2919CC9D00A13FFB /* String+Extension.swift in Sources */,
 				92A5DE67291D124700094D3E /* SignupRequest.swift in Sources */,
+				92E289A6292F4BB300224B3B /* ChatViewModel.swift in Sources */,
 				92A5DE70291DBFE900094D3E /* TabBarViewController.swift in Sources */,
 				9256076B2919C21600A13FFB /* CertificationNumberViewController.swift in Sources */,
 				92A5DE4F291B784200094D3E /* APIConstant.swift in Sources */,
@@ -1025,6 +1048,7 @@
 				9256074C2918F95500A13FFB /* OnboardingViewController.swift in Sources */,
 				9256072C2918EDC100A13FFB /* Metric.swift in Sources */,
 				923DDE19291A4B9200A2FE75 /* EmailViewController.swift in Sources */,
+				92E289A8292F4DB000224B3B /* BaseViewModel.swift in Sources */,
 				923DDE0F291A429400A2FE75 /* BirthViewController.swift in Sources */,
 				92560764291948DE00A13FFB /* Onboarding.swift in Sources */,
 				92A6400C292221DD00A6F708 /* RxMKMapViewDelegateProxy.swift in Sources */,

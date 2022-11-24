@@ -13,16 +13,4 @@ import RxSwift
 final class ChatViewModel: BaseViewModel {
     
     var queue = BehaviorRelay(value: FromQueue(uid: "", nick: "", lat: 0.0, long: 0.0, reputation: [], studylist: [], reviews: [], gender: 0, type: 0, sesac: 0, background: 0))
-    
-//    struct Input {
-//
-//    }
-//
-//    struct Output {
-//
-//    }
-//
-//    func transform(from input: Input) -> Output {
-//        return Output()
-//    }
 }

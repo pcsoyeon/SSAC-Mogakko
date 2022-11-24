@@ -12,6 +12,10 @@ import RxSwift
 import SnapKit
 import Then
 
+protocol CardTableViewCellDelegate: AnyObject {
+    func touchUpMatchButton(_ indexPathRow: Int)
+}
+
 final class CardTableViewCell: BaseTableViewCell {
     
     // MARK: - Property
@@ -29,9 +33,6 @@ final class CardTableViewCell: BaseTableViewCell {
         }
     }
     
-    var tapMatchButton : PublishSubject<Bool> = PublishSubject()
-    var disposeBag = DisposeBag()
-    
     // MARK: - UI Property
     
     var cardView = CardView().then {
@@ -43,22 +44,27 @@ final class CardTableViewCell: BaseTableViewCell {
         $0.type = .hidden
     }
     
+    weak var delegate: CardTableViewCellDelegate?
+    var indexPathRow = 0
+    
     // MARK: - Life Cycle
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
+//        disposeBag = DisposeBag()
     }
     
     override func configureAttribute() {
         backgroundColor = .white
+        configureButton()
         
-        matchButton.rx.tap
-            .bind { [weak self] _ in
-                guard let self = self else { return }
-                self.tapMatchButton.onNext(true)
-            }
-            .disposed(by: disposeBag)
+//        matchButton.rx.tap
+//            .skip(1)
+//            .bind { [weak self] _ in
+//                guard let self = self else { return }
+//                self.tapMatchButton.onNext(true)
+//            }
+//            .disposed(by: disposeBag)
     }
     
     override func configureHierarchy() {
@@ -71,5 +77,15 @@ final class CardTableViewCell: BaseTableViewCell {
             make.top.equalToSuperview().inset(12 + 16)
                 make.trailing.equalToSuperview().inset(12 + 14)
         }
+    }
+    
+    // MARK: - Button
+    
+    private func configureButton() {
+        matchButton.addTarget(self, action: #selector(touchUpMatchButton), for: .touchUpInside)
+    }
+    
+    @objc func touchUpMatchButton() {
+        delegate?.touchUpMatchButton(indexPathRow)
     }
 }

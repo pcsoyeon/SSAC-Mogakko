@@ -40,7 +40,7 @@ final class NearbyView: BaseView {
     var fromQueueRelay = BehaviorRelay<[FromQueue]>(value: [FromQueue(uid: "", nick: "", lat: 0.0, long: 0.0, reputation: [], studylist: [], reviews: [], gender: 0, type: 0, sesac: 0, background: 0)])
     
     
-    var tapMatchButton = BehaviorRelay(value: "")
+    var tapMatchButton = BehaviorRelay<FromQueue>(value: FromQueue(uid: "", nick: "", lat: 0.0, long: 0.0, reputation: [], studylist: [], reviews: [], gender: 0, type: 0, sesac: 0, background: 0))
     
     private let disposeBag = DisposeBag()
     
@@ -109,13 +109,25 @@ extension NearbyView: UITableViewDelegate, UITableViewDataSource {
         cell.cardView.imageItem.accept(ImageItem(background: data.background, sesac: data.sesac))
         cell.cardView.cardItem.accept(CardItem(nickname: data.nick, reputation: data.reputation, comment: data.reviews, studyList: data.studylist))
         
-        cell.tapMatchButton
-            .withUnretained(self)
-            .bind { view, isTapped in
-                if isTapped { view.tapMatchButton.accept(data.uid) }
-            }
-            .disposed(by: cell.disposeBag)
+        cell.indexPathRow = indexPath.row
+        cell.delegate = self
+        
+//        cell.tapMatchButton
+//            .withUnretained(self)
+//            .bind { view, isTapped in
+//                if isTapped {
+//                    let queue = view.list[indexPath.row]
+//                    view.tapMatchButton.accept(queue)
+//                }
+//            }
+//            .disposed(by: cell.disposeBag)
         
         return cell
+    }
+}
+
+extension NearbyView: CardTableViewCellDelegate {
+    func touchUpMatchButton(_ indexPathRow: Int) {
+        tapMatchButton.accept(list[indexPathRow])
     }
 }

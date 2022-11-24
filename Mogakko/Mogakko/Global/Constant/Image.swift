@@ -88,5 +88,6 @@ extension Constant {
         static let sesacFace2 = UIImage(named: "sesac_face_2")
         static let sesacFace3 = UIImage(named: "sesac_face_3")
         static let sesacFace4 = UIImage(named: "sesac_face_4")
+        static let sesacFace5 = UIImage(named: "sesac_face_5")
     }
 }
