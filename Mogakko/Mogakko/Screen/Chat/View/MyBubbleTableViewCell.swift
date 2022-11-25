@@ -15,8 +15,7 @@ final class MyBubbleTableViewCell: BaseTableViewCell {
     // MARK: - UI Property
     
     private let backView = UIView().then {
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.gray4.cgColor
+        $0.backgroundColor = UIColor.whiteGreen
         $0.makeRound()
     }
     

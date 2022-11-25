@@ -39,6 +39,7 @@ extension Constant {
         static let wirte = UIImage(named: "write")!
         
         static let ic = UIImage(named: "ic")!
+        static let icAct = UIImage(named: "ic_act")!
         
         // button
         static let refresh = UIImage(named: "bt_refresh")

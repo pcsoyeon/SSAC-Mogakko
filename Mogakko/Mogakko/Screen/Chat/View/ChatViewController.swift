@@ -58,6 +58,7 @@ final class ChatViewController: UIViewController {
     
     private lazy var sendButton = UIButton().then {
         $0.setImage(Constant.Image.ic, for: .normal)
+        $0.isEnabled = false
     }
     
     // MARK: - Property
@@ -153,18 +154,20 @@ extension ChatViewController: BaseViewControllerAttribute {
     }
     
     func configureDataSource() -> RxTableViewSectionedReloadDataSource<ChatSection> {
-        let dataSource = RxTableViewSectionedReloadDataSource<ChatSection> { dataSource, tableView, indexPath, item in
+        let dataSource = RxTableViewSectionedReloadDataSource<ChatSection> { [weak self] dataSource, tableView, indexPath, item in
+            guard let self = self else { return UITableViewCell() }
+            
             if indexPath.section == 0 {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: HeaderTableViewCell.reuseIdentifier, for: indexPath) as? HeaderTableViewCell else { return UITableViewCell() }
                 cell.setData(date: item.createdAt, nick: item.chat)
                 return cell
             } else {
-                if item.id == "sokyte" {
-                    guard let cell = tableView.dequeueReusableCell(withIdentifier: MyBubbleTableViewCell.reuseIdentifier, for: indexPath) as? MyBubbleTableViewCell else { return UITableViewCell() }
+                if item.from == self.viewModel.uid.value {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherBubbleTableViewCell.reuseIdentifier, for: indexPath) as? OtherBubbleTableViewCell else { return UITableViewCell() }
                     cell.setData(item.chat, item.createdAt)
                     return cell
                 } else {
-                    guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherBubbleTableViewCell.reuseIdentifier, for: indexPath) as? OtherBubbleTableViewCell else { return UITableViewCell() }
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: MyBubbleTableViewCell.reuseIdentifier, for: indexPath) as? MyBubbleTableViewCell else { return UITableViewCell() }
                     cell.setData(item.chat, item.createdAt)
                     return cell
                 }
@@ -208,25 +211,30 @@ extension ChatViewController: BaseViewControllerAttribute {
         messageTextView.rx.didChange
             .withUnretained(self)
             .bind { vc, _ in
-                vc.messageTextView.textColor = .black
-                
-                let size = CGSize(width: vc.messageTextView.frame.width, height: .infinity)
-                let estimatedSize = vc.messageTextView.sizeThatFits(size)
-                
-                if estimatedSize.height > 100 {
-                    vc.messageTextView.isScrollEnabled = true
-                    
-                    vc.messageTextView.constraints.forEach { (constraint) in
-                        if constraint.firstAttribute == .height {
-                            constraint.constant = 100
-                        }
-                    }
+                if vc.messageTextView.hasText {
+                    vc.sendButton.setImage(Constant.Image.icAct, for: .normal)
                 } else {
-                    vc.messageTextView.isScrollEnabled = false
+                    vc.sendButton.setImage(Constant.Image.ic, for: .normal)
+                    vc.messageTextView.textColor = .black
                     
-                    vc.messageTextView.constraints.forEach { (constraint) in
-                        if constraint.firstAttribute == .height {
-                            constraint.constant = estimatedSize.height
+                    let size = CGSize(width: vc.messageTextView.frame.width, height: .infinity)
+                    let estimatedSize = vc.messageTextView.sizeThatFits(size)
+                    
+                    if estimatedSize.height > 100 {
+                        vc.messageTextView.isScrollEnabled = true
+                        
+                        vc.messageTextView.constraints.forEach { (constraint) in
+                            if constraint.firstAttribute == .height {
+                                constraint.constant = 100
+                            }
+                        }
+                    } else {
+                        vc.messageTextView.isScrollEnabled = false
+                        
+                        vc.messageTextView.constraints.forEach { (constraint) in
+                            if constraint.firstAttribute == .height {
+                                constraint.constant = estimatedSize.height
+                            }
                         }
                     }
                 }
