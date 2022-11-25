@@ -78,11 +78,29 @@ final class ChatViewController: UIViewController {
         configureHierarchy()
         configureAttribute()
         bind()
+        
+        fetchChatList()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        // 소켓 통신 disconnection
+        SocketIOManager.shared.closeConnection()
+    }
+    
+    private func getNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(getMessage(notification:)), name: NSNotification.Name("getMessage"), object: nil)
+    }
+    
+    @objc func getMessage(notification: NSNotification) {
+        let id = notification.userInfo!["_id"] as! String
+        let chat = notification.userInfo!["chat"] as! String
+        let createdAt = notification.userInfo!["createdAt"] as! String
+        let from = notification.userInfo!["from"] as! String
+        let to = notification.userInfo!["to"] as! String
+        
+        let value = Chat(id: id, to: to, from: from, chat: chat, createdAt: createdAt)
+        // 데이터 추가
+        // tableview reload
     }
 }
 
@@ -214,6 +232,15 @@ extension ChatViewController: BaseViewControllerAttribute {
                 }
             }
             .disposed(by: disposeBag)
+        
+        sendButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                if let text = vc.messageTextView.text {
+                    // 채팅 보내기
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -222,5 +249,40 @@ extension ChatViewController: BaseViewControllerAttribute {
 extension ChatViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.0
+    }
+}
+
+// MARK: - Network
+
+extension ChatViewController {
+    func fetchChatList() {
+        viewModel.requestChatList(from: viewModel.uid.value, lastchatDate: "2000-01-01T00:00:00.000Z") { [weak self] statusCode in
+            guard let self = self else { return }
+            
+            print(statusCode)
+            
+            if statusCode == 200 {
+                SocketIOManager.shared.establishConnection()
+            } else {
+                guard let error = APIError(rawValue: statusCode) else { return }
+                
+                switch error {
+                case .takenUser, .invalidNickname:
+                    return
+                case .invalidAuthorization:
+                    self.showToast(message: "\(String(describing: error.errorDescription))")
+                case .unsubscribedUser:
+                    Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
+                case .serverError:
+                    self.showToast(message: "\(String(describing: error.errorDescription))")
+                case .emptyParameters:
+                    self.showToast(message: "\(String(describing: error.errorDescription))")
+                }
+            }
+        }
+    }
+    
+    func postChat() {
+        
     }
 }

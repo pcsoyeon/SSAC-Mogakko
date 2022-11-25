@@ -7,18 +7,20 @@
 
 import Foundation
 
-struct ChatList {
+// MARK: - ChatResponse
+
+struct ChatResponse: Codable {
     let payload: [Chat]
 }
 
-struct Chat {
-    let id: String
-    let v: Int
-    let to, from, chat, createdAt: String
-    
+// MARK: - Chat
+
+struct Chat: Codable {
+    let id, to, from, chat: String
+    let createdAt: String
+
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case v = "__v"
         case to, from, chat, createdAt
     }
 }

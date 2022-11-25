@@ -128,11 +128,15 @@
 		92E289A2292E745C00224B3B /* UINavigationViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289A1292E745C00224B3B /* UINavigationViewController+Extension.swift */; };
 		92E289A6292F4BB300224B3B /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289A5292F4BB300224B3B /* ChatViewModel.swift */; };
 		92E289A8292F4DB000224B3B /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289A7292F4DB000224B3B /* BaseViewModel.swift */; };
-		92E289AB29302FB000224B3B /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289AA29302FB000224B3B /* Chat.swift */; };
+		92E289AB29302FB000224B3B /* ChatResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289AA29302FB000224B3B /* ChatResponse.swift */; };
 		92E289AD293031CF00224B3B /* MyBubbleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289AC293031CF00224B3B /* MyBubbleTableViewCell.swift */; };
 		92E289AF293033A600224B3B /* OtherBubbleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289AE293033A600224B3B /* OtherBubbleTableViewCell.swift */; };
 		92E289B229303F5100224B3B /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 92E289B129303F5100224B3B /* RxDataSources */; };
 		92E289B429306B6B00224B3B /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289B329306B6B00224B3B /* HeaderTableViewCell.swift */; };
+		92E289B72930B8BC00224B3B /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289B62930B8BC00224B3B /* SocketIOManager.swift */; };
+		92E289BA2930B97800224B3B /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 92E289B92930B97800224B3B /* SocketIO */; };
+		92E289BC2930BD6F00224B3B /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289BB2930BD6F00224B3B /* ChatRouter.swift */; };
+		92E289BE2930BD7900224B3B /* ChatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289BD2930BD7900224B3B /* ChatAPI.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
@@ -258,10 +262,13 @@
 		92E289A1292E745C00224B3B /* UINavigationViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Extension.swift"; sourceTree = "<group>"; };
 		92E289A5292F4BB300224B3B /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		92E289A7292F4DB000224B3B /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
-		92E289AA29302FB000224B3B /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		92E289AA29302FB000224B3B /* ChatResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatResponse.swift; sourceTree = "<group>"; };
 		92E289AC293031CF00224B3B /* MyBubbleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBubbleTableViewCell.swift; sourceTree = "<group>"; };
 		92E289AE293033A600224B3B /* OtherBubbleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherBubbleTableViewCell.swift; sourceTree = "<group>"; };
 		92E289B329306B6B00224B3B /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
+		92E289B62930B8BC00224B3B /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
+		92E289BB2930BD6F00224B3B /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
+		92E289BD2930BD7900224B3B /* ChatAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAPI.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -283,6 +290,7 @@
 				92E289B229303F5100224B3B /* RxDataSources in Frameworks */,
 				9256075B291945AA00A13FFB /* RxSwift in Frameworks */,
 				925607392918F0CB00A13FFB /* Then in Frameworks */,
+				92E289BA2930B97800224B3B /* SocketIO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +437,7 @@
 		925607092918D54A00A13FFB /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				92E289B52930B82D00224B3B /* Chat */,
 				92A6403C2925339900A6F708 /* Queue */,
 				92A5DE49291B703100094D3E /* User */,
 				923DDE26291AB8DB00A2FE75 /* Base */,
@@ -852,9 +861,19 @@
 		92E289A929302FA600224B3B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				92E289AA29302FB000224B3B /* Chat.swift */,
+				92E289AA29302FB000224B3B /* ChatResponse.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		92E289B52930B82D00224B3B /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				92E289B62930B8BC00224B3B /* SocketIOManager.swift */,
+				92E289BB2930BD6F00224B3B /* ChatRouter.swift */,
+				92E289BD2930BD7900224B3B /* ChatAPI.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		92E74DE32925C78200B15D71 /* Map */ = {
@@ -902,6 +921,7 @@
 				920B6719291FC064000191F1 /* FirebaseAuth */,
 				920B671B291FC064000191F1 /* FirebaseMessaging */,
 				92E289B129303F5100224B3B /* RxDataSources */,
+				92E289B92930B97800224B3B /* SocketIO */,
 			);
 			productName = Mogakko;
 			productReference = 925606F02918D51800A13FFB /* Mogakko.app */;
@@ -938,6 +958,7 @@
 				923DDE2B291ABA9E00A2FE75 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				920B6718291FC064000191F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				92E289B029303F5100224B3B /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				92E289B82930B97800224B3B /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
 			productRefGroup = 925606F12918D51800A13FFB /* Products */;
 			projectDirPath = "";
@@ -979,6 +1000,7 @@
 				92D0839B292A063C0072FC0C /* ReviewCollectionViewCell.swift in Sources */,
 				92A6402029224C7E00A6F708 /* WithdrawView.swift in Sources */,
 				925607282918E67700A13FFB /* Constant.swift in Sources */,
+				92E289BC2930BD6F00224B3B /* ChatRouter.swift in Sources */,
 				920B6713291F64BF000191F1 /* UILabel+Extension.swift in Sources */,
 				92D0838D2928B6CE0072FC0C /* SearchSesacViewController.swift in Sources */,
 				9256072A2918E68A00A13FFB /* Image.swift in Sources */,
@@ -993,6 +1015,7 @@
 				92A64012292233E900A6F708 /* CALayer+Extension.swift in Sources */,
 				92A6402D292299CA00A6F708 /* CardView.swift in Sources */,
 				92A5DE61291CFBF800094D3E /* UserAPI.swift in Sources */,
+				92E289B72930B8BC00224B3B /* SocketIOManager.swift in Sources */,
 				92A640402925378E00A6F708 /* QueueRequest.swift in Sources */,
 				923DDE1D291A4CE000A2FE75 /* GenderViewController.swift in Sources */,
 				92D08386292723FA0072FC0C /* BehaviorRelayProperty.swift in Sources */,
@@ -1016,6 +1039,7 @@
 				92A640382924B45800A6F708 /* Reactive+Extension.swift in Sources */,
 				92A5DE64291CFC5600094D3E /* Login.swift in Sources */,
 				92A6400929221EA100A6F708 /* HomeMapViewModel.swift in Sources */,
+				92E289BE2930BD7900224B3B /* ChatAPI.swift in Sources */,
 				9256073B2918F14D00A13FFB /* UIView+Extension.swift in Sources */,
 				92E74DF22926481300B15D71 /* StudyViewModel.swift in Sources */,
 				920B67312920A3B5000191F1 /* InfoManagementViewController.swift in Sources */,
@@ -1039,7 +1063,7 @@
 				92E289AF293033A600224B3B /* OtherBubbleTableViewCell.swift in Sources */,
 				92A5DE5F291CF53100094D3E /* UserRouter.swift in Sources */,
 				920B672829200955000191F1 /* MyInfoHeaderTableViewCell.swift in Sources */,
-				92E289AB29302FB000224B3B /* Chat.swift in Sources */,
+				92E289AB29302FB000224B3B /* ChatResponse.swift in Sources */,
 				92A6403329237B5900A6F708 /* TitleCollectionViewCell.swift in Sources */,
 				9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */,
 				923DDE25291A671100A2FE75 /* UIViewController+Extension.swift in Sources */,
@@ -1354,6 +1378,14 @@
 				kind = branch;
 			};
 		};
+		92E289B82930B97800224B3B /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1396,6 +1428,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 92E289B029303F5100224B3B /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
+		};
+		92E289B92930B97800224B3B /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92E289B82930B97800224B3B /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -37,3 +37,12 @@ extension Endpoint {
         static let dodge = "/v1/queue/dodge"
     }
 }
+
+// MARK: - Chat
+
+extension Endpoint {
+    struct Chat {
+        static let chat = "/v1/chat"
+        static let lastchatDate = "/v1/chat"
+    }
+}

@@ -31,11 +31,38 @@ final class ChatViewModel: BaseViewModel {
     
     var chatList: [Chat] = []
     lazy var chatRelay = BehaviorRelay<[ChatSection]>(value: [
-        ChatSection(header: 0, items: [Chat(id: "", v: 0, to: "", from: "", chat: self.nick.value, createdAt: "아마도날짜")]),
-        ChatSection(header: 1, items: [Chat(id: "huree", v: 0, to: "", from: "", chat: "방구머겅", createdAt: "05:30"),
-                               Chat(id: "sokyte", v: 0, to: "", from: "", chat: "방구??!?!?너지금방구라그랬냐!?!!?!어?!?!!?!!??!?", createdAt: "05:30"),
-                               Chat(id: "huree", v: 0, to: "", from: "", chat: "똥칼라파워", createdAt: "05:30")
-        ])
+        ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "아마도날짜")]),
+        ChatSection(header: 1, items: [])
     ])
+    
+    func requestChatList(from: String, lastchatDate: String, completionHandler: @escaping (Int) -> Void) {
+        ChatAPI.shared.requestChatList(from: from, lastchatDate: lastchatDate) { [weak self] response, statusCode in
+            guard let self = self else { return }
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            
+            if let response = response {
+                
+                let payload = response.payload
+                var chatList: [Chat] = []
+                payload.forEach {
+                    let date:Date = dateFormatter.date(from: $0.createdAt)!
+                    let dateString: String = date.toChatString()
+                    chatList.append(Chat(id: $0.id, to: $0.to, from: $0.from, chat: $0.chat, createdAt: dateString))
+                }
+                
+                let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "")]),
+                                   ChatSection(header: 1, items: chatList)]
+                
+                self.chatRelay.accept(chatSection)
+                completionHandler(200)
+            }
+            
+            if let statusCode = statusCode {
+                completionHandler(statusCode)
+            }
+        }
+    }
 }
 
