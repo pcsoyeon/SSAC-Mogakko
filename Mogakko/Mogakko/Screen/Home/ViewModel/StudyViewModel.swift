@@ -10,7 +10,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-struct Item: Hashable {
+struct SearchItem: Hashable {
     var id: UUID
     var study: String
 }
@@ -19,13 +19,13 @@ final class StudyViewModel {
     
     // MARK: - Property
     
-    var nearbyRelay = BehaviorRelay<[Item]>(value: [])
+    var nearbyRelay = BehaviorRelay<[SearchItem]>(value: [])
     
-    var wantToDoList: [Item] = []
+    var wantToDoList: [SearchItem] = []
     var wantToDoStringList: [String] = []
-    var wantToDoRelay = BehaviorRelay<[Item]>(value: [])
+    var wantToDoRelay = BehaviorRelay<[SearchItem]>(value: [])
     
-    var snapshotList = BehaviorRelay<[[Item]]>(value: [])
+    var snapshotList = BehaviorRelay<[[SearchItem]]>(value: [])
     
     var mapLatitude = BehaviorRelay<Double>(value: 0.0)
     var mapLongitude = BehaviorRelay<Double>(value: 0.0)
@@ -40,7 +40,7 @@ final class StudyViewModel {
             switch response {
             case .success(let data):
                 
-                var itemList: [Item] = []
+                var itemList: [SearchItem] = []
                 
                 var studyArray: [String] = []
                 studyArray.append(contentsOf: data.fromRecommend)
@@ -55,7 +55,7 @@ final class StudyViewModel {
                 
                 studyArray = self.removeDuplicateStringArray(studyArray)
                 for item in studyArray {
-                    itemList.append(Item(id: UUID(), study: item))
+                    itemList.append(SearchItem(id: UUID(), study: item))
                 }
                 
                 self.nearbyRelay.accept(itemList)
@@ -102,7 +102,7 @@ final class StudyViewModel {
         }
         
         if wantToDoStringList.contains(study) == false {
-            wantToDoList.append(Item(id: UUID(), study: study))
+            wantToDoList.append(SearchItem(id: UUID(), study: study))
             completionHandler(true)
         } else {
             completionHandler(false)
@@ -122,7 +122,7 @@ final class StudyViewModel {
         wantToDoRelay.accept(wantToDoList)
     }
     
-    func makeSnapshot(completionHandler: @escaping ([[Item]]) -> Void) {
+    func makeSnapshot(completionHandler: @escaping ([[SearchItem]]) -> Void) {
         completionHandler([nearbyRelay.value, wantToDoList])
     }
 }

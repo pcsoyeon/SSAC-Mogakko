@@ -39,7 +39,7 @@ final class StudyViewController: UIViewController {
     
     // MARK: - Property
     
-    private var dataSource: UICollectionViewDiffableDataSource<Int, Item>!
+    private var dataSource: UICollectionViewDiffableDataSource<Int, SearchItem>!
     static let sectionHeaderElementKind = "section-header-element-kind"
     
     var viewModel = StudyViewModel()
@@ -130,7 +130,7 @@ extension StudyViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, list in
                 print(list)
-                var snapshot = NSDiffableDataSourceSnapshot<Int, Item>()
+                var snapshot = NSDiffableDataSourceSnapshot<Int, SearchItem>()
                 
                 snapshot.appendSections([0, 1])
                 snapshot.appendItems(list, toSection: 0)
@@ -232,7 +232,7 @@ extension StudyViewController: BaseViewControllerAttribute {
                     vc.showToast(message: "스터디를 더 이상 추가할 수 없습니다")
                 } else {
                     vc.viewModel.makeSnapshot { sectionList in
-                        var snapshot = NSDiffableDataSourceSnapshot<Int, Item>()
+                        var snapshot = NSDiffableDataSourceSnapshot<Int, SearchItem>()
                         
                         snapshot.appendSections([0, 1])
                         
@@ -301,7 +301,7 @@ extension StudyViewController {
     }
     
     private func configureDataSource() {
-        let studyCellRegistration = UICollectionView.CellRegistration<StudyCollectionViewCell, Item>.init { cell, indexPath, itemIdentifier in
+        let studyCellRegistration = UICollectionView.CellRegistration<StudyCollectionViewCell, SearchItem>.init { cell, indexPath, itemIdentifier in
             
             if indexPath.row < 4 {
                 cell.type = .recommend
@@ -312,7 +312,7 @@ extension StudyViewController {
             cell.setData(itemIdentifier.study)
         }
         
-        let myStudyCellRegistration = UICollectionView.CellRegistration<MyStudyCollectionViewCell, Item>.init { cell, indexPath, itemIdentifier in
+        let myStudyCellRegistration = UICollectionView.CellRegistration<MyStudyCollectionViewCell, SearchItem>.init { cell, indexPath, itemIdentifier in
             cell.type = .wantToDo
             cell.setData(itemIdentifier.study)
         }

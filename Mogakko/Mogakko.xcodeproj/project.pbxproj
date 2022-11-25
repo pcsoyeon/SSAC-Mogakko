@@ -128,6 +128,11 @@
 		92E289A2292E745C00224B3B /* UINavigationViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289A1292E745C00224B3B /* UINavigationViewController+Extension.swift */; };
 		92E289A6292F4BB300224B3B /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289A5292F4BB300224B3B /* ChatViewModel.swift */; };
 		92E289A8292F4DB000224B3B /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289A7292F4DB000224B3B /* BaseViewModel.swift */; };
+		92E289AB29302FB000224B3B /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289AA29302FB000224B3B /* Chat.swift */; };
+		92E289AD293031CF00224B3B /* MyBubbleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289AC293031CF00224B3B /* MyBubbleTableViewCell.swift */; };
+		92E289AF293033A600224B3B /* OtherBubbleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289AE293033A600224B3B /* OtherBubbleTableViewCell.swift */; };
+		92E289B229303F5100224B3B /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 92E289B129303F5100224B3B /* RxDataSources */; };
+		92E289B429306B6B00224B3B /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289B329306B6B00224B3B /* HeaderTableViewCell.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
@@ -253,6 +258,10 @@
 		92E289A1292E745C00224B3B /* UINavigationViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Extension.swift"; sourceTree = "<group>"; };
 		92E289A5292F4BB300224B3B /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		92E289A7292F4DB000224B3B /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		92E289AA29302FB000224B3B /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		92E289AC293031CF00224B3B /* MyBubbleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBubbleTableViewCell.swift; sourceTree = "<group>"; };
+		92E289AE293033A600224B3B /* OtherBubbleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherBubbleTableViewCell.swift; sourceTree = "<group>"; };
+		92E289B329306B6B00224B3B /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -271,6 +280,7 @@
 				920B671C291FC064000191F1 /* FirebaseMessaging in Frameworks */,
 				92560759291945AA00A13FFB /* RxCocoa in Frameworks */,
 				925607182918DF1C00A13FFB /* SnapKit in Frameworks */,
+				92E289B229303F5100224B3B /* RxDataSources in Frameworks */,
 				9256075B291945AA00A13FFB /* RxSwift in Frameworks */,
 				925607392918F0CB00A13FFB /* Then in Frameworks */,
 			);
@@ -813,6 +823,7 @@
 		92D0839E292A7B840072FC0C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				92E289A929302FA600224B3B /* Model */,
 				92E289A3292F4A3900224B3B /* View */,
 				92E289A4292F4A4100224B3B /* ViewModel */,
 			);
@@ -823,6 +834,9 @@
 			isa = PBXGroup;
 			children = (
 				92D0839F292A7B940072FC0C /* ChatViewController.swift */,
+				92E289AC293031CF00224B3B /* MyBubbleTableViewCell.swift */,
+				92E289AE293033A600224B3B /* OtherBubbleTableViewCell.swift */,
+				92E289B329306B6B00224B3B /* HeaderTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -833,6 +847,14 @@
 				92E289A5292F4BB300224B3B /* ChatViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		92E289A929302FA600224B3B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				92E289AA29302FB000224B3B /* Chat.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		92E74DE32925C78200B15D71 /* Map */ = {
@@ -879,6 +901,7 @@
 				923DDE2C291ABA9E00A2FE75 /* Alamofire */,
 				920B6719291FC064000191F1 /* FirebaseAuth */,
 				920B671B291FC064000191F1 /* FirebaseMessaging */,
+				92E289B129303F5100224B3B /* RxDataSources */,
 			);
 			productName = Mogakko;
 			productReference = 925606F02918D51800A13FFB /* Mogakko.app */;
@@ -914,6 +937,7 @@
 				92560757291945AA00A13FFB /* XCRemoteSwiftPackageReference "RxSwift" */,
 				923DDE2B291ABA9E00A2FE75 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				920B6718291FC064000191F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				92E289B029303F5100224B3B /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 925606F12918D51800A13FFB /* Products */;
 			projectDirPath = "";
@@ -1012,8 +1036,10 @@
 				92D083882927A1670072FC0C /* RxCoreLocationDelegateProxy.swift in Sources */,
 				92A6401C2922497700A6F708 /* AllowSearchView.swift in Sources */,
 				92A5DE4B291B70E200094D3E /* NetworkMonitor.swift in Sources */,
+				92E289AF293033A600224B3B /* OtherBubbleTableViewCell.swift in Sources */,
 				92A5DE5F291CF53100094D3E /* UserRouter.swift in Sources */,
 				920B672829200955000191F1 /* MyInfoHeaderTableViewCell.swift in Sources */,
+				92E289AB29302FB000224B3B /* Chat.swift in Sources */,
 				92A6403329237B5900A6F708 /* TitleCollectionViewCell.swift in Sources */,
 				9256076D2919C81300A13FFB /* PhoneNumberViewModel.swift in Sources */,
 				923DDE25291A671100A2FE75 /* UIViewController+Extension.swift in Sources */,
@@ -1025,6 +1051,7 @@
 				925606F42918D51800A13FFB /* AppDelegate.swift in Sources */,
 				92A5DE6D291DB8EA00094D3E /* Date+Extension.swift in Sources */,
 				92D083A2292A7D570072FC0C /* QueueAPI.swift in Sources */,
+				92E289B429306B6B00224B3B /* HeaderTableViewCell.swift in Sources */,
 				92D083A0292A7B940072FC0C /* ChatViewController.swift in Sources */,
 				92A64010292230CB00A6F708 /* UIStackView+Extension.swift in Sources */,
 				92A6403B292532D800A6F708 /* SearchResponse.swift in Sources */,
@@ -1037,6 +1064,7 @@
 				92560762291946FF00A13FFB /* BaseTableViewCell.swift in Sources */,
 				92A6401E29224AC000A6F708 /* AgeView.swift in Sources */,
 				9256076F2919CC9D00A13FFB /* String+Extension.swift in Sources */,
+				92E289AD293031CF00224B3B /* MyBubbleTableViewCell.swift in Sources */,
 				92A5DE67291D124700094D3E /* SignupRequest.swift in Sources */,
 				92E289A6292F4BB300224B3B /* ChatViewModel.swift in Sources */,
 				92A5DE70291DBFE900094D3E /* TabBarViewController.swift in Sources */,
@@ -1318,6 +1346,14 @@
 				kind = branch;
 			};
 		};
+		92E289B029303F5100224B3B /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1355,6 +1391,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 92560757291945AA00A13FFB /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		92E289B129303F5100224B3B /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92E289B029303F5100224B3B /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

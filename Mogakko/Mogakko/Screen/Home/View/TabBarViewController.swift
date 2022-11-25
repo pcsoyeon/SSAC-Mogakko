@@ -24,7 +24,7 @@ final class TabBarViewController: UITabBarController, UITabBarControllerDelegate
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .white
-        self.tabBar.standardAppearance = appearance;
+        self.tabBar.standardAppearance = appearance
         self.tabBar.scrollEdgeAppearance = self.tabBar.standardAppearance
         
         let firstTabController = HomeMapViewController()

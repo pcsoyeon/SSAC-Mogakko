@@ -62,6 +62,5 @@ final class MDSFloatingButton: UIButton {
     private func configureImage(_ type: MDSFloatingButtonType) {
         setImage(type.image.withRenderingMode(.alwaysTemplate), for: .normal)
         tintColor = .white
-        
     }
 }
