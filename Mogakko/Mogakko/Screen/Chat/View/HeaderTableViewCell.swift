@@ -16,6 +16,7 @@ final class HeaderTableViewCell: BaseTableViewCell {
     
     private var dateView = UIView().then {
         $0.backgroundColor = .gray7
+        $0.makeRound(radius: 14)
     }
     
     private var dateLabel = UILabel().then {
@@ -57,6 +58,7 @@ final class HeaderTableViewCell: BaseTableViewCell {
             make.top.equalToSuperview().inset(Metric.margin)
             make.centerX.equalToSuperview()
             make.width.equalTo(114)
+            make.height.equalTo(28)
         }
         
         dateLabel.snp.makeConstraints { make in
@@ -64,7 +66,7 @@ final class HeaderTableViewCell: BaseTableViewCell {
         }
         
         titleStackView.snp.makeConstraints { make in
-            make.top.equalTo(dateView.snp.bottom).inset(12)
+            make.top.equalTo(dateView.snp.bottom).offset(12)
             make.centerX.equalToSuperview()
         }
         

@@ -31,7 +31,7 @@ final class ChatViewModel: BaseViewModel {
     
     var chatList: [Chat] = []
     lazy var chatRelay = BehaviorRelay<[ChatSection]>(value: [
-        ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "아마도날짜")]),
+        ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "")]),
         ChatSection(header: 1, items: [])
     ])
     
@@ -50,10 +50,9 @@ final class ChatViewModel: BaseViewModel {
                     let date:Date = dateFormatter.date(from: $0.createdAt)!
                     let dateString: String = date.toChatString()
                     chatList.append(Chat(id: $0.id, to: $0.to, from: $0.from, chat: $0.chat, createdAt: dateString))
-                    chatList.append(Chat(id: $0.id, to: "소깡", from: "소깡", chat: "어쩔방구", createdAt: dateString))
                 }
                 
-                let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "")]),
+                let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "1월 15일 토요일")]),
                                    ChatSection(header: 1, items: chatList)]
                 
                 self.chatRelay.accept(chatSection)

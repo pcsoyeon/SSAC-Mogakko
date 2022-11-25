@@ -57,7 +57,7 @@ final class ChatViewController: UIViewController {
     }
     
     private lazy var sendButton = UIButton().then {
-        $0.setImage(Constant.Image.ic, for: .normal)
+        $0.setImage(Constant.Image.ic.withRenderingMode(.alwaysTemplate), for: .normal)
         $0.isEnabled = false
     }
     
@@ -213,6 +213,7 @@ extension ChatViewController: BaseViewControllerAttribute {
             .bind { vc, _ in
                 if vc.messageTextView.hasText {
                     vc.sendButton.setImage(Constant.Image.icAct, for: .normal)
+                    vc.sendButton.tintColor = .green
                 } else {
                     vc.sendButton.setImage(Constant.Image.ic, for: .normal)
                     vc.messageTextView.textColor = .black
