@@ -162,9 +162,15 @@ extension WriteReviewPopupViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, _ in
                 print(vc.reputation)
-//                if vc.commentTextView.text != vc.placeholder {
-//                    vc.requestRate(uid: vc.uid, reputation: vc.reputation, comment: vc.commentTextView.text)
-//                }
+                if vc.commentTextView.text == vc.placeholder {
+                    vc.requestRate(uid: vc.uid, reputation: vc.reputation, comment: "")
+                } else {
+                    if vc.commentTextView.hasText {
+                        vc.requestRate(uid: vc.uid, reputation: vc.reputation, comment: vc.commentTextView.text)
+                    } else {
+                        vc.requestRate(uid: vc.uid, reputation: vc.reputation, comment: "")
+                    }
+                }
             }
             .disposed(by: disposeBag)
         
@@ -272,6 +278,8 @@ extension WriteReviewPopupViewController {
             if statusCode == 200 {
                 self.registerComment?(true)
                 self.dismiss(animated: true)
+            } else {
+                
             }
         }
     }

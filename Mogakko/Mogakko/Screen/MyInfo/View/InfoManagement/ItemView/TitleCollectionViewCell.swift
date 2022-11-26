@@ -26,6 +26,12 @@ final class TitleCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
+    override var isSelected: Bool {
+        didSet {
+            isActive = isSelected
+        }
+    }
+    
     // MARK: - UI Method
     
     override func configureAttribute() {
