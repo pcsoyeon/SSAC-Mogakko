@@ -34,6 +34,7 @@ final class ChatViewController: UIViewController {
     private lazy var tableView = UITableView(frame: .zero, style: .plain).then {
         $0.rowHeight = UITableView.automaticDimension
         $0.estimatedRowHeight = UITableView.automaticDimension
+        $0.estimatedSectionHeaderHeight = 0.0
         
         $0.separatorStyle = .none
         
@@ -117,6 +118,9 @@ final class ChatViewController: UIViewController {
     
     let viewModel = ChatViewModel()
     private let disposeBag = DisposeBag()
+    
+    private let placeholder = "메세지를 입력하세요"
+    private var keyboardHeight = 0.0
 
     // MARK: - Life Cycle
     
@@ -267,41 +271,77 @@ extension ChatViewController: BaseViewControllerAttribute {
             .setDelegate(self)
             .disposed(by: disposeBag)
         
+        tableView.keyboardDismissMode = .onDrag
+        
+//        NotificationCenter.default.rx.notification(UIResponder.keyboardDidShowNotification)
+//            .withUnretained(self)
+//            .bind { vc, notification in
+//                if let userInfo = notification.userInfo,
+//                   let keyboardRectangle = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+//                    vc.keyboardHeight = keyboardRectangle.height
+//                }
+//            }
+//            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx.notification(UIResponder.keyboardDidHideNotification)
+            .withUnretained(self)
+            .bind { vc, notification in
+                vc.tableView.contentInset = .zero
+                vc.tableView.scrollToRow(at: IndexPath(row: vc.viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         messageTextView.rx.didBeginEditing
             .withUnretained(self)
             .bind { vc, _ in
-                vc.messageTextView.text = (vc.messageTextView.text == "메세지를 입력하세요") ? "" : "메세지를 입력하세요"
+                // TODO: - Bottom Inset 수정
+                vc.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 291, right: 0)
+                vc.tableView.scrollToRow(at: IndexPath(row: vc.viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
+                
+                if vc.messageTextView.text == vc.placeholder {
+                    vc.messageTextView.text = ""
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        messageTextView.rx.didEndEditing
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.tableView.contentInset = .zero
+                vc.tableView.scrollToRow(at: IndexPath(row: vc.viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
             }
             .disposed(by: disposeBag)
         
         messageTextView.rx.didChange
             .withUnretained(self)
             .bind { vc, _ in
-                if vc.messageTextView.hasText {
+                if vc.messageTextView.text != vc.placeholder {
                     vc.sendButton.setImage(Constant.Image.icAct, for: .normal)
                     vc.sendButton.tintColor = .green
                 } else {
                     vc.sendButton.setImage(Constant.Image.ic, for: .normal)
                     vc.messageTextView.textColor = .black
+                }
+                
+                vc.messageTextView.textColor = .black
+                
+                let size = CGSize(width: vc.messageTextView.frame.width, height: .infinity)
+                let estimatedSize = vc.messageTextView.sizeThatFits(size)
+                
+                if estimatedSize.height > 72 {
+                    vc.messageTextView.isScrollEnabled = true
                     
-                    let size = CGSize(width: vc.messageTextView.frame.width, height: .infinity)
-                    let estimatedSize = vc.messageTextView.sizeThatFits(size)
-                    
-                    if estimatedSize.height > 100 {
-                        vc.messageTextView.isScrollEnabled = true
-                        
-                        vc.messageTextView.constraints.forEach { (constraint) in
-                            if constraint.firstAttribute == .height {
-                                constraint.constant = 100
-                            }
+                    vc.messageTextView.constraints.forEach { (constraint) in
+                        if constraint.firstAttribute == .height {
+                            constraint.constant = 72
                         }
-                    } else {
-                        vc.messageTextView.isScrollEnabled = false
-                        
-                        vc.messageTextView.constraints.forEach { (constraint) in
-                            if constraint.firstAttribute == .height {
-                                constraint.constant = estimatedSize.height
-                            }
+                    }
+                } else {
+                    vc.messageTextView.isScrollEnabled = false
+                    
+                    vc.messageTextView.constraints.forEach { (constraint) in
+                        if constraint.firstAttribute == .height {
+                            constraint.constant = estimatedSize.height
                         }
                     }
                 }
@@ -311,9 +351,11 @@ extension ChatViewController: BaseViewControllerAttribute {
         sendButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                if vc.messageTextView.text != "메세지를 입력하세요" {
+                if vc.messageTextView.text != vc.placeholder {
                     if let text = vc.messageTextView.text {
                         vc.postChat(text: text)
+                        vc.messageTextView.endEditing(true)
+                        // TODO: - 위의 endEditing -> TableView에 데이터 추가 후 TableView scrollToRow로 마지막 인덱스로 이동 
                     }
                 }
             }

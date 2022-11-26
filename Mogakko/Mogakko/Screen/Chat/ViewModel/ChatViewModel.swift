@@ -50,7 +50,10 @@ final class ChatViewModel: BaseViewModel {
                     let date:Date = dateFormatter.date(from: $0.createdAt)!
                     let dateString: String = self.toChatString(date)
                     chatList.append(Chat(id: $0.id, to: $0.to, from: $0.from, chat: $0.chat, createdAt: dateString))
+                    chatList.append(Chat(id: $0.id, to: $0.to, from: $0.from, chat: $0.chat, createdAt: dateString))
+                    chatList.append(Chat(id: $0.id, to: $0.to, from: $0.from, chat: $0.chat, createdAt: dateString))
                 }
+                self.chatList = chatList
                 
                 let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "1월 15일 토요일")]),
                                    ChatSection(header: 1, items: chatList)]
