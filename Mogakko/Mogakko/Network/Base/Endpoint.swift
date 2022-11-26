@@ -35,6 +35,7 @@ extension Endpoint {
         static let studyRequest = "/v1/queue/studyrequest"
         static let studyAccept = "/v1/queue/studyaccept"
         static let dodge = "/v1/queue/dodge"
+        static let rate = "/v1/queue/rate"
     }
 }
 
