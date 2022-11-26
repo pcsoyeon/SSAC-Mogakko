@@ -82,8 +82,10 @@ extension QueueRouter: URLRequestConvertible {
         switch self {
         case .queue:
             return URLEncoding(arrayEncoding: .noBrackets)
-        case .deleteQueue, .search, .myQueueState, .studyRequest, .studyAccept, .dodge:
+        case .deleteQueue, .search, .myQueueState, .studyRequest, .studyAccept:
             return URLEncoding.default
+        case .dodge:
+            return JSONEncoding.default
         }
     }
     

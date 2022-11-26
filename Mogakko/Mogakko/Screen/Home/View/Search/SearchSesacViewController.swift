@@ -208,7 +208,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                 viewController.queue = queue
                 viewController.modalTransitionStyle = .crossDissolve
                 viewController.modalPresentationStyle = .overFullScreen
-                self.present(viewController, animated: true)
+                vc.present(viewController, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -220,7 +220,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                 viewController.queue = queue
                 viewController.modalTransitionStyle = .crossDissolve
                 viewController.modalPresentationStyle = .overFullScreen
-                self.present(viewController, animated: true)
+                vc.present(viewController, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -380,7 +380,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                     return
                 } else {
                     self.showToast(message: "\(String(describing: response.matchedNick))님과 매칭되셨습니다. 잠시 후 채팅방으로 이동합니다")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                         let viewController = ChatViewController()
                         self.navigationController?.pushViewController(viewController, animated: true)
                     }

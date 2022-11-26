@@ -121,6 +121,8 @@ final class ChatViewController: UIViewController {
     
     private let placeholder = "메세지를 입력하세요"
     private var keyboardHeight = 0.0
+    
+    private var cancelMatchType: CancelMatchType = .matching
 
     // MARK: - Life Cycle
     
@@ -368,19 +370,48 @@ extension ChatViewController: BaseViewControllerAttribute {
                 
                 // TODO: - 위에서 아래로 내려오는 애니메이션으로 수정
                 if vc.isOpen {
-                    vc.menuBackView.isHidden = false
                     UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut) {
                         vc.menuBackView.alpha = 1
                         vc.menuStackView.alpha = 1
                     }
+                    vc.menuBackView.isHidden = false
                 } else {
-                    vc.menuBackView.isHidden = true
                     UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut) {
                         vc.menuBackView.alpha = 0
                         vc.menuStackView.alpha = 0
                     }
+                    vc.menuBackView.isHidden = true
                 }
                 
+            }
+            .disposed(by: disposeBag)
+        
+        sirenButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                
+            }
+            .disposed(by: disposeBag)
+        
+        cancelButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut) {
+                    vc.menuBackView.alpha = 0
+                    vc.menuStackView.alpha = 0
+                }
+                vc.menuBackView.isHidden = true
+                
+                let popupViewController = CancelMatchPopupViewController()
+                popupViewController.modalTransitionStyle = .crossDissolve
+                popupViewController.modalPresentationStyle = .overFullScreen
+                popupViewController.cancelMatchType = vc.cancelMatchType
+                popupViewController.isCanceled = { isCanceled in
+                    if isCanceled {
+                        vc.navigationController?.popToRootViewController(animated: false)
+                    }
+                }
+                vc.present(popupViewController, animated: true)
             }
             .disposed(by: disposeBag)
     }
@@ -428,9 +459,14 @@ extension ChatViewController {
             
             if statusCode == 201 {
                 self.showToast(message: "스터디가 종료되어 채팅을 전송할 수 없습니다")
+                self.cancelMatchType = .plain
             } else {
                 // 나머지 상태코드 
             }
         }
+    }
+    
+    func requestMyState() {
+        
     }
 }

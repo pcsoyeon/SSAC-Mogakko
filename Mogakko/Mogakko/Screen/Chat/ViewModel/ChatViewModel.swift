@@ -97,5 +97,16 @@ final class ChatViewModel: BaseViewModel {
             }
         }
     }
+    
+    func requestMyState(completionHandler: @escaping (MyStateResponse?, APIError?) -> Void) {
+        GenericAPI.shared.requestDecodableData(type: MyStateResponse.self, router: QueueRouter.myQueueState) { response in
+            switch response {
+            case .success(let data):
+                completionHandler(data, nil)
+            case .failure(let error):
+                completionHandler(nil, error)
+            }
+        }
+    }
 }
 

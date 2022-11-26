@@ -137,6 +137,7 @@
 		92E289BA2930B97800224B3B /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 92E289B92930B97800224B3B /* SocketIO */; };
 		92E289BC2930BD6F00224B3B /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289BB2930BD6F00224B3B /* ChatRouter.swift */; };
 		92E289BE2930BD7900224B3B /* ChatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289BD2930BD7900224B3B /* ChatAPI.swift */; };
+		92E289C22931FC1500224B3B /* CancelMatchPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289C12931FC1500224B3B /* CancelMatchPopupViewController.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
@@ -269,6 +270,7 @@
 		92E289B62930B8BC00224B3B /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		92E289BB2930BD6F00224B3B /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
 		92E289BD2930BD7900224B3B /* ChatAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAPI.swift; sourceTree = "<group>"; };
+		92E289C12931FC1500224B3B /* CancelMatchPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelMatchPopupViewController.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -842,10 +844,9 @@
 		92E289A3292F4A3900224B3B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				92E289C32931FC1C00224B3B /* Cell */,
 				92D0839F292A7B940072FC0C /* ChatViewController.swift */,
-				92E289AC293031CF00224B3B /* MyBubbleTableViewCell.swift */,
-				92E289AE293033A600224B3B /* OtherBubbleTableViewCell.swift */,
-				92E289B329306B6B00224B3B /* HeaderTableViewCell.swift */,
+				92E289C12931FC1500224B3B /* CancelMatchPopupViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -874,6 +875,16 @@
 				92E289BD2930BD7900224B3B /* ChatAPI.swift */,
 			);
 			path = Chat;
+			sourceTree = "<group>";
+		};
+		92E289C32931FC1C00224B3B /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				92E289AC293031CF00224B3B /* MyBubbleTableViewCell.swift */,
+				92E289AE293033A600224B3B /* OtherBubbleTableViewCell.swift */,
+				92E289B329306B6B00224B3B /* HeaderTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		92E74DE32925C78200B15D71 /* Map */ = {
@@ -1101,6 +1112,7 @@
 				9256072C2918EDC100A13FFB /* Metric.swift in Sources */,
 				923DDE19291A4B9200A2FE75 /* EmailViewController.swift in Sources */,
 				92E289A8292F4DB000224B3B /* BaseViewModel.swift in Sources */,
+				92E289C22931FC1500224B3B /* CancelMatchPopupViewController.swift in Sources */,
 				923DDE0F291A429400A2FE75 /* BirthViewController.swift in Sources */,
 				92560764291948DE00A13FFB /* Onboarding.swift in Sources */,
 				92A6400C292221DD00A6F708 /* RxMKMapViewDelegateProxy.swift in Sources */,
