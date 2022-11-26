@@ -36,7 +36,7 @@ final class CardView: BaseView {
 //                let height = collectionView.collectionViewLayout.collectionViewContentSize.height
                 if cardViewType == .plain {
                     collectionView.snp.updateConstraints { make in
-                        make.height.equalTo(400)
+                        make.height.equalTo(410)
                     }
                 }
             } else {
@@ -96,6 +96,7 @@ final class CardView: BaseView {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout()).then {
         $0.backgroundColor = .white
         $0.isScrollEnabled = false
+        $0.isUserInteractionEnabled = false
     }
     
     // MARK: - Property

@@ -138,6 +138,7 @@
 		92E289BC2930BD6F00224B3B /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289BB2930BD6F00224B3B /* ChatRouter.swift */; };
 		92E289BE2930BD7900224B3B /* ChatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289BD2930BD7900224B3B /* ChatAPI.swift */; };
 		92E289C22931FC1500224B3B /* CancelMatchPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289C12931FC1500224B3B /* CancelMatchPopupViewController.swift */; };
+		92E289C52932465B00224B3B /* WriteReviewPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E289C42932465B00224B3B /* WriteReviewPopupViewController.swift */; };
 		92E74DE52925CA5A00B15D71 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */; };
 		92E74DE729260FA400B15D71 /* MyStateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DE629260FA400B15D71 /* MyStateResponse.swift */; };
 		92E74DEC292633AB00B15D71 /* StudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E74DEB292633AB00B15D71 /* StudyViewController.swift */; };
@@ -271,6 +272,7 @@
 		92E289BB2930BD6F00224B3B /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
 		92E289BD2930BD7900224B3B /* ChatAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAPI.swift; sourceTree = "<group>"; };
 		92E289C12931FC1500224B3B /* CancelMatchPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelMatchPopupViewController.swift; sourceTree = "<group>"; };
+		92E289C42932465B00224B3B /* WriteReviewPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteReviewPopupViewController.swift; sourceTree = "<group>"; };
 		92E74DE42925CA5900B15D71 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		92E74DE629260FA400B15D71 /* MyStateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStateResponse.swift; sourceTree = "<group>"; };
 		92E74DEB292633AB00B15D71 /* StudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyViewController.swift; sourceTree = "<group>"; };
@@ -847,6 +849,7 @@
 				92E289C32931FC1C00224B3B /* Cell */,
 				92D0839F292A7B940072FC0C /* ChatViewController.swift */,
 				92E289C12931FC1500224B3B /* CancelMatchPopupViewController.swift */,
+				92E289C42932465B00224B3B /* WriteReviewPopupViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1017,6 +1020,7 @@
 				9256072A2918E68A00A13FFB /* Image.swift in Sources */,
 				92E74DEE292637C900B15D71 /* StudyCollectionViewCell.swift in Sources */,
 				923DDE1B291A4C2000A2FE75 /* EmailViewModel.swift in Sources */,
+				92E289C52932465B00224B3B /* WriteReviewPopupViewController.swift in Sources */,
 				92A640442925389900A6F708 /* SearchRequest.swift in Sources */,
 				920B6715291F7D5D000191F1 /* Helper.swift in Sources */,
 				925606F82918D51800A13FFB /* SplashViewController.swift in Sources */,

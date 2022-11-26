@@ -100,7 +100,7 @@ final class ChatViewController: UIViewController {
     }
     
     private lazy var messageTextView = UITextView().then {
-        $0.text = "메세지를 입력하세요"
+        $0.text = placeholder
         $0.textColor = .gray7
         $0.font = MDSFont.Body3_R14.font
         $0.backgroundColor = .gray1
@@ -376,31 +376,35 @@ extension ChatViewController: BaseViewControllerAttribute {
                     }
                     vc.menuBackView.isHidden = false
                 } else {
-                    UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut) {
-                        vc.menuBackView.alpha = 0
-                        vc.menuStackView.alpha = 0
-                    }
-                    vc.menuBackView.isHidden = true
+                    vc.hideMenuView()
                 }
                 
             }
             .disposed(by: disposeBag)
         
-        sirenButton.rx.tap
+        writeButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
+                vc.hideMenuView()
                 
+                let popupViewController = WriteReviewPopupViewController()
+                popupViewController.modalTransitionStyle = .crossDissolve
+                popupViewController.modalPresentationStyle = .overFullScreen
+                popupViewController.nick = vc.viewModel.nick.value
+                popupViewController.uid = vc.viewModel.uid.value
+                popupViewController.registerComment = { registerComment in
+                    if registerComment {
+                        vc.navigationController?.popToRootViewController(animated: false)
+                    }
+                }
+                vc.present(popupViewController, animated: true)
             }
             .disposed(by: disposeBag)
         
         cancelButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut) {
-                    vc.menuBackView.alpha = 0
-                    vc.menuStackView.alpha = 0
-                }
-                vc.menuBackView.isHidden = true
+                vc.hideMenuView()
                 
                 let popupViewController = CancelMatchPopupViewController()
                 popupViewController.modalTransitionStyle = .crossDissolve
@@ -414,6 +418,14 @@ extension ChatViewController: BaseViewControllerAttribute {
                 vc.present(popupViewController, animated: true)
             }
             .disposed(by: disposeBag)
+    }
+    
+    private func hideMenuView() {
+        UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut) {
+            self.menuBackView.alpha = 0
+            self.menuStackView.alpha = 0
+        }
+        menuBackView.isHidden = true
     }
 }
 
