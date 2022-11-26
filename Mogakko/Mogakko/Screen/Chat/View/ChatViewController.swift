@@ -42,8 +42,59 @@ final class ChatViewController: UIViewController {
         $0.register(OtherBubbleTableViewCell.self, forCellReuseIdentifier: OtherBubbleTableViewCell.reuseIdentifier)
     }
     
-    private var menuView = UIView().then {
+    private var isOpen: Bool = false
+    
+    private var menuBackView = UIView().then {
+        $0.backgroundColor = .black.withAlphaComponent(0.5)
+        $0.alpha = 0
+    }
+    
+    private lazy var menuStackView = UIStackView().then {
         $0.backgroundColor = .white
+        $0.axis = .horizontal
+        $0.spacing = 0
+        $0.distribution = .fillEqually
+        $0.addArrangedSubviews(sirenButton, cancelButton, writeButton)
+        $0.alpha = 0
+    }
+    
+    private var sirenButton = UIButton().then {
+        var config = UIButton.Configuration.plain()
+        config.image = Constant.Image.siren
+        config.imagePadding = 4
+        config.imagePlacement = NSDirectionalRectEdge.top
+        config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0)
+        config.baseForegroundColor = .black
+        var titleAttr = AttributedString.init("새싹 신고")
+        titleAttr.font = MDSFont.Title3_M14.font
+        config.attributedTitle = titleAttr
+        $0.configuration = config
+    }
+    
+    private var cancelButton = UIButton().then {
+        var config = UIButton.Configuration.plain()
+        config.image = Constant.Image.cancelMatch
+        config.imagePadding = 4
+        config.imagePlacement = NSDirectionalRectEdge.top
+        config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0)
+        config.baseForegroundColor = .black
+        var titleAttr = AttributedString.init("스터디 취소")
+        titleAttr.font = MDSFont.Title3_M14.font
+        config.attributedTitle = titleAttr
+        $0.configuration = config
+    }
+    
+    private var writeButton = UIButton().then {
+        var config = UIButton.Configuration.plain()
+        config.image = Constant.Image.wirte
+        config.imagePadding = 4
+        config.imagePlacement = NSDirectionalRectEdge.top
+        config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        config.baseForegroundColor = .black
+        var titleAttr = AttributedString.init("리뷰 등록")
+        titleAttr.font = MDSFont.Title3_M14.font
+        config.attributedTitle = titleAttr
+        $0.configuration = config
     }
     
     private lazy var messageTextView = UITextView().then {
@@ -57,7 +108,7 @@ final class ChatViewController: UIViewController {
     }
     
     private lazy var sendButton = UIButton().then {
-        $0.setImage(Constant.Image.ic.withRenderingMode(.alwaysTemplate), for: .normal)
+        $0.setImage(Constant.Image.ic, for: .normal)
         $0.isEnabled = false
     }
     
@@ -108,6 +159,10 @@ final class ChatViewController: UIViewController {
 extension ChatViewController: BaseViewControllerAttribute {
     func configureHierarchy() {
         view.addSubviews(navigationBar, tableView, messageTextView)
+        
+        view.addSubview(menuBackView)
+        menuBackView.addSubview(menuStackView)
+        
         messageTextView.addSubview(sendButton)
         
         navigationBar.snp.makeConstraints { make in
@@ -122,6 +177,16 @@ extension ChatViewController: BaseViewControllerAttribute {
         moreButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(Metric.margin)
+        }
+        
+        menuBackView.snp.makeConstraints { make in
+            make.top.equalTo(navigationBar.snp.bottom)
+            make.horizontalEdges.bottom.equalToSuperview()
+        }
+        
+        menuStackView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalToSuperview()
+            make.height.equalTo(72)
         }
         
         tableView.snp.makeConstraints { make in
@@ -250,6 +315,27 @@ extension ChatViewController: BaseViewControllerAttribute {
                 }
             }
             .disposed(by: disposeBag)
+        
+        moreButton.rx.tap
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.isOpen.toggle()
+                
+                // TODO: - 위에서 아래로 내려오는 애니메이션으로 수정
+                if vc.isOpen {
+                    UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut) {
+                        vc.menuBackView.alpha = 1
+                        vc.menuStackView.alpha = 1
+                    }
+                } else {
+                    UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut) {
+                        vc.menuBackView.alpha = 0
+                        vc.menuStackView.alpha = 0
+                    }
+                }
+                
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -267,8 +353,6 @@ extension ChatViewController {
     func fetchChatList() {
         viewModel.requestChatList(from: viewModel.uid.value, lastchatDate: "2000-01-01T00:00:00.000Z") { [weak self] statusCode in
             guard let self = self else { return }
-            
-            print(statusCode)
             
             if statusCode == 200 {
                 SocketIOManager.shared.establishConnection()

@@ -48,7 +48,7 @@ final class ChatViewModel: BaseViewModel {
                 var chatList: [Chat] = []
                 payload.forEach {
                     let date:Date = dateFormatter.date(from: $0.createdAt)!
-                    let dateString: String = date.toChatString()
+                    let dateString: String = self.toChatString(date)
                     chatList.append(Chat(id: $0.id, to: $0.to, from: $0.from, chat: $0.chat, createdAt: dateString))
                 }
                 
@@ -62,6 +62,22 @@ final class ChatViewModel: BaseViewModel {
             if let statusCode = statusCode {
                 completionHandler(statusCode)
             }
+        }
+    }
+    
+    private func toChatString(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko-KR")
+        
+        var current = Calendar.current
+        current.locale = Locale(identifier: "ko-KR")
+        
+        if current.isDateInToday(date) {
+            dateFormatter.dateFormat = "a hh:mm"
+            return dateFormatter.string(from: date)
+        } else {
+            dateFormatter.dateFormat = "M/dd a hh:mm"
+            return dateFormatter.string(from: date)
         }
     }
 }
