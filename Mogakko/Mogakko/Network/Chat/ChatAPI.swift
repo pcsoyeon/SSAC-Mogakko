@@ -14,18 +14,17 @@ final class ChatAPI {
     
     private init() { }
     
-    func postChat(to: String, chat: String, completionHandler: @escaping (Int) -> Void) {
+    func postChat(to: String, chat: String, completionHandler: @escaping (Chat?, Int?) -> Void) {
         AF.request(ChatRouter.chat(to: to, chat: chat))
             .validate(statusCode: 200...500)
-            .responseData { response in
+            .responseDecodable(of: Chat.self) { response in
                 switch response.result {
-                case .success(_):
-                    guard let statusCode = response.response?.statusCode else { return }
-                    completionHandler(statusCode)
+                case .success(let data):
+                    completionHandler(data, nil)
                     
                 case .failure(_):
                     guard let statusCode = response.response?.statusCode else { return }
-                    completionHandler(statusCode)
+                    completionHandler(nil, statusCode)
                 }
             }
     }
@@ -37,7 +36,6 @@ final class ChatAPI {
                 print(response)
                 switch response.result {
                 case .success(let data):
-                    print(data)
                     completionHandler(data, nil)
                     
                 case .failure(_):

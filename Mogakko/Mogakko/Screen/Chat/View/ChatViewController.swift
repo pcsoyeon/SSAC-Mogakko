@@ -47,6 +47,7 @@ final class ChatViewController: UIViewController {
     private var menuBackView = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.5)
         $0.alpha = 0
+        $0.isHidden = true
     }
     
     private lazy var menuStackView = UIStackView().then {
@@ -109,7 +110,7 @@ final class ChatViewController: UIViewController {
     
     private lazy var sendButton = UIButton().then {
         $0.setImage(Constant.Image.ic, for: .normal)
-        $0.isEnabled = false
+//        $0.isEnabled = false
     }
     
     // MARK: - Property
@@ -310,8 +311,10 @@ extension ChatViewController: BaseViewControllerAttribute {
         sendButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
-                if let text = vc.messageTextView.text {
-                    // 채팅 보내기
+                if vc.messageTextView.text != "메세지를 입력하세요" {
+                    if let text = vc.messageTextView.text {
+                        vc.postChat(text: text)
+                    }
                 }
             }
             .disposed(by: disposeBag)
@@ -323,11 +326,13 @@ extension ChatViewController: BaseViewControllerAttribute {
                 
                 // TODO: - 위에서 아래로 내려오는 애니메이션으로 수정
                 if vc.isOpen {
+                    vc.menuBackView.isHidden = false
                     UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut) {
                         vc.menuBackView.alpha = 1
                         vc.menuStackView.alpha = 1
                     }
                 } else {
+                    vc.menuBackView.isHidden = true
                     UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut) {
                         vc.menuBackView.alpha = 0
                         vc.menuStackView.alpha = 0
@@ -375,7 +380,15 @@ extension ChatViewController {
         }
     }
     
-    func postChat() {
-        
+    func postChat(text: String) {
+        viewModel.postChat(text: text) { [weak self] statusCode in
+            guard let self = self else { return }
+            
+            if statusCode == 201 {
+                self.showToast(message: "스터디가 종료되어 채팅을 전송할 수 없습니다")
+            } else {
+                // 나머지 상태코드 
+            }
+        }
     }
 }

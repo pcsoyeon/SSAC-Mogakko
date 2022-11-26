@@ -31,7 +31,7 @@ extension ChatRouter: URLRequestConvertible {
     var headers: [String : String] {
         switch self {
         case .chat:
-            return [APIConstant.ContentType.contentType : APIConstant.ContentType.formUrlEncoded,
+            return [APIConstant.ContentType.contentType : APIConstant.ContentType.json,
                     APIConstant.idtoken : UserData.idtoken]
         case .lastchatDate:
             return [APIConstant.ContentType.contentType : APIConstant.ContentType.json,

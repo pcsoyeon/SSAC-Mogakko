@@ -80,5 +80,19 @@ final class ChatViewModel: BaseViewModel {
             return dateFormatter.string(from: date)
         }
     }
+    
+    func postChat(text: String, completionHandler: @escaping (Int) -> Void) {
+        ChatAPI.shared.postChat(to: uid.value, chat: text) { response, statusCode in
+            
+            if let response = response {
+                dump(response)
+            }
+            
+            if let statusCode = statusCode {
+                print("============== 채팅을 보냈어요💨 \(statusCode)")
+                completionHandler(statusCode)
+            }
+        }
+    }
 }
 
