@@ -35,6 +35,8 @@ final class ChatViewModel: BaseViewModel {
         ChatSection(header: 1, items: [])
     ])
     
+    let dateFormatter = DateFormatter()
+    
     func appendChatToSection(_ chat: Chat) {
         chatList.append(chat)
         let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "1월 15일 토요일")]),
@@ -47,15 +49,14 @@ final class ChatViewModel: BaseViewModel {
         ChatAPI.shared.requestChatList(from: from, lastchatDate: lastchatDate) { [weak self] response, statusCode in
             guard let self = self else { return }
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            self.dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
             
             if let response = response {
                 
                 let payload = response.payload
                 var chatList: [Chat] = []
                 payload.forEach {
-                    let date:Date = dateFormatter.date(from: $0.createdAt)!
+                    let date:Date = self.dateFormatter.date(from: $0.createdAt)!
                     let dateString: String = self.toChatString(date)
                     chatList.append(Chat(id: $0.id, to: $0.to, from: $0.from, chat: $0.chat, createdAt: dateString))
                 }
@@ -101,7 +102,8 @@ final class ChatViewModel: BaseViewModel {
                 dump(response)
                 completionHandler(200)
                 
-                self.chatList.append(response)
+                var chat: Chat = Chat(id: response.id, to: response.to, from: response.from, chat: response.chat, createdAt: self.toChatString(self.dateFormatter.date(from: response.createdAt)!))
+                self.chatList.append(chat)
                 let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "1월 15일 토요일")]),
                                    ChatSection(header: 1, items: self.chatList)]
                 
