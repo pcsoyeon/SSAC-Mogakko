@@ -80,11 +80,7 @@ extension CancelMatchPopupViewController: BaseViewControllerAttribute {
             self.dismiss(animated: true)
         } comfirmCompletion: { [weak self] in
             guard let self = self else { return }
-            // (post, /v1/queue/dodge) 를 통해 스터디를 취소합니다.
-            // 요청 바디 - otheruid: 매칭된 상대방의 uid
-            // (post, /v1/queue/dodge) 로부터 성공 응답(200)을 받으면, 사용자 현재 상태를 일반 상태로 변경하고 홈 화면으로 전환합니다.
-            
-//            self.requestDodge()
+            self.requestDodge()
         }
     }
 }
