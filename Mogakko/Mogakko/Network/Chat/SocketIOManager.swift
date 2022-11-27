@@ -31,6 +31,7 @@ final class SocketIOManager {
         // 연결
         socket.on(clientEvent: .connect) { data, ack in
             print("😇 SOCKET IS CONNECTED", data, ack)
+            self.socket.emit("changesocketid", UserData.uid)
         }
         
         // 연결 해제
@@ -39,7 +40,7 @@ final class SocketIOManager {
         }
 
         // 이벤트 수신
-        socket.on("sesac") { dataArray, ack in
+        socket.on("chat") { dataArray, ack in
             print("😇 SESAC RECEIVED", dataArray, ack)
             
             let data = dataArray[0] as! NSDictionary
@@ -48,6 +49,8 @@ final class SocketIOManager {
             let createdAt = data["createdAt"] as! String
             let from = data["from"] as! String
             let to = data["to"] as! String
+            
+            print("Check >>>>", chat, id, createdAt)
             
             NotificationCenter.default.post(name: NSNotification.Name("getMessage"), object: self, userInfo: [
                 "_id" : id,

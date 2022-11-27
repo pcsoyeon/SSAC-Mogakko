@@ -159,7 +159,8 @@ final class ChatViewController: UIViewController {
         let to = notification.userInfo!["to"] as! String
         
         let value = Chat(id: id, to: to, from: from, chat: chat, createdAt: createdAt)
-        viewModel.chatList.append(value)
+        viewModel.appendChatToSection(value)
+        tableView.reloadData()
         if !viewModel.chatList.isEmpty {
             tableView.scrollToRow(at: IndexPath(row: viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
         }
@@ -366,6 +367,7 @@ extension ChatViewController: BaseViewControllerAttribute {
                 if vc.messageTextView.text != vc.placeholder {
                     if let text = vc.messageTextView.text {
                         vc.postChat(text: text)
+                        vc.messageTextView.text = ""
                         vc.messageTextView.endEditing(true)
                     }
                 }
@@ -455,6 +457,9 @@ extension ChatViewController {
             
             if statusCode == 200 {
                 SocketIOManager.shared.establishConnection()
+                if !self.viewModel.chatList.isEmpty {
+                    self.tableView.scrollToRow(at: IndexPath(row: self.viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
+                }
             } else {
                 guard let error = APIError(rawValue: statusCode) else { return }
                 
@@ -478,7 +483,12 @@ extension ChatViewController {
         viewModel.postChat(text: text) { [weak self] statusCode in
             guard let self = self else { return }
             
-            if statusCode == 201 {
+            if statusCode == 200 {
+                self.fetchChatList()
+                if !self.viewModel.chatList.isEmpty {
+                    self.tableView.scrollToRow(at: IndexPath(row: self.viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
+                }
+            } else if statusCode == 201 {
                 self.showToast(message: "스터디가 종료되어 채팅을 전송할 수 없습니다")
                 self.cancelMatchType = .plain
             } else {

@@ -35,6 +35,14 @@ final class ChatViewModel: BaseViewModel {
         ChatSection(header: 1, items: [])
     ])
     
+    func appendChatToSection(_ chat: Chat) {
+        chatList.append(chat)
+        let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "1월 15일 토요일")]),
+                           ChatSection(header: 1, items: chatList)]
+        
+        chatRelay.accept(chatSection)
+    }
+    
     func requestChatList(from: String, lastchatDate: String, completionHandler: @escaping (Int) -> Void) {
         ChatAPI.shared.requestChatList(from: from, lastchatDate: lastchatDate) { [weak self] response, statusCode in
             guard let self = self else { return }
@@ -50,10 +58,10 @@ final class ChatViewModel: BaseViewModel {
                     let date:Date = dateFormatter.date(from: $0.createdAt)!
                     let dateString: String = self.toChatString(date)
                     chatList.append(Chat(id: $0.id, to: $0.to, from: $0.from, chat: $0.chat, createdAt: dateString))
-                    chatList.append(Chat(id: $0.id, to: $0.to, from: $0.from, chat: $0.chat, createdAt: dateString))
-                    chatList.append(Chat(id: $0.id, to: $0.to, from: $0.from, chat: $0.chat, createdAt: dateString))
                 }
                 self.chatList = chatList
+                
+                UserData.uid = chatList[0].from
                 
                 let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "1월 15일 토요일")]),
                                    ChatSection(header: 1, items: chatList)]
@@ -86,13 +94,14 @@ final class ChatViewModel: BaseViewModel {
     
     func postChat(text: String, completionHandler: @escaping (Int) -> Void) {
         ChatAPI.shared.postChat(to: uid.value, chat: text) { response, statusCode in
+            print("============== 채팅을 보냈어요💨 \(statusCode)")
             
             if let response = response {
                 dump(response)
+                completionHandler(200)
             }
             
             if let statusCode = statusCode {
-                print("============== 채팅을 보냈어요💨 \(statusCode)")
                 completionHandler(statusCode)
             }
         }

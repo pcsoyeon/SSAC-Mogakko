@@ -20,7 +20,7 @@ final class ChatAPI {
             .responseDecodable(of: Chat.self) { response in
                 switch response.result {
                 case .success(let data):
-                    completionHandler(data, nil)
+                    completionHandler(data, 200)
                     
                 case .failure(_):
                     guard let statusCode = response.response?.statusCode else { return }

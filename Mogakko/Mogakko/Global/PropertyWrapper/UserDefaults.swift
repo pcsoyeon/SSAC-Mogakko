@@ -56,6 +56,9 @@ struct UserData {
     
     @UserDefault(key: UserDefaultsKeyEnum.gender.rawValue, defaultValue: 0)
     static var gender: Int
+    
+    @UserDefault(key: UserDefaultsKeyEnum.uid.rawValue, defaultValue: "")
+    static var uid: String
 }
 
 enum UserDefaultsKeyEnum: String {
@@ -67,4 +70,5 @@ enum UserDefaultsKeyEnum: String {
     case birth = "birth"
     case email = "email"
     case gender = "gender"
+    case uid = "uid"
 }
