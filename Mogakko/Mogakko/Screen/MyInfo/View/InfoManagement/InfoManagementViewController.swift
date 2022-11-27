@@ -60,7 +60,7 @@ final class InfoManagementViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
+        configureNavigationBar()
         networkMoniter()
         tabBarController?.tabBar.isHidden = true
     }
@@ -109,6 +109,11 @@ extension InfoManagementViewController: BaseViewControllerAttribute {
     func configureAttribute() {
         view.backgroundColor = .white
         configureContentView()
+    }
+    
+    private func configureNavigationBar() {
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     private func configureContentView() {
