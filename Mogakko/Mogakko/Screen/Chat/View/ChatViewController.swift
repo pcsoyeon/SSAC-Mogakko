@@ -160,7 +160,6 @@ final class ChatViewController: UIViewController {
         
         let value = Chat(id: id, to: to, from: from, chat: chat, createdAt: createdAt)
         viewModel.appendChatToSection(value)
-        tableView.reloadData()
         if !viewModel.chatList.isEmpty {
             tableView.scrollToRow(at: IndexPath(row: viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
         }
@@ -484,7 +483,6 @@ extension ChatViewController {
             guard let self = self else { return }
             
             if statusCode == 200 {
-                self.fetchChatList()
                 if !self.viewModel.chatList.isEmpty {
                     self.tableView.scrollToRow(at: IndexPath(row: self.viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
                 }
