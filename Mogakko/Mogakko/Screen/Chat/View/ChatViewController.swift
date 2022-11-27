@@ -138,6 +138,7 @@ final class ChatViewController: UIViewController {
         configureAttribute()
         bind()
         
+        requestMyState()
         fetchChatList()
     }
     
@@ -416,6 +417,7 @@ extension ChatViewController: BaseViewControllerAttribute {
                 let popupViewController = CancelMatchPopupViewController()
                 popupViewController.modalTransitionStyle = .crossDissolve
                 popupViewController.modalPresentationStyle = .overFullScreen
+                popupViewController.uid = vc.viewModel.uid.value
                 popupViewController.cancelMatchType = vc.cancelMatchType
                 popupViewController.isCanceled = { isCanceled in
                     if isCanceled {
@@ -486,6 +488,22 @@ extension ChatViewController {
     }
     
     func requestMyState() {
-        
+        GenericAPI.shared.requestDecodableData(type: MyStateResponse.self, router: QueueRouter.myQueueState) { [weak self] response in
+            guard let self = self else { return }
+            
+            switch response {
+            case .success(let data):
+                if data.matched == 1 {
+                    if data.dodged == 1 {
+                        // 매칭 + 취소된 상태
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                            self.showToast(message: "스터디가 종료되어 채팅을 전송할 수 없습니다")
+                        }
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
