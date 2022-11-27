@@ -158,8 +158,10 @@ final class ChatViewController: UIViewController {
         let to = notification.userInfo!["to"] as! String
         
         let value = Chat(id: id, to: to, from: from, chat: chat, createdAt: createdAt)
-        // 데이터 추가
-        // tableview reload
+        viewModel.chatList.append(value)
+        if !viewModel.chatList.isEmpty {
+            tableView.scrollToRow(at: IndexPath(row: viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
+        }
     }
 }
 
@@ -289,7 +291,10 @@ extension ChatViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, notification in
                 vc.tableView.contentInset = .zero
-                vc.tableView.scrollToRow(at: IndexPath(row: vc.viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
+                
+                if !vc.viewModel.chatList.isEmpty {
+                    vc.tableView.scrollToRow(at: IndexPath(row: vc.viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
+                }
             }
             .disposed(by: disposeBag)
         
@@ -298,7 +303,9 @@ extension ChatViewController: BaseViewControllerAttribute {
             .bind { vc, _ in
                 // TODO: - Bottom Inset 수정
                 vc.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 291, right: 0)
-                vc.tableView.scrollToRow(at: IndexPath(row: vc.viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
+                if !vc.viewModel.chatList.isEmpty {
+                    vc.tableView.scrollToRow(at: IndexPath(row: vc.viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
+                }
                 
                 if vc.messageTextView.text == vc.placeholder {
                     vc.messageTextView.text = ""
@@ -310,7 +317,9 @@ extension ChatViewController: BaseViewControllerAttribute {
             .withUnretained(self)
             .bind { vc, _ in
                 vc.tableView.contentInset = .zero
-                vc.tableView.scrollToRow(at: IndexPath(row: vc.viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
+                if !vc.viewModel.chatList.isEmpty {
+                    vc.tableView.scrollToRow(at: IndexPath(row: vc.viewModel.chatList.count - 1, section: 1), at: .bottom, animated: true)
+                }
             }
             .disposed(by: disposeBag)
         
@@ -357,7 +366,6 @@ extension ChatViewController: BaseViewControllerAttribute {
                     if let text = vc.messageTextView.text {
                         vc.postChat(text: text)
                         vc.messageTextView.endEditing(true)
-                        // TODO: - 위의 endEditing -> TableView에 데이터 추가 후 TableView scrollToRow로 마지막 인덱스로 이동 
                     }
                 }
             }
@@ -368,9 +376,8 @@ extension ChatViewController: BaseViewControllerAttribute {
             .bind { vc, _ in
                 vc.isOpen.toggle()
                 
-                // TODO: - 위에서 아래로 내려오는 애니메이션으로 수정
                 if vc.isOpen {
-                    UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut) {
+                    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
                         vc.menuBackView.alpha = 1
                         vc.menuStackView.alpha = 1
                     }
@@ -421,7 +428,7 @@ extension ChatViewController: BaseViewControllerAttribute {
     }
     
     private func hideMenuView() {
-        UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
             self.menuBackView.alpha = 0
             self.menuStackView.alpha = 0
         }
