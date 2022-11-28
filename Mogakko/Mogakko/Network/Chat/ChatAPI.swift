@@ -33,7 +33,6 @@ final class ChatAPI {
         AF.request(ChatRouter.lastchatDate(from: from, date: lastchatDate))
             .validate(statusCode: 200...500)
             .responseDecodable(of: ChatResponse.self) { response in
-                print(response)
                 switch response.result {
                 case .success(let data):
                     completionHandler(data, nil)

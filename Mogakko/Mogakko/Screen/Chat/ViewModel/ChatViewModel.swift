@@ -35,7 +35,7 @@ final class ChatViewModel: BaseViewModel {
         ChatSection(header: 1, items: [])
     ])
     
-    let dateFormatter = DateFormatter()
+    private var dateFormatter = DateFormatter()
     
     func appendChatToSection(_ chat: Chat) {
         chatList.append(chat)
@@ -50,9 +50,10 @@ final class ChatViewModel: BaseViewModel {
             guard let self = self else { return }
             
             self.dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            self.dateFormatter.timeZone = TimeZone(identifier: "UTC")
             
             if let response = response {
-                
+                dump(response)
                 let payload = response.payload
                 var chatList: [Chat] = []
                 payload.forEach {
@@ -69,10 +70,12 @@ final class ChatViewModel: BaseViewModel {
                 
                 self.chatRelay.accept(chatSection)
                 completionHandler(200)
+                return
             }
             
             if let statusCode = statusCode {
                 completionHandler(statusCode)
+                return
             }
         }
     }

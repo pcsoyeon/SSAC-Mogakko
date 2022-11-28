@@ -278,6 +278,13 @@ extension ChatViewController: BaseViewControllerAttribute {
         
         tableView.keyboardDismissMode = .onDrag
         
+        tableView.rx.itemSelected
+            .withUnretained(self)
+            .bind { vc, _ in
+                vc.view.endEditing(true)
+            }
+            .disposed(by: disposeBag)
+        
 //        NotificationCenter.default.rx.notification(UIResponder.keyboardDidShowNotification)
 //            .withUnretained(self)
 //            .bind { vc, notification in
@@ -461,7 +468,6 @@ extension ChatViewController {
                 }
             } else {
                 guard let error = APIError(rawValue: statusCode) else { return }
-                
                 switch error {
                 case .takenUser, .invalidNickname:
                     return
