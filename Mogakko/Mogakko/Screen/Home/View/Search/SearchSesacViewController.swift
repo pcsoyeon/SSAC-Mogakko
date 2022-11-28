@@ -91,7 +91,7 @@ final class SearchSesacViewController: UIViewController {
     var timer : Timer?
     
     // MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAttribute()
@@ -196,7 +196,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                 print("============ 💗 주변 새싹 💗 ============")
                 dump(list)
                 vc.fromQueueView.list = list
-//                vc.fromQueueView.fromQueueRelay.accept(list)
+                //                vc.fromQueueView.fromQueueRelay.accept(list)
             }
             .disposed(by: disposeBag)
         
@@ -266,17 +266,15 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             $0.rx.tap
                 .withUnretained(self)
                 .bind { vc, _ in
-                    // 1. 서버 통신 (delete)
                     vc.viewModel.deleteQueue { statusCode in
                         if statusCode == 200 {
                             vc.navigationController?.popViewController(animated: true)
-                            // 2. 사용자의 위치는 그대로 전달 (현위치가 아닌, 지도의 중간지점)
                         } else if statusCode == 201 {
                             vc.showToast(message: "누군가와 스터디를 함께하기로 약속하셨어요!")
                             let viewController = ChatViewController()
                             vc.navigationController?.pushViewController(viewController, animated: true)
                         } else {
-                            // 나머지 오류 
+                            vc.handleOtherStausCode(statusCode)
                         }
                     }
                     
@@ -311,7 +309,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                 self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
             }
             .disposed(by: disposeBag)
-         
+        
         stopButton.rx.tap
             .withUnretained(self)
             .bind { vc, _ in
@@ -324,7 +322,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                         let viewController = ChatViewController()
                         vc.navigationController?.pushViewController(viewController, animated: true)
                     } else {
-                        // 나머지 상태코드에 대한 error handling 
+                        vc.handleOtherStausCode(statusCode)
                     }
                 }
             }
@@ -341,7 +339,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
         
         fromTitleButton.setTitleColor(.green, for: .normal)
         fromTitleButton.titleLabel?.font = MDSFont.Title3_M14.font
-
+        
         requestedTitleButton.setTitleColor(.gray6, for: .normal)
         requestedTitleButton.titleLabel?.font = MDSFont.Title4_R14.font
     }
@@ -368,16 +366,12 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             if let statusCode = statusCode {
                 switch statusCode {
                 case 201:
-                    return
-                case 401:
-                    return
-                case 406:
-                    return
-                case 500:
-                    return
-                case 501:
+                    self.showToast(message: "새싹 찾기를 요청하지 않은 상태입니다.")
+                    let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+                    self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
                     return
                 default:
+                    self.handleOtherStausCode(statusCode)
                     return
                 }
             }
@@ -395,4 +389,48 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             }
         }
     }
+    
+    private func refreshToken(_ idtoken: String) {
+        GenericAPI.shared.requestDecodableData(type: Login.self, router: UserRouter.refresh(idToken: idtoken)) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let data):
+                UserData.nickName = data.nick
+                self.requestMyQueueState()
+            case .failure(_):
+                self.showToast(message: "토큰 만료")
+            }
+        }
+    }
+    
+    private func handleOtherStausCode(_ statusCode: Int) {
+        switch statusCode {
+        case 401:
+            UserAPI.shared.refreshIdToken { result in
+                switch result {
+                case .success(let idtoken):
+                    print("갱신 - ", UserData.idtoken)
+                    self.refreshToken(idtoken)
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    return
+                }
+            }
+            return
+        case 406:
+            self.showToast(message: "미가입 회원입니다.")
+            Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
+            return
+        case 500:
+            self.showToast(message: "서버 내부 오류입니다. 잠시 후 다시 시도해주세요")
+            return
+        case 501:
+            self.showToast(message: "요청 값을 확인해주세요.")
+            return
+        default:
+            return
+        }
+    }
+
 }
