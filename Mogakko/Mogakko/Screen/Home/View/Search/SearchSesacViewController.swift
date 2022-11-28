@@ -196,7 +196,7 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
                 print("============ 💗 주변 새싹 💗 ============")
                 dump(list)
                 vc.fromQueueView.list = list
-                //                vc.fromQueueView.fromQueueRelay.accept(list)
+//                vc.fromQueueView.fromQueueRelay.accept(list)
             }
             .disposed(by: disposeBag)
         

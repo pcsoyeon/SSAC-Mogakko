@@ -37,8 +37,8 @@ final class NearbyView: BaseView {
             }
         }
     }
-    var fromQueueRelay = BehaviorRelay<[FromQueue]>(value: [FromQueue(uid: "", nick: "", lat: 0.0, long: 0.0, reputation: [], studylist: [], reviews: [], gender: 0, type: 0, sesac: 0, background: 0)])
     
+    var fromQueueRelay = BehaviorRelay<[FromQueue]>(value: [FromQueue(uid: "", nick: "", lat: 0.0, long: 0.0, reputation: [], studylist: [], reviews: [], gender: 0, type: 0, sesac: 0, background: 0)])
     
     var tapMatchButton = BehaviorRelay<FromQueue>(value: FromQueue(uid: "", nick: "", lat: 0.0, long: 0.0, reputation: [], studylist: [], reviews: [], gender: 0, type: 0, sesac: 0, background: 0))
     
@@ -86,8 +86,8 @@ final class NearbyView: BaseView {
 //                }
 //                cell.isExpanded = true
 //                cell.matchButtonType = .propose
-//                print("========= 데이터는 잘 들어오나 ??? ", element)
-////                cell.queue = element
+//                print("========= 데이터는 잘 들어오나??? ", element)
+//
 //                cell.cardView.imageItem.accept(ImageItem(background: element.background, sesac: element.sesac))
 //                cell.cardView.cardItem.accept(CardItem(nickname: element.nick, reputation: element.reputation, comment: element.reviews, studyList: element.studylist))
 //            }
@@ -111,16 +111,6 @@ extension NearbyView: UITableViewDelegate, UITableViewDataSource {
         
         cell.indexPathRow = indexPath.row
         cell.delegate = self
-        
-//        cell.tapMatchButton
-//            .withUnretained(self)
-//            .bind { view, isTapped in
-//                if isTapped {
-//                    let queue = view.list[indexPath.row]
-//                    view.tapMatchButton.accept(queue)
-//                }
-//            }
-//            .disposed(by: cell.disposeBag)
         
         return cell
     }

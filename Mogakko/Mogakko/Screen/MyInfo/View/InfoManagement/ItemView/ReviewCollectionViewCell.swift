@@ -10,6 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
+protocol ReviewCollectionViewCellDelegate: AnyObject {
+    func numberOfLines(_ numberOfLines: Int)
+}
+
 final class ReviewCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - UI Property
@@ -18,6 +22,10 @@ final class ReviewCollectionViewCell: BaseCollectionViewCell {
         $0.font = MDSFont.Body3_R14.font
         $0.numberOfLines = 0
     }
+    
+    // MARK: - Property
+    
+    var delegate: ReviewCollectionViewCellDelegate?
     
     // MARK: - UI Method
     
@@ -43,6 +51,8 @@ final class ReviewCollectionViewCell: BaseCollectionViewCell {
         } else {
             textLabel.text = comment
             textLabel.textColor = .black
+            
+            delegate?.numberOfLines(textLabel.countCurrentLines())
         }
     }
 }

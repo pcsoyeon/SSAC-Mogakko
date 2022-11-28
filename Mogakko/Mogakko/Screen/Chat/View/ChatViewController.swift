@@ -111,7 +111,6 @@ final class ChatViewController: UIViewController {
     
     private lazy var sendButton = UIButton().then {
         $0.setImage(Constant.Image.ic, for: .normal)
-//        $0.isEnabled = false
     }
     
     // MARK: - Property

@@ -14,6 +14,7 @@ import Then
 
 protocol CardTableViewCellDelegate: AnyObject {
     func touchUpMatchButton(_ indexPathRow: Int)
+//    func touchUpExpandButton(_ indexPathRow: Int)
 }
 
 final class CardTableViewCell: BaseTableViewCell {

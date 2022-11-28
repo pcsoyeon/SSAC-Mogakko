@@ -106,6 +106,8 @@ final class CardView: BaseView {
     
     private let disposeBag = DisposeBag()
     
+    var numberOfLines: Int = 1
+    
     // MARK: - UI Method
     
     override func configureAttribute() {
@@ -141,6 +143,7 @@ final class CardView: BaseView {
         expandButton.snp.makeConstraints { make in
             make.horizontalEdges.verticalEdges.equalToSuperview()
         }
+        
         expandIconImageView.snp.makeConstraints { make in
             make.width.height.equalTo(16)
             make.trailing.equalToSuperview().inset(16)
@@ -150,7 +153,7 @@ final class CardView: BaseView {
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(nicknameView.snp.bottom)
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(310 - 58 - 20)
+            make.height.equalTo(310 - 58)
         }
     }
     
@@ -254,7 +257,7 @@ extension CardView {
                     let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(128), heightDimension: .estimated(128))
                     let item = NSCollectionLayoutItem(layoutSize: itemSize)
                     
-                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.2))
                     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                     
                     let headerSize = NSCollectionLayoutSize(
@@ -296,7 +299,7 @@ extension CardView {
                     let item = NSCollectionLayoutItem(layoutSize: itemSize)
                     item.edgeSpacing = .init(leading: .fixed(16), top: .fixed(8), trailing: .fixed(0), bottom: .fixed(8))
                     
-                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.2))
                     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                     
                     let headerSize = NSCollectionLayoutSize(
@@ -312,10 +315,10 @@ extension CardView {
                     section.boundarySupplementaryItems = [header]
                     return section
                 } else {
-                    let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(128), heightDimension: .estimated(128))
+                    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.2))
                     let item = NSCollectionLayoutItem(layoutSize: itemSize)
                     
-                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.2))
                     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                     
                     let headerSize = NSCollectionLayoutSize(
@@ -349,6 +352,7 @@ extension CardView {
         
         let reviewCellRegistration = UICollectionView.CellRegistration<ReviewCollectionViewCell, CardCollectionItem>.init { cell, indexPath, itemIdentifier in
             cell.setData(itemIdentifier.text)
+            cell.delegate = self
         }
         
         let headerRegistration = UICollectionView.SupplementaryRegistration<StudyHeaderView>(elementKind: CardView.sectionHeaderElementKind) { (supplementaryView, string, indexPath) in
@@ -401,5 +405,13 @@ extension CardView {
         dataSource.supplementaryViewProvider = { (view, kind, index) in
             return self.collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: index)
         }
+    }
+}
+
+// MARK: - Custom Delegate
+
+extension CardView: ReviewCollectionViewCellDelegate {
+    func numberOfLines(_ numberOfLines: Int) {
+        self.numberOfLines = numberOfLines
     }
 }
