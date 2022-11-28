@@ -332,8 +332,11 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
     }
     
     private func highlightedFromTitle() {
-        indicatorLine.snp.updateConstraints { make in
-            make.leading.equalToSuperview()
+        UIView.animate(withDuration: 0.35) {
+            self.indicatorLine.snp.updateConstraints { make in
+                make.leading.equalToSuperview()
+            }
+            self.view.layoutIfNeeded()
         }
         
         fromTitleButton.setTitleColor(.green, for: .normal)
@@ -344,12 +347,16 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
     }
     
     private func highlightedRequestTitle() {
-        indicatorLine.snp.updateConstraints { make in
-            make.leading.equalToSuperview().inset(self.view.frame.width / 2)
+        UIView.animate(withDuration: 0.2) {
+            self.indicatorLine.snp.updateConstraints { make in
+                make.leading.equalToSuperview().inset(self.view.frame.width / 2)
+            }
+            self.view.layoutIfNeeded()
         }
         
         fromTitleButton.setTitleColor(.gray6, for: .normal)
         fromTitleButton.titleLabel?.font = MDSFont.Title4_R14.font
+        
         requestedTitleButton.setTitleColor(.green, for: .normal)
         requestedTitleButton.titleLabel?.font = MDSFont.Title3_M14.font
     }
