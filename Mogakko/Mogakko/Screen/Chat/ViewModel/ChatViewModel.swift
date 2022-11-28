@@ -63,8 +63,6 @@ final class ChatViewModel: BaseViewModel {
                 }
                 self.chatList = chatList
                 
-                UserData.uid = chatList[0].from
-                
                 let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "1월 15일 토요일")]),
                                    ChatSection(header: 1, items: chatList)]
                 
@@ -99,22 +97,23 @@ final class ChatViewModel: BaseViewModel {
     func postChat(text: String, completionHandler: @escaping (Int) -> Void) {
         ChatAPI.shared.postChat(to: uid.value, chat: text) { [weak self] response, statusCode in
             guard let self = self else { return }
+            guard let statusCode = statusCode else { return }
             print("============== 채팅을 보냈어요💨 \(statusCode)")
+            
+            completionHandler(200)
             
             if let response = response {
                 dump(response)
-                completionHandler(200)
                 
-                var chat: Chat = Chat(id: response.id, to: response.to, from: response.from, chat: response.chat, createdAt: self.toChatString(self.dateFormatter.date(from: response.createdAt)!))
+                let chat: Chat = Chat(id: response.id, to: response.to, from: response.from, chat: response.chat, createdAt: self.toChatString(self.dateFormatter.date(from: response.createdAt)!))
+                
+                UserData.uid = response.from
+                
                 self.chatList.append(chat)
                 let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "1월 15일 토요일")]),
                                    ChatSection(header: 1, items: self.chatList)]
                 
                 self.chatRelay.accept(chatSection)
-            }
-            
-            if let statusCode = statusCode {
-                completionHandler(statusCode)
             }
         }
     }

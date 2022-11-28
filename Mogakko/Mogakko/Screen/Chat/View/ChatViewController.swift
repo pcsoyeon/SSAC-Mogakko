@@ -47,8 +47,8 @@ final class ChatViewController: UIViewController {
     
     private var menuBackView = UIView().then {
         $0.backgroundColor = .black.withAlphaComponent(0.5)
-        $0.alpha = 0
-        $0.isHidden = true
+//        $0.alpha = 0
+//        $0.isHidden = true
     }
     
     private lazy var menuStackView = UIStackView().then {
@@ -57,7 +57,8 @@ final class ChatViewController: UIViewController {
         $0.spacing = 0
         $0.distribution = .fillEqually
         $0.addArrangedSubviews(sirenButton, cancelButton, writeButton)
-        $0.alpha = 0
+//        $0.alpha = 0
+//        $0.isHidden = true
     }
     
     private var sirenButton = UIButton().then {
@@ -71,6 +72,7 @@ final class ChatViewController: UIViewController {
         titleAttr.font = MDSFont.Title3_M14.font
         config.attributedTitle = titleAttr
         $0.configuration = config
+        $0.isHidden = true
     }
     
     private var cancelButton = UIButton().then {
@@ -84,6 +86,7 @@ final class ChatViewController: UIViewController {
         titleAttr.font = MDSFont.Title3_M14.font
         config.attributedTitle = titleAttr
         $0.configuration = config
+        $0.isHidden = true
     }
     
     private var writeButton = UIButton().then {
@@ -97,6 +100,7 @@ final class ChatViewController: UIViewController {
         titleAttr.font = MDSFont.Title3_M14.font
         config.attributedTitle = titleAttr
         $0.configuration = config
+        $0.isHidden = true
     }
     
     private lazy var messageTextView = UITextView().then {
@@ -190,12 +194,15 @@ extension ChatViewController: BaseViewControllerAttribute {
         
         menuBackView.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom)
-            make.horizontalEdges.bottom.equalToSuperview()
+            make.horizontalEdges.equalToSuperview()
+//            make.height.equalTo(724)
+            make.height.equalTo(0)
         }
         
         menuStackView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
-            make.height.equalTo(72)
+//            make.height.equalTo(72)
+            make.height.equalTo(0)
         }
         
         tableView.snp.makeConstraints { make in
@@ -385,15 +392,43 @@ extension ChatViewController: BaseViewControllerAttribute {
                 vc.isOpen.toggle()
                 
                 if vc.isOpen {
+//                    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
+//                        vc.menuBackView.alpha = 1
+//                        vc.menuStackView.alpha = 1
+//                    }
+//                    vc.menuBackView.isHidden = false
+                    
                     UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
-                        vc.menuBackView.alpha = 1
-                        vc.menuStackView.alpha = 1
+                        self.menuBackView.snp.updateConstraints { make in
+                            make.height.equalTo(UIScreen.main.bounds.height - 44 - 72)
+                        }
+                        
+                        self.menuStackView.snp.updateConstraints { make in
+                            make.height.equalTo(72)
+                        }
+                        
+                        [vc.sirenButton, vc.cancelButton, vc.writeButton].forEach {
+                            $0.isHidden = false
+                        }
                     }
-                    vc.menuBackView.isHidden = false
                 } else {
-                    vc.hideMenuView()
+//                    vc.hideMenuView()
+                    
+                    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
+                        self.menuBackView.snp.updateConstraints { make in
+                            make.height.equalTo(0)
+                        }
+                        
+                        self.menuStackView.snp.updateConstraints { make in
+                            make.height.equalTo(0)
+                        }
+                        
+                        [vc.sirenButton, vc.cancelButton, vc.writeButton].forEach {
+                            $0.isHidden = true
+                        }
+                    }
+                    
                 }
-                
             }
             .disposed(by: disposeBag)
         
