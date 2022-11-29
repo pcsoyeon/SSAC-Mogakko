@@ -23,7 +23,7 @@ final class SocketIOManager {
                                 config: [
 //                                    .log(true),
                                     .compress,
-//                                    .forceWebsockets(true)
+                                    .forceWebsockets(true)
                                 ])
         
         socket = manager.defaultSocket // room - 1:1로 채팅하는 경우에는 따로 지정을 해야한다.

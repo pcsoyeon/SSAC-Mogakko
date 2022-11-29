@@ -202,18 +202,14 @@ final class CardView: BaseView {
                 switch view.cardViewType {
                 case .plain:
                     var snapshot = NSDiffableDataSourceSnapshot<Int, CardCollectionItem>()
-                    
                     snapshot.appendSections([0, 1, 2])
-                    
                     snapshot.appendItems(titleItemList, toSection: 0)
                     snapshot.appendItems(studyItemList, toSection: 1)
                     snapshot.appendItems(commentItemList, toSection: 2)
                     view.dataSource.apply(snapshot)
                 case .info:
                     var snapshot = NSDiffableDataSourceSnapshot<Int, CardCollectionItem>()
-                    
                     snapshot.appendSections([0, 1])
-                    
                     snapshot.appendItems(titleItemList, toSection: 0)
                     snapshot.appendItems(commentItemList, toSection: 1)
                     view.dataSource.apply(snapshot)

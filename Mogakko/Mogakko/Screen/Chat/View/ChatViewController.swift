@@ -133,6 +133,7 @@ final class ChatViewController: UIViewController {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
         configureNavigationBar()
+        fetchChatList()
     }
     
     override func viewDidLoad() {
@@ -141,8 +142,8 @@ final class ChatViewController: UIViewController {
         configureAttribute()
         bind()
         
+        getNotification()
         requestMyState()
-        fetchChatList()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
