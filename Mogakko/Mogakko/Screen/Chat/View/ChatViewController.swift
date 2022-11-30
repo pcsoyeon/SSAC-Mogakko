@@ -133,7 +133,8 @@ final class ChatViewController: UIViewController {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
         configureNavigationBar()
-        fetchChatList()
+        
+        requestMyState()
     }
     
     override func viewDidLoad() {
@@ -143,7 +144,6 @@ final class ChatViewController: UIViewController {
         bind()
         
         getNotification()
-        requestMyState()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -244,7 +244,7 @@ extension ChatViewController: BaseViewControllerAttribute {
                 cell.setData(date: item.createdAt, nick: item.chat)
                 return cell
             } else {
-                if item.from == self.viewModel.uid.value {
+                if item.from == self.viewModel.uid {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherBubbleTableViewCell.reuseIdentifier, for: indexPath) as? OtherBubbleTableViewCell else { return UITableViewCell() }
                     cell.setData(item.chat, item.createdAt)
                     return cell
@@ -260,13 +260,6 @@ extension ChatViewController: BaseViewControllerAttribute {
     }
     
     func bind() {
-        viewModel.nick
-            .withUnretained(self)
-            .bind { vc, nick in
-                vc.navigationBar.title = nick
-            }
-            .disposed(by: disposeBag)
-        
         backButton.rx.tap
             .withUnretained(self)
             .bind { _ in
@@ -403,11 +396,11 @@ extension ChatViewController: BaseViewControllerAttribute {
                         self.menuBackView.snp.updateConstraints { make in
                             make.height.equalTo(UIScreen.main.bounds.height - 44 - 72)
                         }
-                        
+
                         self.menuStackView.snp.updateConstraints { make in
                             make.height.equalTo(72)
                         }
-                        
+
                         [vc.sirenButton, vc.cancelButton, vc.writeButton].forEach {
                             $0.isHidden = false
                         }
@@ -441,8 +434,6 @@ extension ChatViewController: BaseViewControllerAttribute {
                 let popupViewController = WriteReviewPopupViewController()
                 popupViewController.modalTransitionStyle = .crossDissolve
                 popupViewController.modalPresentationStyle = .overFullScreen
-                popupViewController.nick = vc.viewModel.nick.value
-                popupViewController.uid = vc.viewModel.uid.value
                 popupViewController.registerComment = { registerComment in
                     if registerComment {
                         vc.navigationController?.popToRootViewController(animated: false)
@@ -460,7 +451,7 @@ extension ChatViewController: BaseViewControllerAttribute {
                 let popupViewController = CancelMatchPopupViewController()
                 popupViewController.modalTransitionStyle = .crossDissolve
                 popupViewController.modalPresentationStyle = .overFullScreen
-                popupViewController.uid = vc.viewModel.uid.value
+                popupViewController.uid = vc.viewModel.uid
                 popupViewController.cancelMatchType = vc.cancelMatchType
                 popupViewController.isCanceled = { isCanceled in
                     if isCanceled {
@@ -493,7 +484,7 @@ extension ChatViewController: UITableViewDelegate {
 
 extension ChatViewController {
     func fetchChatList() {
-        viewModel.requestChatList(from: viewModel.uid.value, lastchatDate: "2000-01-01T00:00:00.000Z") { [weak self] statusCode in
+        viewModel.requestChatList(lastchatDate: "2000-01-01T00:00:00.000Z") { [weak self] statusCode in
             guard let self = self else { return }
             
             if statusCode == 200 {
@@ -506,14 +497,10 @@ extension ChatViewController {
                 switch error {
                 case .takenUser, .invalidNickname:
                     return
-                case .invalidAuthorization:
+                case .invalidAuthorization, .serverError, .emptyParameters:
                     self.showToast(message: "\(String(describing: error.errorDescription))")
                 case .unsubscribedUser:
                     Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
-                case .serverError:
-                    self.showToast(message: "\(String(describing: error.errorDescription))")
-                case .emptyParameters:
-                    self.showToast(message: "\(String(describing: error.errorDescription))")
                 }
             }
         }
@@ -530,29 +517,48 @@ extension ChatViewController {
             } else if statusCode == 201 {
                 self.showToast(message: "스터디가 종료되어 채팅을 전송할 수 없습니다")
                 self.cancelMatchType = .plain
-            } else {
-                // 나머지 상태코드 
+            } else if statusCode == 401 {
+                UserAPI.shared.refreshIdToken { result in
+                    switch result {
+                    case .success(let idToken):
+                        UserData.idtoken = idToken
+                        self.postChat(text: text)
+                    case .failure(let error):
+                        self.showToast(message: error.localizedDescription)
+                    }
+                }
+            } else if statusCode == 406 {
+                self.showToast(message: "미가입 회원입니다.")
+                Helper.convertNavigationRootViewController(view: self.view, controller: NicknameViewController())
+            } else if statusCode == 500 {
+                self.showToast(message: "서버 오류입니다.")
             }
         }
     }
     
     func requestMyState() {
-        GenericAPI.shared.requestDecodableData(type: MyStateResponse.self, router: QueueRouter.myQueueState) { [weak self] response in
+        viewModel.requestMyState { [weak self] response, error in
             guard let self = self else { return }
             
-            switch response {
-            case .success(let data):
-                if data.matched == 1 {
-                    if data.dodged == 1 {
+            if let response = response {
+                self.navigationBar.title = response.matchedNick ?? ""
+                
+                if response.matched == 1 {
+                    self.fetchChatList()
+                    
+                    if response.dodged == 1 {
                         // 매칭 + 취소된 상태
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                             self.showToast(message: "스터디가 종료되어 채팅을 전송할 수 없습니다")
                         }
                     }
                 }
-            case .failure(let error):
-                print(error)
+            }
+            
+            if let error = error {
+                
             }
         }
     }
+    
 }

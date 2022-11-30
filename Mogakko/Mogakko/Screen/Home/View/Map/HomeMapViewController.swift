@@ -277,8 +277,6 @@ extension HomeMapViewController: BaseViewControllerAttribute {
                 } else {
                     // 매칭된 > 채팅화면으로 이동
                     let viewController = ChatViewController()
-                    viewController.viewModel.nick.accept(vc.matchedNick)
-                    viewController.viewModel.uid.accept(vc.matchedUid)
                     vc.navigationController?.pushViewController(viewController, animated: true)
                 }
             }

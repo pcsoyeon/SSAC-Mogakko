@@ -100,8 +100,6 @@ extension NearbyPopupViewController {
                 let navigationController = presentingViewController is UINavigationController ? presentingViewController as? UINavigationController : presentingViewController.navigationController
                 self.dismiss(animated: true) {
                     let viewController = ChatViewController()
-                    viewController.viewModel.uid.accept(self.queue.uid)
-                    viewController.viewModel.nick.accept(self.queue.nick)
                     navigationController?.pushViewController(viewController, animated: true)
                 }
             } else if statusCode == 201 {

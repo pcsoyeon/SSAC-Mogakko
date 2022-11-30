@@ -26,27 +26,31 @@ extension ChatSection: SectionModelType {
 }
 
 final class ChatViewModel: BaseViewModel {
-    var uid = BehaviorRelay(value: "")
-    var nick = BehaviorRelay(value: "")
+//    var uid = BehaviorRelay(value: "")
+//    var nick = BehaviorRelay(value: "")
+    
+    var uid: String = ""
+    var nick: String = ""
     
     var chatList: [Chat] = []
     lazy var chatRelay = BehaviorRelay<[ChatSection]>(value: [
-        ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "")]),
+        ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick, createdAt: "")]),
         ChatSection(header: 1, items: [])
     ])
     
     private var dateFormatter = DateFormatter()
     
     func appendChatToSection(_ chat: Chat) {
+        let chat = Chat(id: chat.id, to: chat.to, from: chat.from, chat: chat.chat, createdAt: toChatString(dateFormatter.date(from: chat.createdAt)!))
         chatList.append(chat)
-        let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "1월 15일 토요일")]),
+        let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: nick, createdAt: "1월 15일 토요일")]),
                            ChatSection(header: 1, items: chatList)]
         
         chatRelay.accept(chatSection)
     }
     
-    func requestChatList(from: String, lastchatDate: String, completionHandler: @escaping (Int) -> Void) {
-        ChatAPI.shared.requestChatList(from: from, lastchatDate: lastchatDate) { [weak self] response, statusCode in
+    func requestChatList(lastchatDate: String, completionHandler: @escaping (Int) -> Void) {
+        ChatAPI.shared.requestChatList(from: uid, lastchatDate: lastchatDate) { [weak self] response, statusCode in
             guard let self = self else { return }
             
             self.dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -54,6 +58,7 @@ final class ChatViewModel: BaseViewModel {
             
             if let response = response {
                 dump(response)
+                
                 let payload = response.payload
                 var chatList: [Chat] = []
                 payload.forEach {
@@ -63,7 +68,7 @@ final class ChatViewModel: BaseViewModel {
                 }
                 self.chatList = chatList
                 
-                let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "1월 15일 토요일")]),
+                let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick, createdAt: "1월 15일 토요일")]),
                                    ChatSection(header: 1, items: chatList)]
                 
                 self.chatRelay.accept(chatSection)
@@ -95,7 +100,7 @@ final class ChatViewModel: BaseViewModel {
     }
     
     func postChat(text: String, completionHandler: @escaping (Int) -> Void) {
-        ChatAPI.shared.postChat(to: uid.value, chat: text) { [weak self] response, statusCode in
+        ChatAPI.shared.postChat(to: uid, chat: text) { [weak self] response, statusCode in
             guard let self = self else { return }
             guard let statusCode = statusCode else { return }
             print("============== 채팅을 보냈어요💨 \(statusCode)")
@@ -110,7 +115,7 @@ final class ChatViewModel: BaseViewModel {
                 UserData.uid = response.from
                 
                 self.chatList.append(chat)
-                let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick.value, createdAt: "1월 15일 토요일")]),
+                let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick, createdAt: "1월 15일 토요일")]),
                                    ChatSection(header: 1, items: self.chatList)]
                 
                 self.chatRelay.accept(chatSection)
@@ -119,9 +124,15 @@ final class ChatViewModel: BaseViewModel {
     }
     
     func requestMyState(completionHandler: @escaping (MyStateResponse?, APIError?) -> Void) {
-        GenericAPI.shared.requestDecodableData(type: MyStateResponse.self, router: QueueRouter.myQueueState) { response in
+        GenericAPI.shared.requestDecodableData(type: MyStateResponse.self, router: QueueRouter.myQueueState) { [weak self] response in
+            guard let self = self else { return }
+            
             switch response {
             case .success(let data):
+                
+                self.uid = data.matchedUid ?? ""
+                self.nick = data.matchedNick ?? ""
+                
                 completionHandler(data, nil)
             case .failure(let error):
                 completionHandler(nil, error)
