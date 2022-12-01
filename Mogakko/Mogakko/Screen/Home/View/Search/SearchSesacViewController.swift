@@ -241,9 +241,9 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             .bind { [weak self] index in
                 guard let self = self else { return }
                 if index == 0 {
-                    self.highlightedFromTitle()
+                    self.highlightedTitle(index: 0, selectedButton: self.fromTitleButton, deselectedButton: self.requestedTitleButton)
                 } else {
-                    self.highlightedRequestTitle()
+                    self.highlightedTitle(index: 1, selectedButton: self.requestedTitleButton, deselectedButton: self.fromTitleButton)
                 }
             }
             .disposed(by: disposeBag)
@@ -329,34 +329,28 @@ extension SearchSesacViewController: BaseViewControllerAttribute {
             .disposed(by: disposeBag)
     }
     
-    private func highlightedFromTitle() {
-        UIView.animate(withDuration: 0.35) {
-            self.indicatorLine.snp.updateConstraints { make in
-                make.leading.equalToSuperview()
+    private func highlightedTitle(index: Int, selectedButton: UIButton, deselectedButton: UIButton) {
+        if index == 0 {
+            UIView.animate(withDuration: 0.35) {
+                self.indicatorLine.snp.updateConstraints { make in
+                    make.leading.equalToSuperview()
+                }
+                self.view.layoutIfNeeded()
             }
-            self.view.layoutIfNeeded()
+        } else {
+            UIView.animate(withDuration: 0.2) {
+                self.indicatorLine.snp.updateConstraints { make in
+                    make.leading.equalToSuperview().inset(self.view.frame.width / 2)
+                }
+                self.view.layoutIfNeeded()
+            }
         }
         
-        fromTitleButton.setTitleColor(.green, for: .normal)
-        fromTitleButton.titleLabel?.font = MDSFont.Title3_M14.font
+        selectedButton.setTitleColor(.green, for: .normal)
+        selectedButton.titleLabel?.font = MDSFont.Title3_M14.font
         
-        requestedTitleButton.setTitleColor(.gray6, for: .normal)
-        requestedTitleButton.titleLabel?.font = MDSFont.Title4_R14.font
-    }
-    
-    private func highlightedRequestTitle() {
-        UIView.animate(withDuration: 0.2) {
-            self.indicatorLine.snp.updateConstraints { make in
-                make.leading.equalToSuperview().inset(self.view.frame.width / 2)
-            }
-            self.view.layoutIfNeeded()
-        }
-        
-        fromTitleButton.setTitleColor(.gray6, for: .normal)
-        fromTitleButton.titleLabel?.font = MDSFont.Title4_R14.font
-        
-        requestedTitleButton.setTitleColor(.green, for: .normal)
-        requestedTitleButton.titleLabel?.font = MDSFont.Title3_M14.font
+        deselectedButton.setTitleColor(.gray6, for: .normal)
+        deselectedButton.titleLabel?.font = MDSFont.Title4_R14.font
     }
     
     @objc func requestMyQueueState() {

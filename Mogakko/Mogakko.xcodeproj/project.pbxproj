@@ -37,6 +37,15 @@
 		923DDE28291AB8F400A2FE75 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 923DDE27291AB8F400A2FE75 /* .gitignore */; };
 		923DDE2A291AB90500A2FE75 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923DDE29291AB90500A2FE75 /* APIKey.swift */; };
 		923DDE2D291ABA9E00A2FE75 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 923DDE2C291ABA9E00A2FE75 /* Alamofire */; };
+		92405266293763F800EA2BC1 /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92405265293763F800EA2BC1 /* ShopViewController.swift */; };
+		924052682937652700EA2BC1 /* SesacView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924052672937652700EA2BC1 /* SesacView.swift */; };
+		9240526A2937653100EA2BC1 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924052692937653100EA2BC1 /* BackgroundView.swift */; };
+		9240526C2937691500EA2BC1 /* ShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9240526B2937691500EA2BC1 /* ShopViewModel.swift */; };
+		9240526F293777E100EA2BC1 /* Sesac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9240526E293777E100EA2BC1 /* Sesac.swift */; };
+		92405271293777E700EA2BC1 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92405270293777E700EA2BC1 /* Background.swift */; };
+		9240527329377C8D00EA2BC1 /* SesacCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9240527229377C8D00EA2BC1 /* SesacCollectionViewCell.swift */; };
+		9240527529377CAF00EA2BC1 /* BackgroundCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9240527429377CAF00EA2BC1 /* BackgroundCollectionViewCell.swift */; };
+		9240527B2938823A00EA2BC1 /* SesacPriceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9240527A2938823A00EA2BC1 /* SesacPriceType.swift */; };
 		925606F42918D51800A13FFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925606F32918D51800A13FFB /* AppDelegate.swift */; };
 		925606F62918D51800A13FFB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925606F52918D51800A13FFB /* SceneDelegate.swift */; };
 		925606F82918D51800A13FFB /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925606F72918D51800A13FFB /* SplashViewController.swift */; };
@@ -175,6 +184,15 @@
 		923DDE24291A671100A2FE75 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		923DDE27291AB8F400A2FE75 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		923DDE29291AB90500A2FE75 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		92405265293763F800EA2BC1 /* ShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
+		924052672937652700EA2BC1 /* SesacView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SesacView.swift; sourceTree = "<group>"; };
+		924052692937653100EA2BC1 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		9240526B2937691500EA2BC1 /* ShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewModel.swift; sourceTree = "<group>"; };
+		9240526E293777E100EA2BC1 /* Sesac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sesac.swift; sourceTree = "<group>"; };
+		92405270293777E700EA2BC1 /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
+		9240527229377C8D00EA2BC1 /* SesacCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SesacCollectionViewCell.swift; sourceTree = "<group>"; };
+		9240527429377CAF00EA2BC1 /* BackgroundCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCollectionViewCell.swift; sourceTree = "<group>"; };
+		9240527A2938823A00EA2BC1 /* SesacPriceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SesacPriceType.swift; sourceTree = "<group>"; };
 		925606F02918D51800A13FFB /* Mogakko.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mogakko.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		925606F32918D51800A13FFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		925606F52918D51800A13FFB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -384,6 +402,46 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		92405262293763D400EA2BC1 /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				9240526D293777D300EA2BC1 /* Model */,
+				92405264293763ED00EA2BC1 /* View */,
+				92405263293763E500EA2BC1 /* ViewModel */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		92405263293763E500EA2BC1 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9240526B2937691500EA2BC1 /* ShopViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		92405264293763ED00EA2BC1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				92405265293763F800EA2BC1 /* ShopViewController.swift */,
+				924052672937652700EA2BC1 /* SesacView.swift */,
+				924052692937653100EA2BC1 /* BackgroundView.swift */,
+				9240527229377C8D00EA2BC1 /* SesacCollectionViewCell.swift */,
+				9240527429377CAF00EA2BC1 /* BackgroundCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9240526D293777D300EA2BC1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9240526E293777E100EA2BC1 /* Sesac.swift */,
+				92405270293777E700EA2BC1 /* Background.swift */,
+				9240527A2938823A00EA2BC1 /* SesacPriceType.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		925606E72918D51800A13FFB = {
 			isa = PBXGroup;
 			children = (
@@ -427,6 +485,7 @@
 		925607082918D54500A13FFB /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				92405262293763D400EA2BC1 /* Shop */,
 				92D0839E292A7B840072FC0C /* Chat */,
 				920B671F29200364000191F1 /* MyInfo */,
 				92A5DE6E291DBFBD00094D3E /* Home */,
@@ -1020,13 +1079,16 @@
 				9256072A2918E68A00A13FFB /* Image.swift in Sources */,
 				92E74DEE292637C900B15D71 /* StudyCollectionViewCell.swift in Sources */,
 				923DDE1B291A4C2000A2FE75 /* EmailViewModel.swift in Sources */,
+				9240527329377C8D00EA2BC1 /* SesacCollectionViewCell.swift in Sources */,
 				92E289C52932465B00224B3B /* WriteReviewPopupViewController.swift in Sources */,
 				92A640442925389900A6F708 /* SearchRequest.swift in Sources */,
 				920B6715291F7D5D000191F1 /* Helper.swift in Sources */,
 				925606F82918D51800A13FFB /* SplashViewController.swift in Sources */,
 				923DDE23291A501200A2FE75 /* GenderCollectionViewCell.swift in Sources */,
+				9240526C2937691500EA2BC1 /* ShopViewModel.swift in Sources */,
 				923DDE1F291A4D8500A2FE75 /* GenderViewModel.swift in Sources */,
 				925607132918DDD100A13FFB /* BaseViewControllerAttribute.swift in Sources */,
+				924052682937652700EA2BC1 /* SesacView.swift in Sources */,
 				92A64012292233E900A6F708 /* CALayer+Extension.swift in Sources */,
 				92A6402D292299CA00A6F708 /* CardView.swift in Sources */,
 				92A5DE61291CFBF800094D3E /* UserAPI.swift in Sources */,
@@ -1039,10 +1101,13 @@
 				92D083992928FE080072FC0C /* CardTableViewCell.swift in Sources */,
 				920B672D29200B78000191F1 /* MyInfo.swift in Sources */,
 				925607362918F0B400A13FFB /* MDSNavigationBar.swift in Sources */,
+				9240526A2937653100EA2BC1 /* BackgroundView.swift in Sources */,
 				92E28996292C92C900224B3B /* MDSMatchButton.swift in Sources */,
 				92A64031292358D300A6F708 /* BaseView.swift in Sources */,
+				9240527529377CAF00EA2BC1 /* BackgroundCollectionViewCell.swift in Sources */,
 				92A6403E292533ED00A6F708 /* QueueRouter.swift in Sources */,
 				925607342918EF6300A13FFB /* BackButton.swift in Sources */,
+				92405271293777E700EA2BC1 /* Background.swift in Sources */,
 				92A640292922975E00A6F708 /* InfoManagementItem.swift in Sources */,
 				92560756291926A700A13FFB /* MDSFont.swift in Sources */,
 				9256075D2919468400A13FFB /* OnboardingCollectionViewCell.swift in Sources */,
@@ -1052,6 +1117,7 @@
 				925607542919266600A13FFB /* UIFont+Extension.swift in Sources */,
 				9256073F2918F2E700A13FFB /* MDSInputTextField.swift in Sources */,
 				92A640382924B45800A6F708 /* Reactive+Extension.swift in Sources */,
+				92405266293763F800EA2BC1 /* ShopViewController.swift in Sources */,
 				92A5DE64291CFC5600094D3E /* Login.swift in Sources */,
 				92A6400929221EA100A6F708 /* HomeMapViewModel.swift in Sources */,
 				92E289BE2930BD7900224B3B /* ChatAPI.swift in Sources */,
@@ -1070,6 +1136,7 @@
 				92E2899E292E1EAD00224B3B /* AcceptPopupViewController.swift in Sources */,
 				923DDE2A291AB90500A2FE75 /* APIKey.swift in Sources */,
 				92A640072921DFE100A6F708 /* MDSSlider.swift in Sources */,
+				9240527B2938823A00EA2BC1 /* SesacPriceType.swift in Sources */,
 				920B6711291F5138000191F1 /* APIError.swift in Sources */,
 				9256074E2918FCED00A13FFB /* MDSMessageTextField.swift in Sources */,
 				92D083882927A1670072FC0C /* RxCoreLocationDelegateProxy.swift in Sources */,
@@ -1093,6 +1160,7 @@
 				92E289B429306B6B00224B3B /* HeaderTableViewCell.swift in Sources */,
 				92D083A0292A7B940072FC0C /* ChatViewController.swift in Sources */,
 				92A64010292230CB00A6F708 /* UIStackView+Extension.swift in Sources */,
+				9240526F293777E100EA2BC1 /* Sesac.swift in Sources */,
 				92A6403B292532D800A6F708 /* SearchResponse.swift in Sources */,
 				920B6723292003EC000191F1 /* MyInfoViewController.swift in Sources */,
 				920B67392921530C000191F1 /* GenericAPI.swift in Sources */,

@@ -139,11 +139,7 @@ extension GenderViewController: BaseViewControllerAttribute {
     func bind() {
         let listObservable = Observable.of(gender)
         listObservable.bind(to: collectionView.rx.items(cellIdentifier: GenderCollectionViewCell.reuseIdentifier, cellType: GenderCollectionViewCell.self)) { index, data, cell in
-            if index == 0 {
-                cell.setData(Gender.man)
-            } else {
-                cell.setData(Gender.woman)
-            }
+            cell.setData(data)
         }
         .disposed(by: disposeBag)
         

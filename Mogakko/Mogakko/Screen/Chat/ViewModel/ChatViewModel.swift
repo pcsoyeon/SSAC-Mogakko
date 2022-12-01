@@ -105,7 +105,7 @@ final class ChatViewModel: BaseViewModel {
             guard let statusCode = statusCode else { return }
             print("============== 채팅을 보냈어요💨 \(statusCode)")
             
-            completionHandler(200)
+            completionHandler(statusCode)
             
             if let response = response {
                 dump(response)
