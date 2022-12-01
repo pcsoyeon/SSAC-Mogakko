@@ -28,7 +28,7 @@ final class TabBarViewController: UITabBarController, UITabBarControllerDelegate
         self.tabBar.scrollEdgeAppearance = self.tabBar.standardAppearance
         
         let firstTabController = HomeMapViewController()
-        let secondTabController = UIViewController()
+        let secondTabController = ShopViewController()
         let thirdTabController = UIViewController()
         let fourthTabController = UINavigationController(rootViewController: MyInfoViewController())
         
