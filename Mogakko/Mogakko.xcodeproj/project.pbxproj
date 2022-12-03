@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		920929102939F53F006AC1BA /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 9209290F2939F53F006AC1BA /* Realm */; };
+		920929122939F53F006AC1BA /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 920929112939F53F006AC1BA /* RealmSwift */; };
+		920929152939F73A006AC1BA /* ChatDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920929142939F73A006AC1BA /* ChatDB.swift */; };
+		920929172939F83A006AC1BA /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920929162939F83A006AC1BA /* ChatRepository.swift */; };
+		9209291B293A0C5E006AC1BA /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9209291A293A0C5E006AC1BA /* Person.swift */; };
+		9209291D293A0CA5006AC1BA /* PersonRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9209291C293A0CA5006AC1BA /* PersonRepository.swift */; };
 		920B6711291F5138000191F1 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B6710291F5138000191F1 /* APIError.swift */; };
 		920B6713291F64BF000191F1 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B6712291F64BF000191F1 /* UILabel+Extension.swift */; };
 		920B6715291F7D5D000191F1 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B6714291F7D5D000191F1 /* Helper.swift */; };
@@ -157,6 +163,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		920929142939F73A006AC1BA /* ChatDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDB.swift; sourceTree = "<group>"; };
+		920929162939F83A006AC1BA /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
+		9209291A293A0C5E006AC1BA /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		9209291C293A0CA5006AC1BA /* PersonRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonRepository.swift; sourceTree = "<group>"; };
 		920B6710291F5138000191F1 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		920B6712291F64BF000191F1 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		920B6714291F7D5D000191F1 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
@@ -308,9 +318,11 @@
 				920B671A291FC064000191F1 /* FirebaseAuth in Frameworks */,
 				920B671C291FC064000191F1 /* FirebaseMessaging in Frameworks */,
 				92560759291945AA00A13FFB /* RxCocoa in Frameworks */,
+				920929102939F53F006AC1BA /* Realm in Frameworks */,
 				925607182918DF1C00A13FFB /* SnapKit in Frameworks */,
 				92E289B229303F5100224B3B /* RxDataSources in Frameworks */,
 				9256075B291945AA00A13FFB /* RxSwift in Frameworks */,
+				920929122939F53F006AC1BA /* RealmSwift in Frameworks */,
 				925607392918F0CB00A13FFB /* Then in Frameworks */,
 				92E289BA2930B97800224B3B /* SocketIO in Frameworks */,
 			);
@@ -319,6 +331,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		920929132939F5BE006AC1BA /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				92092919293A0C37006AC1BA /* Person */,
+				92092918293A0C31006AC1BA /* Chat */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		92092918293A0C31006AC1BA /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				920929142939F73A006AC1BA /* ChatDB.swift */,
+				920929162939F83A006AC1BA /* ChatRepository.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		92092919293A0C37006AC1BA /* Person */ = {
+			isa = PBXGroup;
+			children = (
+				9209291A293A0C5E006AC1BA /* Person.swift */,
+				9209291C293A0CA5006AC1BA /* PersonRepository.swift */,
+			);
+			path = Person;
+			sourceTree = "<group>";
+		};
 		920B671F29200364000191F1 /* MyInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -511,6 +550,7 @@
 		9256070A2918D54F00A13FFB /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				920929132939F5BE006AC1BA /* Realm */,
 				92D08384292723500072FC0C /* PropertyWrapper */,
 				92A6400A292221BA00A6F708 /* DelegateProxy */,
 				9256075E291946BC00A13FFB /* Base */,
@@ -995,6 +1035,8 @@
 				920B671B291FC064000191F1 /* FirebaseMessaging */,
 				92E289B129303F5100224B3B /* RxDataSources */,
 				92E289B92930B97800224B3B /* SocketIO */,
+				9209290F2939F53F006AC1BA /* Realm */,
+				920929112939F53F006AC1BA /* RealmSwift */,
 			);
 			productName = Mogakko;
 			productReference = 925606F02918D51800A13FFB /* Mogakko.app */;
@@ -1032,6 +1074,7 @@
 				920B6718291FC064000191F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				92E289B029303F5100224B3B /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				92E289B82930B97800224B3B /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
+				9209290E2939F53F006AC1BA /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 925606F12918D51800A13FFB /* Products */;
 			projectDirPath = "";
@@ -1084,6 +1127,7 @@
 				92A640442925389900A6F708 /* SearchRequest.swift in Sources */,
 				920B6715291F7D5D000191F1 /* Helper.swift in Sources */,
 				925606F82918D51800A13FFB /* SplashViewController.swift in Sources */,
+				920929172939F83A006AC1BA /* ChatRepository.swift in Sources */,
 				923DDE23291A501200A2FE75 /* GenderCollectionViewCell.swift in Sources */,
 				9240526C2937691500EA2BC1 /* ShopViewModel.swift in Sources */,
 				923DDE1F291A4D8500A2FE75 /* GenderViewModel.swift in Sources */,
@@ -1163,6 +1207,7 @@
 				9240526F293777E100EA2BC1 /* Sesac.swift in Sources */,
 				92A6403B292532D800A6F708 /* SearchResponse.swift in Sources */,
 				920B6723292003EC000191F1 /* MyInfoViewController.swift in Sources */,
+				920929152939F73A006AC1BA /* ChatDB.swift in Sources */,
 				920B67392921530C000191F1 /* GenericAPI.swift in Sources */,
 				925607212918E09900A13FFB /* UIColor+Extension.swift in Sources */,
 				925607472918F35200A13FFB /* MDSButton.swift in Sources */,
@@ -1172,6 +1217,7 @@
 				92A6401E29224AC000A6F708 /* AgeView.swift in Sources */,
 				9256076F2919CC9D00A13FFB /* String+Extension.swift in Sources */,
 				92E289AD293031CF00224B3B /* MyBubbleTableViewCell.swift in Sources */,
+				9209291B293A0C5E006AC1BA /* Person.swift in Sources */,
 				92A5DE67291D124700094D3E /* SignupRequest.swift in Sources */,
 				92E289A6292F4BB300224B3B /* ChatViewModel.swift in Sources */,
 				92A5DE70291DBFE900094D3E /* TabBarViewController.swift in Sources */,
@@ -1182,6 +1228,7 @@
 				92E289A0292E321800224B3B /* ReviewViewController.swift in Sources */,
 				9256074C2918F95500A13FFB /* OnboardingViewController.swift in Sources */,
 				9256072C2918EDC100A13FFB /* Metric.swift in Sources */,
+				9209291D293A0CA5006AC1BA /* PersonRepository.swift in Sources */,
 				923DDE19291A4B9200A2FE75 /* EmailViewController.swift in Sources */,
 				92E289A8292F4DB000224B3B /* BaseViewModel.swift in Sources */,
 				92E289C22931FC1500224B3B /* CancelMatchPopupViewController.swift in Sources */,
@@ -1414,6 +1461,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9209290E2939F53F006AC1BA /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		920B6718291FC064000191F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1473,6 +1528,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9209290F2939F53F006AC1BA /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9209290E2939F53F006AC1BA /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		920929112939F53F006AC1BA /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9209290E2939F53F006AC1BA /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		920B6719291FC064000191F1 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 920B6718291FC064000191F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

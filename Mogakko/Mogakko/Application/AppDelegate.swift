@@ -7,6 +7,7 @@
 
 import UIKit
 
+import RealmSwift
 import FirebaseCore
 import FirebaseMessaging
 
@@ -17,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        aboutRealmMigration()
         
         FirebaseApp.configure()
         
@@ -115,5 +118,14 @@ extension AppDelegate: MessagingDelegate {
             object: nil,
             userInfo: dataDict
         )
+    }
+}
+
+// MARK: - Realm
+
+extension AppDelegate {
+    func aboutRealmMigration() {
+        let config = Realm.Configuration(schemaVersion: 1, deleteRealmIfMigrationNeeded: true)
+        Realm.Configuration.defaultConfiguration = config
     }
 }

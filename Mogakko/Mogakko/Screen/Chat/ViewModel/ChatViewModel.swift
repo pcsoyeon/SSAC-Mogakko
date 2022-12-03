@@ -26,9 +26,6 @@ extension ChatSection: SectionModelType {
 }
 
 final class ChatViewModel: BaseViewModel {
-//    var uid = BehaviorRelay(value: "")
-//    var nick = BehaviorRelay(value: "")
-    
     var uid: String = ""
     var nick: String = ""
     
@@ -38,7 +35,60 @@ final class ChatViewModel: BaseViewModel {
         ChatSection(header: 1, items: [])
     ])
     
+    private let chatRepository = ChatRepository()
+    
     private var dateFormatter = DateFormatter()
+    
+    // MARK: - Realm
+    
+    func fetchChatListByDB(completionHandler: @escaping (Int) -> Void) {
+        let chatDB = chatRepository.filterChatListByUid(uid: uid)
+        
+        chatDB.forEach {
+            chatList.append(Chat(id: $0.id, to: $0.to, from: $0.from, chat: $0.chat, createdAt: self.toChatString($0.createdAt)))
+        }
+        
+        let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: nick, createdAt: "1월 15일 토요일")]),
+                           ChatSection(header: 1, items: chatList)]
+        chatRelay.accept(chatSection)
+        
+        let lastchatDate = chatDB.last?.createdAt
+        ChatAPI.shared.requestChatList(from: uid, lastchatDate: "2000-01-01T00:00:00.000Z") { [weak self] response, statusCode in
+            guard let self = self else { return }
+            
+            self.dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            self.dateFormatter.timeZone = TimeZone(identifier: "UTC")
+            
+            if let response = response {
+                dump(response)
+                
+                let payload = response.payload
+                var chatList: [Chat] = []
+                payload.forEach {
+                    let date:Date = self.dateFormatter.date(from: $0.createdAt)!
+                    let dateString: String = self.toChatString(date)
+                    chatList.append(Chat(id: $0.id, to: $0.to, from: $0.from, chat: $0.chat, createdAt: dateString))
+                    
+                    self.chatRepository.addChat(chat: ChatDB(id: $0.id, chat: $0.chat, createdAt: date, from: $0.from, to: $0.to))
+                }
+                self.chatList = chatList
+                
+                let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick, createdAt: "1월 15일 토요일")]),
+                                   ChatSection(header: 1, items: chatList)]
+                
+                self.chatRelay.accept(chatSection)
+                completionHandler(200)
+                return
+            }
+            
+            if let statusCode = statusCode {
+                completionHandler(statusCode)
+                return
+            }
+        }
+    }
+    
+    // MARK: - Data
     
     func appendChatToSection(_ chat: Chat) {
         let chat = Chat(id: chat.id, to: chat.to, from: chat.from, chat: chat.chat, createdAt: toChatString(dateFormatter.date(from: chat.createdAt)!))
@@ -48,6 +98,8 @@ final class ChatViewModel: BaseViewModel {
         
         chatRelay.accept(chatSection)
     }
+    
+    // MARK: - Network
     
     func requestChatList(lastchatDate: String, completionHandler: @escaping (Int) -> Void) {
         ChatAPI.shared.requestChatList(from: uid, lastchatDate: lastchatDate) { [weak self] response, statusCode in
@@ -115,6 +167,9 @@ final class ChatViewModel: BaseViewModel {
                 UserData.uid = response.from
                 
                 self.chatList.append(chat)
+                
+                let date: Date = self.dateFormatter.date(from: response.createdAt)!
+                self.chatRepository.addChat(chat: ChatDB(id: chat.id, chat: chat.chat, createdAt: date, from: chat.from, to: chat.to))
                 let chatSection = [ChatSection(header: 0, items: [Chat(id: "", to: "", from: "", chat: self.nick, createdAt: "1월 15일 토요일")]),
                                    ChatSection(header: 1, items: self.chatList)]
                 

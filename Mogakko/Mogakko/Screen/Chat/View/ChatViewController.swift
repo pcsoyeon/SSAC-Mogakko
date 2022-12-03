@@ -7,6 +7,7 @@
 
 import UIKit
 
+import RealmSwift
 import RxCocoa
 import RxDataSources
 import RxSwift
@@ -484,7 +485,7 @@ extension ChatViewController: UITableViewDelegate {
 
 extension ChatViewController {
     func fetchChatList() {
-        viewModel.requestChatList(lastchatDate: "2000-01-01T00:00:00.000Z") { [weak self] statusCode in
+        viewModel.fetchChatListByDB { [weak self] statusCode in
             guard let self = self else { return }
             
             if statusCode == 200 {
@@ -562,9 +563,8 @@ extension ChatViewController {
             }
             
             if let error = error {
-                
+                self.showToast(message: error.localizedDescription)
             }
         }
     }
-    
 }
