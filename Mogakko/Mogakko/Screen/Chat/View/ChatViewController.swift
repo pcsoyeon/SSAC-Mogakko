@@ -435,6 +435,7 @@ extension ChatViewController: BaseViewControllerAttribute {
                 let popupViewController = WriteReviewPopupViewController()
                 popupViewController.modalTransitionStyle = .crossDissolve
                 popupViewController.modalPresentationStyle = .overFullScreen
+                popupViewController.uid = vc.viewModel.uid
                 popupViewController.registerComment = { registerComment in
                     if registerComment {
                         vc.navigationController?.popToRootViewController(animated: false)

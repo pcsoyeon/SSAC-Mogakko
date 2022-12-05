@@ -75,7 +75,7 @@ final class WriteReviewPopupViewController: UIViewController {
     }
     
     private var reputationTitle: [String] = ["좋은 매너", "정확한 시간 약속", "빠른 응답", "친절한 성격", "능숙한 실력", "유익한 시간"]
-    private var reputation: [Int] = Array(repeating: 0, count: 6)
+    private var reputation: [Int] = Array(repeating: 0, count: 9)
     
     private let placeholder = "자세한 피드백은 다른 새싹들에게 도움이 됩니다 (500자 이내 작성)"
     
@@ -272,6 +272,7 @@ extension WriteReviewPopupViewController: UITextViewDelegate {
 
 extension WriteReviewPopupViewController {
     private func requestRate(uid: String, reputation: [Int], comment: String) {
+        
         QueueAPI.shared.requestRate(uid: uid, reputation: reputation, comment: comment) { [weak self] statusCode in
             guard let self = self else { return }
             print(statusCode)
