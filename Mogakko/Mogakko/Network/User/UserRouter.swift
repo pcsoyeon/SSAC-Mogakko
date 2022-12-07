@@ -77,7 +77,7 @@ extension UserRouter: URLRequestConvertible {
         case .withdraw:
             return ["" : ""]
         case .updateFcmToken:
-            return ["" : ""]
+            return ["FCMtoken" : UserData.FCMtoken]
         case .mypage(let mypageRequest):
             return ["searchable" : "\(mypageRequest.searchable)",
                     "ageMin" : "\(mypageRequest.ageMin)",
