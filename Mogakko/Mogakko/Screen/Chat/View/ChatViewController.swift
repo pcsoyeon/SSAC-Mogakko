@@ -559,6 +559,13 @@ extension ChatViewController {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                             self.showToast(message: "스터디가 종료되어 채팅을 전송할 수 없습니다")
                         }
+                        self.cancelMatchType = .plain
+                        
+                        var config = UIButton.Configuration.plain()
+                        var titleAttr = AttributedString.init("스터디 종료")
+                        titleAttr.font = MDSFont.Title3_M14.font
+                        config.attributedTitle = titleAttr
+                        self.cancelButton.configuration = config
                     }
                 }
             }
