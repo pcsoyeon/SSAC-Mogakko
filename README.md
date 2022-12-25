@@ -6,6 +6,10 @@ Service Level Project
 - 실제 업무 환경과 동일한 프로세스로 진행되는 개인 프로젝트
 - 서비스 레벨의 API/기획 명세서와 디자인 리소스를 전달 받아서 앱 개발 진행
 ```
+</br>
+
+### Screen Shot
+![Slide 16_9 - 2](https://user-images.githubusercontent.com/59593430/209462875-6c95a9a6-5cd1-4f78-9425-ffef1e0da78d.png)
 
 </br>
 
